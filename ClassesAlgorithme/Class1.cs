@@ -45,10 +45,21 @@ namespace ClassesAlgorithme
 
     public class Condition
     {
+        private Variables m_variables;
+        public Variables variables
+        {
+            set { m_variables = value; }
+            get { return m_variables; }
+        }
     }
 
 
     public class Realisation
     {
-    }
+        private Variables m_variables;
+        public Variables variables
+        {
+            set { m_variables = value; }
+            get { return m_variables; }
+        }
 }
