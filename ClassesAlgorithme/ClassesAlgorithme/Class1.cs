@@ -85,9 +85,13 @@ namespace ClassesAlgorithme
     {
         private String m_name = "NoName";
         private Boolean m_actif = false;
-        private List<Condition> m_conditions = new List<Condition>();
-        private List<Realisation> m_realisations = new List<Realisation>();
-
+        public List<Condition> m_conditions { get; set; }
+        public List<Realisation> m_realisations { get; set; }
+        
+        public Boolean estActif()
+        {
+            return m_actif;
+        }
         public Boolean setDynamicValue(String sentinelle, String package, String name, dynamic dynamicValue)
         {//retourne true si toutes les conditions sont vérifiées
             foreach (Condition cond in m_conditions)

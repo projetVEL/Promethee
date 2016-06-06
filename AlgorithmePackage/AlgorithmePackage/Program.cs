@@ -14,9 +14,9 @@ namespace AlgorithmePackage
         {   
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
-            var1["sentinelle"] = "sent1";
+            var1["sentinelle"] = "DESKTOP-E5D5ULL";
             var1["package"] = "package1";
-            var1["variable"] = "var1" ;
+            var1["variable"] = "stateObjectDemo" ;
             cond1.variables = var1;
             cond1.Valeure = 42;
             Realisation real1 = new Realisation();
@@ -24,25 +24,21 @@ namespace AlgorithmePackage
             List<dynamic> maListe = new List<dynamic>();
             maListe.Add(18);
             maListe.Add("test");
-            real1.Arguments = maListe;
-            Condition cond2 = new Condition();
-            Dictionary<string, string> vars2 = new Dictionary<string, string>();
-            vars2["sentinelle"] = "sent2";
-            vars2["package"] = "package";
-            vars2["variable"] = "var";
-            cond2.variables = vars2;
-            cond2.Valeure = "test";
+            real1.Arguments = maListe;            
 
             List<Condition> conditions = new List<Condition>();
             conditions.Add(cond1);
-            conditions.Add(cond2);
             List<Realisation> realisations = new List<Realisation>();
             realisations.Add(real1);
 
 
-            Algorithme algo1 = new Algorithme(conditions, realisations, "algo1", true);            
+            Algorithme algo1 = new Algorithme(conditions, realisations, "1er algo", true);            
             Console.WriteLine(algo1.toString(false));
 
+            //ci-git un exemple de sérialisation à aller rechercher dans ../Debug/myfile.json
+            Constellation.Utils.SerializationHelper.SerializeToFile<Algorithme>(algo1, "myfile.json");
+
+            //Algorithme myData = Constellation.Utils.SerializationHelper.DeserializeFromFile<Algorithme>(PackageHost.GetSettingValue("myfile.json"));
 
             PackageHost.Start<Program>(args);
         }
@@ -88,7 +84,7 @@ namespace AlgorithmePackage
         {
             foreach(Algorithme algo in m_algorithmes)
             {
-                if(algo.setDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
+                if(algo.estActif() && algo.setDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
                 {
                     realiseAlgo(algo.getRealisations());
                 }
