@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassesAlgorithme
 {
@@ -12,11 +9,8 @@ namespace ClassesAlgorithme
         private dynamic m_valeure;
         private Boolean m_true = false;
 
-        public Boolean isTrue
-        {
-             set { m_true = value; }
-             get { return m_true; }
-        }
+        public dynamic dynamicValue { get; set; }
+        
         public String toString()
         {
             String chaine = "variables : ";
@@ -94,11 +88,27 @@ namespace ClassesAlgorithme
         private List<Condition> m_conditions = new List<Condition>();
         private List<Realisation> m_realisations = new List<Realisation>();
 
+        public Boolean setDynamicValue(String sentinelle, String package, String name, dynamic dynamicValue)
+        {//retourne true si toutes les conditions sont vérifiées
+            foreach (Condition cond in m_conditions)
+            {
+                if (cond.variables["sentinelle"] ==sentinelle && cond.variables["package"] ==
+                    package && cond.variables["variable"] == name)
+                {
+                    cond.dynamicValue = dynamicValue;
+                    if (toutesConditionsVraies())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public Boolean toutesConditionsVraies()
         {
             foreach(Condition cond in m_conditions)
             {
-                if (!cond.isTrue) return false;
+                if (cond.dynamicValue != cond.Valeure) return false;
             }
             return true;
         }
