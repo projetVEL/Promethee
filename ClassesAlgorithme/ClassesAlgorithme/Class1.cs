@@ -78,6 +78,10 @@ namespace ClassesAlgorithme
             {
                 returnedRealisation.variables = new Dictionary<string, string>(m_variables);
             }
+            if(m_arguments != null)
+            {
+                returnedRealisation.Arguments = new List<dynamic>(m_arguments);
+            }
             return returnedRealisation;
         }
     }

@@ -6,33 +6,40 @@ using System.Collections.Generic;
 using ClassesAlgorithme;
 
 namespace AlgorithmePackage
-{
+{    
     public class Program : PackageBase
     {        
+        private static Algorithme algo1;
         private List<Algorithme> m_algorithmes = new List<Algorithme>();
         static void Main(string[] args)
-        {   
+        {
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
-            var1["sentinelle"] = "DESKTOP-E5D5ULL";
-            var1["package"] = "package1";
-            var1["variable"] = "stateObjectDemo" ;
+            var1["sentinelle"] = "DESKTOP-FQMIBUN";
+            var1["package"] = "ConstellationPackageConsole1";
+            var1["variable"] = "myValue" ;
+            Dictionary<String, String> var2 = new Dictionary<String, String>();
+            var2["sentinelle"] = "DESKTOP-FQMIBUN";
+            var2["package"] = "ConstellationPackageConsole1";
+            var2["callBack"] = "changeVal";
             cond1.variables = var1;
-            cond1.Valeure = 42;
+            cond1.Valeure = 5;
             Realisation real1 = new Realisation();
-            real1.variables = var1;
+            real1.variables = var2;
             List<dynamic> maListe = new List<dynamic>();
-            maListe.Add(18);
+            maListe.Add(42);
             maListe.Add("test");
             real1.Arguments = maListe;            
 
             List<Condition> conditions = new List<Condition>();
             conditions.Add(cond1);
             List<Realisation> realisations = new List<Realisation>();
+            
             realisations.Add(real1);
 
 
-            Algorithme algo1 = new Algorithme(conditions, realisations, "1er algo", true);            
+            algo1 = new Algorithme(conditions, realisations, "1er algo", true);    
+                    
             Console.WriteLine(algo1.toString(false));
 
             //ci-git un exemple de sérialisation à aller rechercher dans ../Debug/myfile.json
@@ -45,7 +52,8 @@ namespace AlgorithmePackage
 
         public override void OnStart()
         { //get the algos from the bdd or constellation
-            //on souscrit aux algos en memoire
+            //on souscrit aux algos en memoire           
+            m_algorithmes.Add(algo1);
             foreach (Algorithme algo in m_algorithmes)
             {
                 foreach (Condition cond in algo.getConditions())
@@ -99,9 +107,21 @@ namespace AlgorithmePackage
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
             foreach (Realisation real in realisations)
             {
-                MessageScope scope = MessageScope.Create(MessageScope.ScopeType.Package, 
-                    $"{real.variables["sentinelle"]}/{real.variables["package"]}");
-                PackageHost.SendMessage(scope, real.variables["variable"], real.Arguments);
+                dynamic send;
+                switch(real.Arguments.Count)
+                {
+                    case 0 :
+                        send = null;
+                        break;
+                    case 1:
+                        send = real.Arguments[0];
+                        break;
+                    default :
+                        send = real.Arguments;
+                        break;
+                }
+                PackageHost.SendMessage(MessageScope.Create(MessageScope.ScopeType.Package,
+                    $"{real.variables["sentinelle"]}/{real.variables["package"]}"), real.variables["callBack"], send);               
             }
         }
         public override void OnPreShutdown()
