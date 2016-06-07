@@ -8,44 +8,73 @@ using ClassesAlgorithme;
 namespace AlgorithmePackage
 {
     public class Program : PackageBase
-    {        
+    {
+        private static Algorithme algo1;
         private List<Algorithme> m_algorithmes = new List<Algorithme>();
         static void Main(string[] args)
-        {   
+        {
+            //test : un package envoyant myValue = rand(0,10) et mValue = "a" : fonctionne
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
-            var1["sentinelle"] = "DESKTOP-E5D5ULL";
-            var1["package"] = "package1";
-            var1["variable"] = "stateObjectDemo" ;
+            var1["sentinelle"] = "DESKTOP-FQMIBUN";
+            var1["package"] = "ConstellationPackageConsole1";
+            var1["variable"] = "myValue";            
             cond1.variables = var1;
-            cond1.Valeure = 42;
+            cond1.Valeure = 5;
+            Condition cond2 = new Condition();
+            Dictionary<String, String> var11 = new Dictionary<String, String>();
+            var11["sentinelle"] = "DESKTOP-FQMIBUN";
+            var11["package"] = "ConstellationPackageConsole1";
+            var11["variable"] = "mValue";
+            cond2.variables = var11;
+            cond2.Valeure = "a";
+
             Realisation real1 = new Realisation();
-            real1.variables = var1;
+            Dictionary<String, String> var2 = new Dictionary<String, String>();
+            var2["sentinelle"] = "DESKTOP-FQMIBUN";
+            var2["package"] = "ConstellationPackageConsole1";
+            var2["callBack"] = "changeVal";
+            real1.variables = var2;
             List<dynamic> maListe = new List<dynamic>();
-            maListe.Add(18);
+            maListe.Add(42);
             maListe.Add("test");
-            real1.Arguments = maListe;            
+            real1.Arguments = maListe;
+
+            Realisation real2 = new Realisation();
+            Dictionary<String, String> var22 = new Dictionary<String, String>();
+            var22["sentinelle"] = "DESKTOP-FQMIBUN";
+            var22["package"] = "ConstellationPackageConsole1";
+            var22["callBack"] = "changeVal";
+            real2.variables = var22;
+            List<dynamic> maListe2 = new List<dynamic>();
+            maListe2.Add(24);
+            maListe2.Add("tset");
+            real2.Arguments = maListe2;
 
             List<Condition> conditions = new List<Condition>();
             conditions.Add(cond1);
+            conditions.Add(cond2);
+
             List<Realisation> realisations = new List<Realisation>();
             realisations.Add(real1);
+            realisations.Add(real2);
 
 
-            Algorithme algo1 = new Algorithme(conditions, realisations, "1er algo", true);            
+            algo1 = new Algorithme(conditions, realisations, "1er algo", true);
+            algo1.changeRestrictionHoraire(2);
+
             Console.WriteLine(algo1.toString(false));
 
             //ci-git un exemple de sérialisation à aller rechercher dans ../Debug/myfile.json
-            Constellation.Utils.SerializationHelper.SerializeToFile<Algorithme>(algo1, "myfile.json");
-
-            //Algorithme myData = Constellation.Utils.SerializationHelper.DeserializeFromFile<Algorithme>(PackageHost.GetSettingValue("myfile.json"));
+            //Constellation.Utils.SerializationHelper.SerializeToFile<Algorithme>(algo1, "myfile.json");
 
             PackageHost.Start<Program>(args);
         }
 
         public override void OnStart()
         { //get the algos from the bdd or constellation
-            //on souscrit aux algos en memoire
+            //on souscrit aux algos en memoire           
+            m_algorithmes.Add(algo1);
             foreach (Algorithme algo in m_algorithmes)
             {
                 foreach (Condition cond in algo.getConditions())
@@ -53,7 +82,7 @@ namespace AlgorithmePackage
                     subscribeStateObject(cond.variables);
                 }
             }
-            //lorsqu'une des valeures souscrite change
+            //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
             {
                 checkAlgorithmes(e.StateObject);
@@ -69,23 +98,28 @@ namespace AlgorithmePackage
         }
         public void deleteAlgorithme(String name)
         {
-            foreach(Algorithme algo in m_algorithmes)
+            foreach (Algorithme algo in m_algorithmes)
             {
-                if(algo.Name == name)
+                if (algo.Name == name)
                 {
                     //suppression de l'algo depuis la bdd ou constellation
                     //suppression de l'algo de la bdd et du package en cours
                     m_algorithmes.Remove(algo);
-                    //suppression du subscribe
+                    foreach (Condition cond in algo.getConditions())
+                    {
+                        unSubscribeStateObject(cond.variables);
+                    }
                 }
             }
         }
         public void checkAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
-            foreach(Algorithme algo in m_algorithmes)
+            foreach (Algorithme algo in m_algorithmes)
             {
-                if(algo.estActif() && algo.setDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
+                if (algo.estActif() && !algo.estRestreintHorairement &&
+                    algo.setDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
                 {
+                    algo.resetDerniereRealisation();
                     realiseAlgo(algo.getRealisations());
                 }
             }
@@ -94,14 +128,31 @@ namespace AlgorithmePackage
         {
             PackageHost.SubscribeStateObjects(sentinel: var["sentinelle"], package: var["package"], name: var["variable"]);
         }
+        private void unSubscribeStateObject(Dictionary<String, String> var)
+        {
+            PackageHost.UnSubscribeStateObjects(sentinel: var["sentinelle"], package: var["package"], name: var["variable"]);
+        }
+
         private void realiseAlgo(List<Realisation> realisations)
         {
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
             foreach (Realisation real in realisations)
             {
-                MessageScope scope = MessageScope.Create(MessageScope.ScopeType.Package, 
-                    $"{real.variables["sentinelle"]}/{real.variables["package"]}");
-                PackageHost.SendMessage(scope, real.variables["variable"], real.Arguments);
+                dynamic send;
+                switch (real.Arguments.Count)
+                {
+                    case 0:
+                        send = null;
+                        break;
+                    case 1:
+                        send = real.Arguments[0];
+                        break;
+                    default:
+                        send = real.Arguments;
+                        break;
+                }
+                PackageHost.SendMessage(MessageScope.Create(MessageScope.ScopeType.Package,
+                    $"{real.variables["sentinelle"]}/{real.variables["package"]}"), real.variables["callBack"], send);
             }
         }
         public override void OnPreShutdown()

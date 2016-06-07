@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ClassesAlgorithme
 {
@@ -10,7 +12,7 @@ namespace ClassesAlgorithme
         private Boolean m_true = false;
 
         public dynamic dynamicValue { get; set; }
-        
+
         public String toString()
         {
             String chaine = "variables : ";
@@ -55,12 +57,12 @@ namespace ClassesAlgorithme
         public String toString()
         {
             String chaine = "variables : ";
-            foreach(KeyValuePair<String, String> variable in m_variables)
+            foreach (KeyValuePair<String, String> variable in m_variables)
             {
                 chaine += $"{variable} ";
             }
             chaine += $" arguments : ";
-            foreach(dynamic arg in m_arguments)
+            foreach (dynamic arg in m_arguments)
             {
                 chaine += $"{arg}, ";
             }
@@ -74,20 +76,60 @@ namespace ClassesAlgorithme
         public object Clone()
         {
             Realisation returnedRealisation = new Realisation();
-            if(m_variables != null)
+            if (m_variables != null)
             {
                 returnedRealisation.variables = new Dictionary<string, string>(m_variables);
+            }
+            if (m_arguments != null)
+            {
+                returnedRealisation.Arguments = new List<dynamic>(m_arguments);
             }
             return returnedRealisation;
         }
     }
     public class Algorithme : ICloneable
     {
+        private DateTime m_derniereRealisation = new DateTime();
+        private int m_attentes = 0;
         private String m_name = "NoName";
         private Boolean m_actif = false;
         public List<Condition> m_conditions { get; set; }
         public List<Realisation> m_realisations { get; set; }
-        
+        public bool estRestreintHorairement
+        {
+            get
+            {
+                if (m_attentes == 0) return true;
+                if (m_derniereRealisation.Year == 1)
+                {
+                    m_derniereRealisation = DateTime.Now;
+                    return false;
+                }
+                double delta = DateTime.Now.Subtract(m_derniereRealisation).TotalSeconds;
+                if (delta >= m_attentes)
+                {                    
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public void resetDerniereRealisation()
+        {
+            m_derniereRealisation = DateTime.Now;
+        }
+        public void changeRestrictionHoraire(int val)
+        {
+            if (val != 0)
+            {
+                m_attentes = val;
+            }
+            else
+            {
+                m_attentes = 0;
+            }
+
+        }
         public Boolean estActif()
         {
             return m_actif;
@@ -96,7 +138,7 @@ namespace ClassesAlgorithme
         {//retourne true si toutes les conditions sont vérifiées
             foreach (Condition cond in m_conditions)
             {
-                if (cond.variables["sentinelle"] ==sentinelle && cond.variables["package"] ==
+                if (cond.variables["sentinelle"] == sentinelle && cond.variables["package"] ==
                     package && cond.variables["variable"] == name)
                 {
                     cond.dynamicValue = dynamicValue;
@@ -110,7 +152,7 @@ namespace ClassesAlgorithme
         }
         public Boolean toutesConditionsVraies()
         {
-            foreach(Condition cond in m_conditions)
+            foreach (Condition cond in m_conditions)
             {
                 if (cond.dynamicValue != cond.Valeure) return false;
             }
@@ -130,7 +172,7 @@ namespace ClassesAlgorithme
         }
         public String toString(Boolean uneSeuleLigne = true)
         {
-            String chaine = "Nom : " + m_name + " actif : " + m_actif;
+            String chaine = $"Nom : {m_name}, actif : {m_actif}, attente minimale : {m_attentes}s";
             if (!uneSeuleLigne) chaine += "\n";
             chaine += " Conditions : ";
             foreach (Condition condition in m_conditions)
@@ -159,7 +201,6 @@ namespace ClassesAlgorithme
                 m_actif = true;
             }
         }
-
         public void addCondition(Condition condition)
         {
             if (condition != null)
@@ -210,6 +251,13 @@ namespace ClassesAlgorithme
                 }
             }
             return returnedAlgorithme;
+        }
+        public void createHashName()
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] digest = md5.ComputeHash(Encoding.UTF8.GetBytes(toString()));
+            string base64digest = Convert.ToBase64String(digest, 0, digest.Length);
+            m_name = base64digest;
         }
     }
 }
