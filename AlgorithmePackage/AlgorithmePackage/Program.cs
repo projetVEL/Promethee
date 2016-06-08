@@ -3,65 +3,78 @@ using Constellation.Package;
 using System;
 using System.Collections.Generic;
 
-using ClassesAlgorithme;
+using ClassAlgorithm;
 
 namespace AlgorithmePackage
 {
     public class Program : PackageBase
     {
-        private static Algorithme algo1;
+        private static Algorithme algo1; //used 4 tests
+
         private List<Algorithme> m_algorithmes = new List<Algorithme>();
+        private List<Algorithme> m_pausedAlgorithmes = new List<Algorithme>();
         static void Main(string[] args)
         {
             //test : un package envoyant myValue = rand(0,10) et mValue = "a" : fonctionne
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
-            var1["sentinelle"] = "DESKTOP-FQMIBUN";
+            var1["sentinel"] = "DESKTOP-FQMIBUN";
             var1["package"] = "ConstellationPackageConsole1";
             var1["variable"] = "myValue";            
             cond1.variables = var1;
-            cond1.Valeure = 5;
+            cond1.Value = 6;
+            cond1.OperationTested = Operations.StrictlyLower;
             Condition cond2 = new Condition();
             Dictionary<String, String> var11 = new Dictionary<String, String>();
-            var11["sentinelle"] = "DESKTOP-FQMIBUN";
+            var11["sentinel"] = "DESKTOP-FQMIBUN";
             var11["package"] = "ConstellationPackageConsole1";
             var11["variable"] = "mValue";
             cond2.variables = var11;
-            cond2.Valeure = "a";
+            cond2.Value = "2";
+            cond2.OperationTested = Operations.Different;
+            Condition cond3 = new Condition();
+            Dictionary<String, String> var111 = new Dictionary<String, String>();
+            var111["sentinel"] = "DESKTOP-FQMIBUN";
+            var111["package"] = "ConstellationPackageConsole1";
+            var111["variable"] = "myValue";
+            cond3.variables = var111;
+            cond3.Value = 4;
+            cond3.OperationTested = Operations.Upper;
 
-            Realisation real1 = new Realisation();
+            Execution real1 = new Execution();
             Dictionary<String, String> var2 = new Dictionary<String, String>();
-            var2["sentinelle"] = "DESKTOP-FQMIBUN";
+            var2["sentinel"] = "DESKTOP-FQMIBUN";
             var2["package"] = "ConstellationPackageConsole1";
             var2["callBack"] = "changeVal";
             real1.variables = var2;
             List<dynamic> maListe = new List<dynamic>();
             maListe.Add(42);
-            maListe.Add("test");
+            maListe.Add("new");
             real1.Arguments = maListe;
 
-            Realisation real2 = new Realisation();
+            Execution real2 = new Execution();
             Dictionary<String, String> var22 = new Dictionary<String, String>();
-            var22["sentinelle"] = "DESKTOP-FQMIBUN";
+            var22["sentinel"] = "DESKTOP-FQMIBUN";
             var22["package"] = "ConstellationPackageConsole1";
             var22["callBack"] = "changeVal";
             real2.variables = var22;
             List<dynamic> maListe2 = new List<dynamic>();
             maListe2.Add(24);
-            maListe2.Add("tset");
+            maListe2.Add("wen");
             real2.Arguments = maListe2;
 
             List<Condition> conditions = new List<Condition>();
             conditions.Add(cond1);
             conditions.Add(cond2);
+            conditions.Add(cond3);
 
-            List<Realisation> realisations = new List<Realisation>();
+            List<Execution> realisations = new List<Execution>();
             realisations.Add(real1);
             realisations.Add(real2);
 
 
             algo1 = new Algorithme(conditions, realisations, "1er algo", true);
-            algo1.changeRestrictionHoraire(2);
+            algo1.ChangeTimeRestriction(2);
 
             Console.WriteLine(algo1.toString(false));
 
@@ -73,86 +86,167 @@ namespace AlgorithmePackage
 
         public override void OnStart()
         { //get the algos from the bdd or constellation
-            //on souscrit aux algos en memoire           
-            m_algorithmes.Add(algo1);
+            //on souscrit aux algos en memoire  
+            AddAlgorithme(algo1);
             foreach (Algorithme algo in m_algorithmes)
             {
-                foreach (Condition cond in algo.getConditions())
+                foreach (Condition cond in algo.GetConditions())
                 {
-                    subscribeStateObject(cond.variables);
+                    SubscribeStateObject(cond.variables);
                 }
             }
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
             {
-                checkAlgorithmes(e.StateObject);
+                CheckAlgorithmes(e.StateObject);
             };
         }
-
-        public void addAlgorithme(Algorithme algo)
+        /// <summary>
+        /// Ajout d'un algorithme, si un algorithme au nom identique existe deja, il sera ecrase par celui-ci.
+        /// </summary>
+        /// <param name="algo">
+        /// L'algorithme qui sera ajouté.
+        /// </param>
+        [MessageCallback]
+        public void AddAlgorithme(Algorithme algo)
         {
             if (algo != null)
             {
-                m_algorithmes.Add(algo);
+                foreach(Algorithme alg in m_algorithmes)
+                {
+                    if (algo.Name == alg.Name)
+                    {
+                        DeleteAlgorithme(alg.Name);
+                        break;
+                    }
+                }
+                foreach (Algorithme alg in m_pausedAlgorithmes)
+                {
+                    if (algo.Name == alg.Name)
+                    {
+                        DeleteAlgorithme(alg.Name);
+                        break;
+                    }
+                }
+                if(algo.IsActiv())
+                {
+                    m_algorithmes.Add(algo);
+                }
+                else
+                {
+                    m_pausedAlgorithmes.Add(algo);
+                }
+                
             }
         }
-        public void deleteAlgorithme(String name)
+        /// <summary>
+        /// Supprime l'algorithme correspondant au nom donne, il ne sera plus stocke ni realise
+        /// </summary>
+        /// <param name="name">
+        /// Le nom identifiant l'algorithme
+        /// </param>
+        [MessageCallback]
+        public void DeleteAlgorithme(String name)
         {
             foreach (Algorithme algo in m_algorithmes)
             {
                 if (algo.Name == name)
                 {
                     //suppression de l'algo depuis la bdd ou constellation
-                    //suppression de l'algo de la bdd et du package en cours
-                    m_algorithmes.Remove(algo);
-                    foreach (Condition cond in algo.getConditions())
+                    //suppression de l'algo de la bdd et du package en cours                    
+                    foreach (Condition cond in algo.GetConditions())
                     {
-                        unSubscribeStateObject(cond.variables);
+                        UnSubscribeStateObject(cond.variables);
                     }
+                    m_algorithmes.Remove(algo);
+                    return;
+                }
+            }
+            foreach (Algorithme algo in m_pausedAlgorithmes)
+            {
+                if (algo.Name == name)
+                {
+                    //suppression de l'algo depuis la bdd ou constellation
+                    //suppression de l'algo de la bdd et du package en cours                    
+                    foreach (Condition cond in algo.GetConditions())
+                    {
+                        UnSubscribeStateObject(cond.variables);
+                    }
+                    m_pausedAlgorithmes.Remove(algo);
+                    return;
                 }
             }
         }
-        public void checkAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
+        /// <summary>
+        /// Met l'algorithme en pause ou le relance.
+        /// Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
+        /// </summary>
+        /// <param name="name">Le nom de l'algorithme à metre en pause</param>
+        [MessageCallback(Key = "PauseResumeAlgo")]
+        public void EnableDisableAlgorithme(String name)
         {
             foreach (Algorithme algo in m_algorithmes)
             {
-                if (algo.estActif() && !algo.estRestreintHorairement &&
-                    algo.setDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
+                if(algo.Name == name)
                 {
-                    algo.resetDerniereRealisation();
-                    realiseAlgo(algo.getRealisations());
+                    algo.EnableOrDisable();
+                    m_pausedAlgorithmes.Add(algo);
+                    m_algorithmes.Remove(algo);
+                    return;
+                }
+            }
+            foreach (Algorithme algo in m_pausedAlgorithmes)
+            {
+                if (algo.Name == name)
+                {
+                    algo.EnableOrDisable();
+                    m_algorithmes.Add(algo);
+                    m_pausedAlgorithmes.Remove(algo);
+                    return;
                 }
             }
         }
-        private void subscribeStateObject(Dictionary<String, String> var)
+        private void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
-            PackageHost.SubscribeStateObjects(sentinel: var["sentinelle"], package: var["package"], name: var["variable"]);
+            foreach (Algorithme algo in m_algorithmes)
+            {
+                if (!algo.IsTimeRestricted &&
+                    algo.SetDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
+                {
+                    algo.ResetLastExecution();
+                    RealiseAlgorithme(algo.GetExecutions());
+                }
+            }
         }
-        private void unSubscribeStateObject(Dictionary<String, String> var)
+        private void SubscribeStateObject(Dictionary<String, String> var)
         {
-            PackageHost.UnSubscribeStateObjects(sentinel: var["sentinelle"], package: var["package"], name: var["variable"]);
+            PackageHost.SubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
+        }
+        private void UnSubscribeStateObject(Dictionary<String, String> var)
+        {
+            PackageHost.UnSubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
 
-        private void realiseAlgo(List<Realisation> realisations)
+        private void RealiseAlgorithme(List<Execution> executions)
         {
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
-            foreach (Realisation real in realisations)
+            foreach (Execution exec in executions)
             {
                 dynamic send;
-                switch (real.Arguments.Count)
+                switch (exec.Arguments.Count)
                 {
                     case 0:
                         send = null;
                         break;
                     case 1:
-                        send = real.Arguments[0];
+                        send = exec.Arguments[0];
                         break;
                     default:
-                        send = real.Arguments;
+                        send = exec.Arguments;
                         break;
                 }
                 PackageHost.SendMessage(MessageScope.Create(MessageScope.ScopeType.Package,
-                    $"{real.variables["sentinelle"]}/{real.variables["package"]}"), real.variables["callBack"], send);
+                    $"{exec.variables["sentinel"]}/{exec.variables["package"]}"), exec.variables["callBack"], send);
             }
         }
         public override void OnPreShutdown()

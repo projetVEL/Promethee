@@ -4,5 +4,28 @@
         <name>AlgorithmePackage</name>
     </assembly>
     <members>
+        <member name="M:AlgorithmePackage.Program.AddAlgorithme(ClassAlgorithm.Algorithme)">
+            <summary>
+            Ajout d'un algorithme, si un algorithme au nom identique existe deja, il sera ecrase par celui-ci.
+            </summary>
+            <param name="algo">
+            L'algorithme qui sera ajouté.
+            </param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.DeleteAlgorithme(System.String)">
+            <summary>
+            Supprime l'algorithme correspondant au nom donne, il ne sera plus stocke ni realise
+            </summary>
+            <param name="name">
+            Le nom identifiant l'algorithme
+            </param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.EnableDisableAlgorithme(System.String)">
+            <summary>
+            Met l'algorithme en pause ou le relance.
+            Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
+            </summary>
+            <param name="name">Le nom de l'algorithme à metre en pause</param>
+        </member>
     </members>
 </doc>

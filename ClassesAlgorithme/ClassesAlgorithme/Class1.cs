@@ -3,30 +3,82 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ClassesAlgorithme
+namespace ClassAlgorithm
 {
+    public enum Operations : short
+    {
+        Boolean = 0, //bool -> isTrue ?
+        Equal = 1, //string/int/float/double : a==b ?
+        Different = 2, //string/int/float/double : a!=b ?
+        StrictlyLower = 3, //int/float/double : a<b ?
+        Lower = 4, //int/float/double : a<=b ?
+        StrictlyUpper = 5, //int/float/double : a>b ?
+        Upper = 6 //int/float/double : a>=b ?
+    }
     public class Condition : ICloneable
     {
         private Dictionary<String, String> m_variables = new Dictionary<String, String>();
-        private dynamic m_valeure;
-        private Boolean m_true = false;
-
-        public dynamic dynamicValue { get; set; }
+        public dynamic Value { get; set; }
+        public dynamic DynamicValue { get; set; }
+        public Operations OperationTested { get; set; }
+        public Boolean IsTrue
+        {
+            get 
+            {
+               switch(OperationTested)
+                {
+                    case Operations.Different:
+                        if (DynamicValue != Value) return true;
+                        return false;
+                    case Operations.Lower:
+                        if (DynamicValue <= Value) return true;
+                        return false;
+                    case Operations.StrictlyLower:
+                        if (DynamicValue < Value) return true;
+                        return false;
+                    case Operations.Upper:
+                        if (DynamicValue >= Value) return true;
+                        return false;
+                    case Operations.StrictlyUpper:
+                        if (DynamicValue > Value) return true;
+                        return false;
+                    default:
+                        if (DynamicValue == Value) return true;
+                        return false;
+                }
+            }
+        }
 
         public String toString()
         {
-            String chaine = "variables : ";
+            String str = "variables : ";
             foreach (KeyValuePair<String, String> variable in m_variables)
             {
-                chaine += $"{variable} ";
+                str += $"{variable} ";
             }
-            chaine += $" valeure : {m_valeure}";
-            return chaine;
-        }
-        public dynamic Valeure
-        {
-            set { m_valeure = value; }
-            get { return m_valeure; }
+            switch (OperationTested)
+            {
+                case Operations.Different:
+                    str += " != ";
+                    break;
+                case Operations.Lower:
+                    str += " <= ";
+                    break;
+                case Operations.StrictlyLower:
+                    str += " < ";
+                    break;
+                case Operations.Upper:
+                    str += " >= ";
+                    break;
+                case Operations.StrictlyUpper:
+                    str += " >= ";
+                    break;
+                default:
+                    str += " == ";
+                    break;
+            }
+            str += $"{Value}";
+            return str;
         }
         public Dictionary<String, String> variables
         {
@@ -45,28 +97,23 @@ namespace ClassesAlgorithme
     }
 
 
-    public class Realisation : ICloneable
+    public class Execution : ICloneable
     {
         private Dictionary<String, String> m_variables = new Dictionary<String, String>();
-        private List<dynamic> m_arguments = null;
-        public List<dynamic> Arguments
-        {
-            set { m_arguments = value; }
-            get { return m_arguments; }
-        }
+        public List<dynamic> Arguments { set; get; }
         public String toString()
         {
-            String chaine = "variables : ";
+            String str = "variables : ";
             foreach (KeyValuePair<String, String> variable in m_variables)
             {
-                chaine += $"{variable} ";
+                str += $"{variable} ";
             }
-            chaine += $" arguments : ";
-            foreach (dynamic arg in m_arguments)
+            str += $" arguments : ";
+            foreach (dynamic arg in Arguments)
             {
-                chaine += $"{arg}, ";
+                str += $"{arg}, ";
             }
-            return chaine;
+            return str;
         }
         public Dictionary<String, String> variables
         {
@@ -75,147 +122,137 @@ namespace ClassesAlgorithme
         }
         public object Clone()
         {
-            Realisation returnedRealisation = new Realisation();
+            Execution returnedExecution = new Execution();
             if (m_variables != null)
             {
-                returnedRealisation.variables = new Dictionary<string, string>(m_variables);
+                returnedExecution.variables = new Dictionary<string, string>(m_variables);
             }
-            if (m_arguments != null)
+            if (Arguments != null)
             {
-                returnedRealisation.Arguments = new List<dynamic>(m_arguments);
+                returnedExecution.Arguments = new List<dynamic>(Arguments);
             }
-            return returnedRealisation;
+            return returnedExecution;
         }
     }
+
     public class Algorithme : ICloneable
     {
-        private DateTime m_derniereRealisation = new DateTime();
-        private int m_attentes = 0;
-        private String m_name = "NoName";
-        private Boolean m_actif = false;
+        private DateTime m_lastExecution = new DateTime();
+        private int m_waiting = 0;
+        private Boolean m_activ = false;
         public List<Condition> m_conditions { get; set; }
-        public List<Realisation> m_realisations { get; set; }
-        public bool estRestreintHorairement
+        public List<Execution> m_executions { get; set; }
+        public String Name { set; get; }
+        public bool IsTimeRestricted
         {
             get
             {
-                if (m_attentes == 0) return true;
-                if (m_derniereRealisation.Year == 1)
-                {
-                    m_derniereRealisation = DateTime.Now;
-                    return false;
-                }
-                double delta = DateTime.Now.Subtract(m_derniereRealisation).TotalSeconds;
-                if (delta >= m_attentes)
+                if (m_waiting == 0) return true;
+                double delta = DateTime.Now.Subtract(m_lastExecution).TotalSeconds;
+                if (delta >= m_waiting)
                 {                    
                     return false;
                 }
                 return true;
             }
         }
-
-        public void resetDerniereRealisation()
+        public void ResetLastExecution()
         {
-            m_derniereRealisation = DateTime.Now;
+            m_lastExecution = DateTime.Now;
         }
-        public void changeRestrictionHoraire(int val)
+        public void ChangeTimeRestriction(int val)
         {
             if (val != 0)
             {
-                m_attentes = val;
+                m_waiting = val;
             }
             else
             {
-                m_attentes = 0;
+                m_waiting = 0;
             }
 
         }
-        public Boolean estActif()
+        public Boolean IsActiv()
         {
-            return m_actif;
+            return m_activ;
         }
-        public Boolean setDynamicValue(String sentinelle, String package, String name, dynamic dynamicValue)
+        public Boolean SetDynamicValue(String sentinel, String package, String name, dynamic dynamicValue)
         {//retourne true si toutes les conditions sont vérifiées
+            Boolean isChanged = false;
             foreach (Condition cond in m_conditions)
             {
-                if (cond.variables["sentinelle"] == sentinelle && cond.variables["package"] ==
+                if (cond.variables["sentinel"] == sentinel && cond.variables["package"] ==
                     package && cond.variables["variable"] == name)
                 {
-                    cond.dynamicValue = dynamicValue;
-                    if (toutesConditionsVraies())
-                    {
-                        return true;
-                    }
+                    cond.DynamicValue = dynamicValue;
+                    isChanged = true;
                 }
             }
+            if(isChanged) return AllConditionsTrue();
             return false;
         }
-        public Boolean toutesConditionsVraies()
+        private Boolean AllConditionsTrue()
         {
             foreach (Condition cond in m_conditions)
             {
-                if (cond.dynamicValue != cond.Valeure) return false;
+                if (!cond.IsTrue) return false;
             }
             return true;
         }
-        public Algorithme(List<Condition> conditions, List<Realisation> realisations, String name, Boolean actif = false)
-        {
-            m_name = name;
-            m_actif = actif;
+        public Algorithme(List<Condition> conditions, List<Execution> executions, String name = null, Boolean activ = false)
+        {       
+            m_activ = activ;
             m_conditions = conditions;
-            m_realisations = realisations;
-        }
-        public String Name
+            m_executions = executions;
+            if (name == null) this.CreateHashName();
+            else Name = name;
+        }        
+        public String toString(Boolean displayOnOneLine = true)
         {
-            set { m_name = value; }
-            get { return m_name; }
-        }
-        public String toString(Boolean uneSeuleLigne = true)
-        {
-            String chaine = $"Nom : {m_name}, actif : {m_actif}, attente minimale : {m_attentes}s";
-            if (!uneSeuleLigne) chaine += "\n";
-            chaine += " Conditions : ";
+            String str = $"Nom : {Name}, actif : {m_activ}, attente minimale : {m_waiting}s";
+            if (!displayOnOneLine) str += "\n";
+            str += " Conditions : ";
             foreach (Condition condition in m_conditions)
             {
-                if (!uneSeuleLigne) chaine += "\n";
-                chaine += condition.toString();
+                if (!displayOnOneLine) str += "\n";
+                str += condition.toString();
             }
-            if (!uneSeuleLigne) chaine += "\n";
-            chaine += " Realisations : ";
-            foreach (Realisation condition in m_realisations)
+            if (!displayOnOneLine) str += "\n";
+            str += " Realisations : ";
+            foreach (Execution execution in m_executions)
             {
-                if (!uneSeuleLigne) chaine += "\n";
-                chaine += condition.toString();
+                if (!displayOnOneLine) str += "\n";
+                str += execution.toString();
             }
 
-            return chaine;
+            return str;
         }
-        public void activeOuDesactiveAlgorithme()
+        public void EnableOrDisable()
         {
-            if (m_actif)
+            if (m_activ)
             {
-                m_actif = false;
+                m_activ = false;
             }
             else
             {
-                m_actif = true;
+                m_activ = true;
             }
         }
-        public void addCondition(Condition condition)
+        public void AddCondition(Condition condition)
         {
             if (condition != null)
             {
                 m_conditions.Add(condition);
             }
         }
-        public void addRealisation(Realisation realisation)
+        public void AddExecution(Execution execution)
         {
-            if (realisation != null)
+            if (execution != null)
             {
-                m_realisations.Add(realisation);
+                m_executions.Add(execution);                
             }
-        }
-        public List<Condition> getConditions()
+        }        
+        public List<Condition> GetConditions()
         {
             List<Condition> returnedConditions = new List<Condition>();
             foreach (Condition cond in m_conditions)
@@ -224,40 +261,40 @@ namespace ClassesAlgorithme
             }
             return returnedConditions;
         }
-        public List<Realisation> getRealisations()
+        public List<Execution> GetExecutions()
         {
-            List<Realisation> returnedRealisations = new List<Realisation>();
-            foreach (Realisation real in m_realisations)
+            List<Execution> returnedExecutions = new List<Execution>();
+            foreach (Execution real in m_executions)
             {
-                returnedRealisations.Add((Realisation)real.Clone());
+                returnedExecutions.Add((Execution)real.Clone());
             }
-            return returnedRealisations;
+            return returnedExecutions;
         }
         public object Clone()
         {
-            Algorithme returnedAlgorithme = new Algorithme(null, null, m_name, m_actif);
+            Algorithme returnedAlgorithme = new Algorithme(null, null, Name, m_activ);
             foreach (Condition condition in m_conditions)
             {
                 if (condition != null)
                 {
-                    returnedAlgorithme.addCondition((Condition)condition.Clone());
+                    returnedAlgorithme.AddCondition((Condition)condition.Clone());
                 }
             }
-            foreach (Realisation realisation in m_realisations)
+            foreach (Execution executions in m_executions)
             {
-                if (realisation != null)
+                if (executions != null)
                 {
-                    returnedAlgorithme.addRealisation((Realisation)realisation.Clone());
+                    returnedAlgorithme.AddExecution((Execution)executions.Clone());
                 }
             }
             return returnedAlgorithme;
         }
-        public void createHashName()
+        public void CreateHashName()
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] digest = md5.ComputeHash(Encoding.UTF8.GetBytes(toString()));
             string base64digest = Convert.ToBase64String(digest, 0, digest.Length);
-            m_name = base64digest;
+            Name = base64digest;
         }
     }
 }
