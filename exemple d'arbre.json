@@ -1,0 +1,38 @@
+{
+    Sentinelles :
+    [
+        {
+            Name : "sent1",
+            Packages : 
+            [
+                {
+                    Name : "packg1",
+                    StatesObjects : 
+                    [
+                        SO1, //une var JS : StateObject pouvant être aussi compliqué que cet arbre
+                        SO2, //il faudra un algo pour parcourir le SO et montrer tous ses attributs
+                        ...
+                    ]
+                    CallBacks : 
+                    [
+                        {
+                            Name : "Addition",
+                            Description : "additionne les parametres",
+                            Parameters :
+                            [
+                                {
+                                    Name : "a",
+                                    Type : "System.Type.Integer"
+                                }
+                                {
+                                    Name : "b",
+                                    Type : "System.Type.Integer"
+                                }
+                            ]
+                        }
+                    ]
+                }                
+            ]
+        }
+    ]
+}
