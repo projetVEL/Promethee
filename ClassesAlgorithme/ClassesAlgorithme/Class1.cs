@@ -162,15 +162,7 @@ namespace ClassAlgorithm
         }
         public void ChangeTimeRestriction(int val)
         {
-            if (val != 0)
-            {
-                m_waiting = val;
-            }
-            else
-            {
-                m_waiting = 0;
-            }
-
+            m_waiting = Math.Abs(val);
         }
         public Boolean IsActiv()
         {
