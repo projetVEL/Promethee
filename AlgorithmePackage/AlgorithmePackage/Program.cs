@@ -13,7 +13,7 @@ namespace AlgorithmePackage
     {
         private static Algorithme algo1; //used 4 tests
        
-        private Dictionary<String, TimeSlot> m_reactivationAlgo = new Dictionary<String, TimeSlot>();
+        private Dictionary<String, Time> m_reactivationAlgo = new Dictionary<String, Time>();
         private List<Algorithme> m_algorithmes = new List<Algorithme>();
         private List<Algorithme> m_pausedAlgorithmes = new List<Algorithme>();
         static void Main(string[] args)
@@ -114,6 +114,7 @@ namespace AlgorithmePackage
             };
             SubscribeAllStateObject();
 
+            //thread pour la reactivation des algos en pause
             Task.Factory.StartNew(() =>
             {
                 while (PackageHost.IsRunning)
@@ -244,7 +245,7 @@ namespace AlgorithmePackage
             {
                 if(!algo.Schedule.IsInTimeSlot())
                 {
-                    m_reactivationAlgo.Add(algo.Name, algo.Schedule);
+                    m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin());
                     EnableDisableAlgorithme(algo.Name);
                     continue;
                 }
@@ -311,7 +312,7 @@ namespace AlgorithmePackage
         {
             foreach(var item in m_reactivationAlgo)
             {
-                if(item.Value.IsInTimeSlot())
+                if(item.Value.IsPassed())
                 {
                     EnableDisableAlgorithme(item.Key);
                     m_reactivationAlgo.Remove(item.Key);

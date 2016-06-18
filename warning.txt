@@ -1,0 +1,1 @@
+ne pas laisser dans le web la possibilité de reactivation de periode pour un timeSlot (0,0) ! (ex : "Hours" alors que begin.hour = 0 = End.Hour)

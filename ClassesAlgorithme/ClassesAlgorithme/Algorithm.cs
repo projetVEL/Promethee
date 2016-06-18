@@ -15,6 +15,7 @@ namespace ClassesAlgorithm
         public List<Execution> Executions { get; set; }
         public String Name { set; get; }
         public Boolean DisableAfterRealisation { get; set; } = false;
+        public Dictionary<String, int> DisableDuration = null;
 
         public bool IsTimeRestricted
         {
