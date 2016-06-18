@@ -68,9 +68,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ClassesAlgorithme\ClassesAlgorithme\ClassesAlgorithme.csproj">
+    <ProjectReference Include="..\..\ClassesAlgorithme\ClassesAlgorithme\ClassesAlgorithm.csproj">
       <Project>{ce79d750-ea14-4448-ab5c-d2a50722f50d}</Project>
-      <Name>ClassesAlgorithme</Name>
+      <Name>ClassesAlgorithm</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

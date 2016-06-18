@@ -2,20 +2,23 @@
 using Constellation.Package;
 using System;
 using System.Collections.Generic;
-
-using ClassAlgorithm;
+using Newtonsoft.Json;
+using ClassesAlgorithm;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace AlgorithmePackage
 {
     public class Program : PackageBase
     {
         private static Algorithme algo1; //used 4 tests
-
+       
+        private Dictionary<String, TimeSlot> m_reactivationAlgo = new Dictionary<String, TimeSlot>();
         private List<Algorithme> m_algorithmes = new List<Algorithme>();
         private List<Algorithme> m_pausedAlgorithmes = new List<Algorithme>();
         static void Main(string[] args)
         {
-            //test : un package envoyant myValue = rand(0,10) et mValue = "a" : fonctionne
+            //test : un package envoyant myValue = rand(0,10) et mValue = "a" -> fonctionne
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
             var1["sentinel"] = "DESKTOP-FQMIBUN";
@@ -46,7 +49,7 @@ namespace AlgorithmePackage
             var2["sentinel"] = "DESKTOP-FQMIBUN";
             var2["package"] = "ConstellationPackageConsole1";
             var2["callBack"] = "changeVal";
-            real1.variables = var2;
+            real1.Variables = var2;
             List<dynamic> maListe = new List<dynamic>();
             maListe.Add(42);
             maListe.Add("new");
@@ -57,7 +60,7 @@ namespace AlgorithmePackage
             var22["sentinel"] = "DESKTOP-FQMIBUN";
             var22["package"] = "ConstellationPackageConsole1";
             var22["callBack"] = "changeVal";
-            real2.variables = var22;
+            real2.Variables = var22;
             List<dynamic> maListe2 = new List<dynamic>();
             maListe2.Add(24);
             maListe2.Add("wen");
@@ -74,7 +77,7 @@ namespace AlgorithmePackage
 
 
             algo1 = new Algorithme(conditions, realisations, "1er algo", true);
-            algo1.ChangeTimeRestriction(2);
+            algo1.Waiting = 2;
 
             Console.WriteLine(algo1.toString(false));
 
@@ -85,21 +88,50 @@ namespace AlgorithmePackage
         }
 
         public override void OnStart()
-        { //get the algos from the bdd or constellation
-            //on souscrit aux algos en memoire  
-            AddAlgorithme(algo1);
-            foreach (Algorithme algo in m_algorithmes)
-            {
-                foreach (Condition cond in algo.GetConditions())
+        {
+            PackageHost.LastStateObjectsReceived += (s, e) =>
+            {                
+                try
                 {
-                    SubscribeStateObject(cond.variables);
+                    Newtonsoft.Json.Linq.JArray algo = e.StateObjects[1].DynamicValue;
+                    m_algorithmes = JsonConvert.DeserializeObject<List<Algorithme>>(algo.ToString());
+                    algo = e.StateObjects[0].DynamicValue;
+                    m_pausedAlgorithmes = JsonConvert.DeserializeObject<List<Algorithme>>(algo.ToString());
                 }
-            }
+                catch(Exception exp)
+                {
+                    PackageHost.WriteDebug(exp.ToString());
+                }
+                SubscribeAllStateObject();
+            };
+/////////
+           AddAlgorithme(algo1);
+/////////            
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
             {
                 CheckAlgorithmes(e.StateObject);
             };
+            SubscribeAllStateObject();
+
+            Task.Factory.StartNew(() =>
+            {
+                while (PackageHost.IsRunning)
+                {
+                    CheckTimeSlot();
+                    Thread.Sleep(700);
+                }
+            });
+        }
+        private void SubscribeAllStateObject()
+        {
+            foreach (Algorithme algo in m_algorithmes)
+            {
+                foreach (Condition cond in algo.Conditions)
+                {
+                    SubscribeStateObject(cond.variables);
+                }
+            }
         }
         /// <summary>
         /// Ajout d'un algorithme, si un algorithme au nom identique existe deja, il sera ecrase par celui-ci.
@@ -128,7 +160,7 @@ namespace AlgorithmePackage
                         break;
                     }
                 }
-                if(algo.IsActiv())
+                if(algo.IsActive)
                 {
                     m_algorithmes.Add(algo);
                 }
@@ -154,7 +186,7 @@ namespace AlgorithmePackage
                 {
                     //suppression de l'algo depuis la bdd ou constellation
                     //suppression de l'algo de la bdd et du package en cours                    
-                    foreach (Condition cond in algo.GetConditions())
+                    foreach (Condition cond in algo.CloneConditions())
                     {
                         UnSubscribeStateObject(cond.variables);
                     }
@@ -168,7 +200,7 @@ namespace AlgorithmePackage
                 {
                     //suppression de l'algo depuis la bdd ou constellation
                     //suppression de l'algo de la bdd et du package en cours                    
-                    foreach (Condition cond in algo.GetConditions())
+                    foreach (Condition cond in algo.CloneConditions())
                     {
                         UnSubscribeStateObject(cond.variables);
                     }
@@ -188,7 +220,7 @@ namespace AlgorithmePackage
             foreach (Algorithme algo in m_algorithmes)
             {
                 if(algo.Name == name)
-                {
+                {                    
                     algo.EnableOrDisable();
                     m_pausedAlgorithmes.Add(algo);
                     m_algorithmes.Remove(algo);
@@ -210,11 +242,18 @@ namespace AlgorithmePackage
         {
             foreach (Algorithme algo in m_algorithmes)
             {
-                if (!algo.IsTimeRestricted &&
-                    algo.SetDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
+                if(!algo.Schedule.IsInTimeSlot())
+                {
+                    m_reactivationAlgo.Add(algo.Name, algo.Schedule);
+                    EnableDisableAlgorithme(algo.Name);
+                    continue;
+                }
+                if (!algo.IsTimeRestricted
+                    && algo.SetDynamicValue(SO.SentinelName, SO.PackageName, SO.Name, SO.DynamicValue))
                 {
                     algo.ResetLastExecution();
-                    RealiseAlgorithme(algo.GetExecutions());
+                    RealiseAlgorithme(algo.Executions);
+                    if (algo.DisableAfterRealisation) EnableDisableAlgorithme(algo.Name);
                 }
             }
         }
@@ -222,11 +261,19 @@ namespace AlgorithmePackage
         {
             PackageHost.SubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
+        /// <summary>
+        /// se desincrit du stateObject definit par Sentinelle/pckg/nom si ce So n'est pas utile à un autre Algorithme enabled,
+        /// il faut donc bien faire attention à disable l'Algorithme qui utilise ce StateObject au préalable
+        /// </summary>
+        /// <param name="var">dictionnaire définissant le StateObject"</param>
         private void UnSubscribeStateObject(Dictionary<String, String> var)
         {
+            foreach(Algorithme algo in m_algorithmes)
+            {
+                if (algo.IsUsingStateObject(sentinel: var["sentinel"], package: var["package"], name: var["variable"])) return;
+            }
             PackageHost.UnSubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
-
         private void RealiseAlgorithme(List<Execution> executions)
         {
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
@@ -246,19 +293,30 @@ namespace AlgorithmePackage
                         break;
                 }
                 PackageHost.SendMessage(MessageScope.Create(MessageScope.ScopeType.Package,
-                    $"{exec.variables["sentinel"]}/{exec.variables["package"]}"), exec.variables["callBack"], send);
+                    $"{exec.Variables["sentinel"]}/{exec.Variables["package"]}"), exec.Variables["callBack"], send);
             }
         }
         public override void OnPreShutdown()
         {
-            //push the algos on constellation             
+            //push the algos on constellation     
+            PackageHost.PushStateObject("Algorithmes", m_algorithmes);
+            PackageHost.PushStateObject("pauseAlgorithmes", m_pausedAlgorithmes);     
             base.OnPreShutdown();
         }
         public override void OnShutdown()
         {
-            //push algos in mémories on the bdd
-            //close the connexion and the thread with the bdd/web
             base.OnShutdown();
+        }
+        private void CheckTimeSlot()
+        {
+            foreach(var item in m_reactivationAlgo)
+            {
+                if(item.Value.IsInTimeSlot())
+                {
+                    EnableDisableAlgorithme(item.Key);
+                    m_reactivationAlgo.Remove(item.Key);
+                }
+            }
         }
     }
 }

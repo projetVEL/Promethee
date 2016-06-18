@@ -4,7 +4,7 @@
         <name>AlgorithmePackage</name>
     </assembly>
     <members>
-        <member name="M:AlgorithmePackage.Program.AddAlgorithme(ClassAlgorithm.Algorithme)">
+        <member name="M:AlgorithmePackage.Program.AddAlgorithme(ClassesAlgorithm.Algorithme)">
             <summary>
             Ajout d'un algorithme, si un algorithme au nom identique existe deja, il sera ecrase par celui-ci.
             </summary>
@@ -26,6 +26,13 @@
             Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
             </summary>
             <param name="name">Le nom de l'algorithme à metre en pause</param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.UnSubscribeStateObject(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            se desincrit du stateObject definit par Sentinelle/pckg/nom si ce So n'est pas utile à un autre Algorithme enabled,
+            il faut donc bien faire attention à disable l'Algorithme qui utilise ce StateObject au préalable
+            </summary>
+            <param name="var">dictionnaire définissant le StateObject"</param>
         </member>
     </members>
 </doc>
