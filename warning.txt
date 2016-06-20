@@ -1,1 +1,3 @@
-ne pas laisser dans le web la possibilité de reactivation de periode pour un timeSlot (0,0) ! (ex : "Hours" alors que begin.hour = 0 = End.Hour)
+web : 
+-par defaut laisser les timeSlot au max (jours : 1-31, mois : 1-12, heures : 0-23, ...)
+-ne pas laisser la possibilité a un algo de pouvoir etre desactive apres execution tout en ayant une pause entre chaque execution (clash)

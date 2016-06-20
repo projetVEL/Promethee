@@ -88,7 +88,7 @@ namespace ClassesAlgorithm
                         }
                         break;
                     case "Days":
-                        DateTime date = DateTime.Now.AddDays(1);
+                        DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
                         if (inRange(date.Day, Begin.Day, End.Day))
                         {
                             time.Day = date.Day;
@@ -152,7 +152,7 @@ namespace ClassesAlgorithm
                                                 time.Hour = (time.Hour + 1) % 24;
                                                 if (time.Hour == 0)
                                                 {
-                                                    DateTime date = DateTime.Now.AddDays(1);
+                                                    DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
                                                     time.Day = date.Day;
                                                     time.Month = date.Month;
                                                 }
@@ -175,7 +175,7 @@ namespace ClassesAlgorithm
                                         time.Hour = (time.Hour + 1) % 24;
                                         if (time.Hour == 0)
                                         {
-                                            DateTime date = DateTime.Now.AddDays(1);
+                                            DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
                                             time.Day = date.Day;
                                             time.Month = date.Month;
                                         }
@@ -192,7 +192,7 @@ namespace ClassesAlgorithm
                             }
                             else
                             {
-                                DateTime date = DateTime.Now.AddDays(1);
+                                DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
                                 time.Day = date.Day;
                                 time.Month = date.Month;
                             }

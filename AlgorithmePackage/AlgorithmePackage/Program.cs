@@ -52,8 +52,8 @@ namespace AlgorithmePackage
             var2["callBack"] = "changeVal";
             real1.Variables = var2;
             List<dynamic> maListe = new List<dynamic>();
-            maListe.Add(42);
-            maListe.Add("message schedule");
+            maListe.Add(24);
+            maListe.Add("test2");
             real1.Arguments = maListe;
 
             Execution real2 = new Execution();
@@ -63,8 +63,8 @@ namespace AlgorithmePackage
             var22["callBack"] = "changeVal";
             real2.Variables = var22;
             List<dynamic> maListe2 = new List<dynamic>();
-            maListe2.Add(24);
-            maListe2.Add("11.40.20");
+            maListe2.Add(42);
+            maListe2.Add("test");
             real2.Arguments = maListe2;
 
             List<Condition> conditions = new List<Condition>();
@@ -108,7 +108,7 @@ namespace AlgorithmePackage
             algo1 = new Algorithme(conditions, realisations, "1er algo", true);
             algo2 = new Algorithme(conditions2, realisations2, "2e algo", true);
             algo2.Waiting = 2;
-           // algo1.Waiting = 2;
+            algo1.Waiting = 2;
 
             TimeSlot schedule = new TimeSlot();
             schedule.Begin.Month = 1;
@@ -116,13 +116,14 @@ namespace AlgorithmePackage
             schedule.Begin.Day = 20;
             schedule.End.Day = 21;
             schedule.Begin.Hour = 0;
-            schedule.End.Hour = 0;
-            schedule.Begin.Minute = 11;
-            schedule.End.Minute = 11;
+            schedule.End.Hour = 1;
+            schedule.Begin.Minute = 9;
+            schedule.End.Minute = 10;
             schedule.Begin.Second = 0;
-            schedule.End.Second = 0;
+            schedule.End.Second = 59;
+            schedule.Week = new WeekDays(false, false, true, false, false);
             schedule.ReactivationPeriode = "Minutes";
-            algo1.DisableAfterRealisation = true;
+            //algo1.DisableAfterRealisation = true;
             algo1.Schedule = schedule;
 
             Console.WriteLine(algo1.toString(false));
