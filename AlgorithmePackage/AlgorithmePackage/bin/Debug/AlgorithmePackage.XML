@@ -20,7 +20,7 @@
             Le nom identifiant l'algorithme
             </param>
         </member>
-        <member name="M:AlgorithmePackage.Program.EnableDisableAlgorithme(System.String)">
+        <member name="M:AlgorithmePackage.Program.EnableDisableAlgorithme(System.String,System.Boolean)">
             <summary>
             Met l'algorithme en pause ou le relance.
             Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)

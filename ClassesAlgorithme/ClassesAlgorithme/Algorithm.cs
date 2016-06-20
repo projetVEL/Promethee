@@ -7,33 +7,15 @@ namespace ClassesAlgorithm
 {
     public class Algorithme : ICloneable
     {
-        public TimeSlot Schedule { get; set; } = new TimeSlot();
-        private DateTime m_lastExecution = new DateTime();
-        public int Waiting { get; set; } = 0;
-        public Boolean IsActive { get; set; } = false;
-        public List<Condition> Conditions { get; set; }
+        private DateTime m_lastExecution = new DateTime(); 
+        public int Waiting { get; set; } = 0; //temps a attendre entre chaque execution
+        public Boolean IsActive { get; set; } = false; //permet de ne pas lancer l'algo lors de l'add
+        public List<Condition> Conditions { get; set; } 
         public List<Execution> Executions { get; set; }
         public String Name { set; get; }
-        public Boolean DisableAfterRealisation { get; set; } = false;
-        public Dictionary<String, int> DisableDuration = null;
+        public Boolean DisableAfterRealisation { get; set; } = false; //met en pause l'algo apres une realisation
+        public TimeSlot Schedule { get; set; } = new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
 
-        public bool IsTimeRestricted
-        {
-            get
-            {
-                if (Waiting == 0) return true;
-                double delta = DateTime.Now.Subtract(m_lastExecution).TotalSeconds;
-                if (delta >= Waiting)
-                {                    
-                    return false;
-                }
-                return true;
-            }
-        }
-        public void ResetLastExecution()
-        {
-            m_lastExecution = DateTime.Now;
-        }
         public Boolean IsUsingStateObject(String sentinel, String package, String name)
         {//retourne true si toutes les conditions sont vérifiées
             foreach (Condition cond in Conditions)

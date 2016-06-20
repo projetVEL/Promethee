@@ -11,8 +11,8 @@ namespace ClassesAlgorithm
         public int Second = 0;
         public int Minute = 0;
         public int Hour = 0;
-        public int Day = 0;
-        public int Month = 0;
+        public int Day = 1;
+        public int Month = 1;
 
         public Boolean IsPassed()
         {
@@ -29,6 +29,11 @@ namespace ClassesAlgorithm
                 return true;
             }
             return false;
+        }
+        public String toString()
+        {
+            String str = $"{Day}/{Month} {Hour}H{Minute}min{Second}";
+            return str;
         }
     }   
 }
