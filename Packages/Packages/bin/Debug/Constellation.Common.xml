@@ -1,0 +1,3644 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Constellation.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Constellation.Configuration.AppSettingElement">
+            <summary>
+            The AppSettingElement Configuration Element.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingElement.SettingValue">
+            <summary>
+            Gets the setting value (eg. the Content if exist, otherwise the Value attribute, otherwise a string.Empty)
+            </summary>
+            <value>
+            The setting value (eg. the Content if exist, otherwise the Value attribute, otherwise a string.Empty).
+            </value>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.AppSettingElement.KeyPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Configuration.AppSettingElement.Key"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingElement.Key">
+            <summary>
+            Gets or sets the Key.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.AppSettingElement.ValuePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Configuration.AppSettingElement.Value"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingElement.Value">
+            <summary>
+            Gets or sets the Value.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.AppSettingElement.ContentPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Configuration.AppSettingElement.Content"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingElement.Content">
+            <summary>
+            Gets or sets the Content.
+            </summary>
+        </member>
+        <member name="T:Constellation.Configuration.AppSettingContentElement">
+            <summary>
+            The AppSettingContentElement Configuration Element.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingContentElement.Value">
+            <summary>
+            Gets the content value as string.
+            </summary>
+            <value>
+            The content value as string.
+            </value>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingContentElement.DeserializeElement(System.Xml.XmlReader,System.Boolean)">
+            <summary>
+            Reads XML from the configuration file.
+            </summary>
+            <param name="reader">The <see cref="T:System.Xml.XmlReader" /> that reads from the configuration file.</param>
+            <param name="serializeCollectionKey">true to serialize only the collection key properties; otherwise, false.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingContentElement.HandleUnrecognizedElement(System.String,System.Xml.XmlReader)">
+            <summary>
+            Handles the unrecognized element.
+            </summary>
+            <param name="elementName">Name of the element.</param>
+            <param name="reader">The reader.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingContentElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingContentElement.OnDeserializeUnrecognizedElement(System.String,System.Xml.XmlReader)">
+            <summary>
+            Gets a value indicating whether an unknown element is encountered during deserialization.
+            </summary>
+            <param name="elementName">The name of the unknown subelement.</param>
+            <param name="reader">The <see cref="T:System.Xml.XmlReader"/> being used for deserialization.</param>
+            <returns>
+            <see langword="true"/> when an unknown element is encountered while deserializing; otherwise, <see langword="false"/>.
+            </returns>
+            <exception cref="T:System.Configuration.ConfigurationErrorsException">The element identified by <paramref name="elementName"/> is locked.- or -One or more of the element's attributes is locked.- or -<paramref name="elementName"/> is unrecognized, or the element has an unrecognized attribute.- or -The element has a Boolean attribute with an invalid value.- or -An attempt was made to deserialize a property more than once.- or -An attempt was made to deserialize a property that is not a valid member of the element.- or -The element cannot contain a CDATA or text element.</exception>
+        </member>
+        <member name="T:Constellation.Configuration.ConstellationSettings">
+            <summary>
+            The ConstellationSettings Configuration Section.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.ConstellationSettings.ConstellationSettingsSectionName">
+            <summary>
+            The XML name of the ConstellationSettings Configuration Section.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.ConstellationSettings.Instance">
+            <summary>
+            Gets the ConstellationSettings instance.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.ConstellationSettings.XmlnsPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Configuration.ConstellationSettings.Xmlns"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.ConstellationSettings.Xmlns">
+            <summary>
+            Gets the XML namespace of this Configuration Section.
+            </summary>
+            <remarks>
+            This property makes sure that if the configuration file contains the XML namespace,
+            the parser doesn't throw an exception because it encounters the unknown "xmlns" attribute.
+            </remarks>
+        </member>
+        <member name="M:Constellation.Configuration.ConstellationSettings.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.ConstellationSettings.SettingsPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Configuration.ConstellationSettings.Settings"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.ConstellationSettings.Settings">
+            <summary>
+            Gets or sets the Settings.
+            </summary>
+        </member>
+        <member name="T:Constellation.Configuration.AppSettingsCollection">
+            <summary>
+            A collection of AppSettingElement instances.
+            </summary>
+        </member>
+        <member name="F:Constellation.Configuration.AppSettingsCollection.AppSettingElementPropertyName">
+            <summary>
+            The XML name of the individual <see cref="T:Constellation.Configuration.AppSettingElement"/> instances in this collection.
+            </summary>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingsCollection.CollectionType">
+            <summary>
+            Gets the type of the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <returns>The <see cref="T:System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingsCollection.ElementName">
+            <summary>
+            Gets the name used to identify this collection of elements
+            </summary>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.IsElementName(System.String)">
+            <summary>
+            Indicates whether the specified <see cref="T:System.Configuration.ConfigurationElement"/> exists in the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="elementName">The name of the element to verify.</param>
+            <returns>
+            <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            Gets the element key for the specified configuration element.
+            </summary>
+            <param name="element">The <see cref="T:System.Configuration.ConfigurationElement"/> to return the key for.</param>
+            <returns>
+            An <see cref="T:System.Object"/> that acts as the key for the specified <see cref="T:System.Configuration.ConfigurationElement"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.CreateNewElement">
+            <summary>
+            Creates a new <see cref="T:Constellation.Configuration.AppSettingElement"/>.
+            </summary>
+            <returns>
+            A new <see cref="T:Constellation.Configuration.AppSettingElement"/>.
+            </returns>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingsCollection.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Configuration.AppSettingElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Configuration.AppSettingElement"/> to retrieve.</param>
+        </member>
+        <member name="P:Constellation.Configuration.AppSettingsCollection.Item(System.Object)">
+            <summary>
+            Gets the <see cref="T:Constellation.Configuration.AppSettingElement"/> with the specified key.
+            </summary>
+            <param name="key">The key of the <see cref="T:Constellation.Configuration.AppSettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.Add(Constellation.Configuration.AppSettingElement)">
+            <summary>
+            Adds the specified <see cref="T:Constellation.Configuration.AppSettingElement"/> to the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="setting">The <see cref="T:Constellation.Configuration.AppSettingElement"/> to add.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.Remove(Constellation.Configuration.AppSettingElement)">
+            <summary>
+            Removes the specified <see cref="T:Constellation.Configuration.AppSettingElement"/> from the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="setting">The <see cref="T:Constellation.Configuration.AppSettingElement"/> to remove.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.GetItemAt(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Configuration.AppSettingElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Configuration.AppSettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.GetItemByKey(System.String)">
+            <summary>
+            Gets the <see cref="T:Constellation.Configuration.AppSettingElement"/> with the specified key.
+            </summary>
+            <param name="key">The key of the <see cref="T:Constellation.Configuration.AppSettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Configuration.AppSettingsCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="T:Constellation.ConstellationHubNames">
+            <summary>
+            Constellation's hub names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConstellationDefaultNames">
+            <summary>
+            Constellation's default names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConstellationHeaderNames">
+            <summary>
+            Constellation's HTTP header names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConstellationServerMethodNames">
+            <summary>
+            Constellation's server method names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConstellationClientMethodNames">
+            <summary>
+            Constellation's client method names
+            </summary>
+        </member>
+        <member name="T:Constellation.SentinelServerMethodNames">
+            <summary>
+            Sentinel's server method names
+            </summary>
+        </member>
+        <member name="T:Constellation.SentinelClientMethodNames">
+            <summary>
+            Sentinel's client method names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConsumerServerMethodNames">
+            <summary>
+            Consumer's server method names
+            </summary>
+        </member>
+        <member name="T:Constellation.ConsumerClientMethodNames">
+            <summary>
+            Consumer's client method names
+            </summary>
+        </member>
+        <member name="T:Constellation.ControlServerMethodNames">
+            <summary>
+            Controller's server method names
+            </summary>
+        </member>
+        <member name="T:Constellation.ControlClientMethodNames">
+            <summary>
+            Controller's client method names
+            </summary>
+        </member>
+        <member name="T:Constellation.Control.SentinelInfo">
+            <summary>
+            Represent a Sentinel's connection information
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.SentinelInfo.RegistrationDate">
+            <summary>
+            Gets or sets the registration date.
+            </summary>
+            <value>
+            The registration date.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.SentinelInfo.Description">
+            <summary>
+            Gets or sets the sentinel description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.SentinelInfo.IsConnected">
+            <summary>
+            Gets or sets a value indicating whether this sentinel is connected.
+            </summary>
+            <value>
+            <c>true</c> if this sentinel is connected; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.PackageInfo">
+            <summary>
+            Represent a Package's connection information
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.Package">
+            <summary>
+            Gets or sets the package description.
+            </summary>
+            <value>
+            The package description.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.LastUpdate">
+            <summary>
+            Gets or sets the last update.
+            </summary>
+            <value>
+            The last update.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.State">
+            <summary>
+            Gets or sets the package's state.
+            </summary>
+            <value>
+            The package's state.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.ConnectionId">
+            <summary>
+            Gets or sets the SignalR connection identifier on the ConstellationHub.
+            </summary>
+            <value>
+            The SignalR connection identifier on the ConstellationHub.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.IsConnected">
+            <summary>
+            Gets or sets a value indicating whether this package is connected to the Constellation hub.
+            </summary>
+            <value>
+            <c>true</c> if this package is connected to the Constellation hub; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.ConstellationClientVersion">
+            <summary>
+            Gets or sets the Constellation client version
+            </summary>
+            <value>
+            The Constellation client version
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageInfo.PackageVersion">
+            <summary>
+            Gets or sets the Package version
+            </summary>
+            <value>
+            The Package version
+            </value>
+        </member>
+        <member name="T:Constellation.Control.LogEntry">
+            <summary>
+            Represent a log entry
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.LogEntry.Date">
+            <summary>
+            Gets or sets the date.
+            </summary>
+            <value>
+            The date.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.LogEntry.SentinelName">
+            <summary>
+            Gets or sets the sentinel name.
+            </summary>
+            <value>
+            The sentinel name.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.LogEntry.PackageName">
+            <summary>
+            Gets or sets the package name.
+            </summary>
+            <value>
+            The package name.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.LogEntry.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The message.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.LogEntry.Level">
+            <summary>
+            Gets or sets the log level.
+            </summary>
+            <value>
+            The log level.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.LogEntryEventArgs">
+            <summary>
+            Provides data for LogEntryReceived event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.LogEntryEventArgs.LogEntry">
+            <summary>
+            Gets or sets the log entry.
+            </summary>
+            <value>
+            The log entry.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.PackageDescriptorEventArgs">
+            <summary>
+            Provides data for PackageDescriptorUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.PackageDescriptorEventArgs.PackageName">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageDescriptorEventArgs.Descriptor">
+            <summary>
+            Gets or sets the package descriptor.
+            </summary>
+            <value>
+            The package descriptor.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.SentinelsListEventArgs">
+            <summary>
+            Provides data for SentinelsListUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.SentinelsListEventArgs.Sentinels">
+            <summary>
+            Gets or sets the sentinels.
+            </summary>
+            <value>
+            The sentinels.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.SentinelEventArgs">
+            <summary>
+            Provides data for SentinelUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.SentinelEventArgs.Sentinel">
+            <summary>
+            Gets or sets the sentinel information.
+            </summary>
+            <value>
+            The sentinel information.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.PackageUsageEventArgs">
+            <summary>
+            Provides data for PackageUsageUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.PackageUsageEventArgs.SentinelName">
+            <summary>
+            Gets or sets the name of the sentinel.
+            </summary>
+            <value>
+            The name of the sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageUsageEventArgs.PackageName">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageUsageEventArgs.LastUpdate">
+            <summary>
+            Gets or sets the last update.
+            </summary>
+            <value>
+            The last update.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageUsageEventArgs.CPU">
+            <summary>
+            Gets or sets the CPU usage.
+            </summary>
+            <value>
+            The CPU usage.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageUsageEventArgs.RAM">
+            <summary>
+            Gets or sets the size of memory used.
+            </summary>
+            <value>
+            The size of memory used.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.PackageStateEventArgs">
+            <summary>
+            Provides data for PackageStateUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.SentinelName">
+            <summary>
+            Gets or sets the name of the sentinel.
+            </summary>
+            <value>
+            The name of the sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.PackageName">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.LastUpdate">
+            <summary>
+            Gets or sets the last update.
+            </summary>
+            <value>
+            The last update.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.State">
+            <summary>
+            Gets or sets the package's state.
+            </summary>
+            <value>
+            The package's state.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.ConstellationClientVersion">
+            <summary>
+            Gets or sets the constellation client version.
+            </summary>
+            <value>
+            The constellation client version.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.PackageVersion">
+            <summary>
+            Gets or sets the package version.
+            </summary>
+            <value>
+            The package version.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.ConnectionId">
+            <summary>
+            Gets or sets the SignalR connection identifier on the ConstellationHub.
+            </summary>
+            <value>
+            The SignalR connection identifier on the ConstellationHub.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackageStateEventArgs.IsConnected">
+            <summary>
+            Gets or sets a value indicating whether this package is connected to the Constellation hub.
+            </summary>
+            <value>
+            <c>true</c> if this package is connected to the Constellation hub; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.PackagesListEventArgs">
+            <summary>
+            Provides data for PackagesListUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.PackagesListEventArgs.SentinelName">
+            <summary>
+            Gets or sets the name of the sentinel.
+            </summary>
+            <value>
+            The name of the sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.PackagesListEventArgs.Packages">
+            <summary>
+            Gets or sets the packages.
+            </summary>
+            <value>
+            The packages.
+            </value>
+        </member>
+        <member name="T:Constellation.Control.ControlManager">
+            <summary>
+            Provides access to the Constellation Control hub
+            </summary>
+        </member>
+        <member name="F:Constellation.Control.ControlManager.groupSubscriptions">
+            <summary>
+            Groups subscribed for this Connection
+            </summary>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.ControlHub">
+            <summary>
+            Gets the control hub.
+            </summary>
+            <value>
+            The control hub.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.HubConnection">
+            <summary>
+            Gets the hub connection.
+            </summary>
+            <value>
+            The hub connection.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.ReceivePackageState">
+            <summary>
+            Gets or sets a value to indicate if the manager subscribes to package's state updates.
+            </summary>
+            <value>
+              <c>true</c> to receive package's state; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.ReceivePackageUsage">
+            <summary>
+            Gets or sets a value to indicate if the manager subscribes to package's usage updates.
+            </summary>
+            <value>
+              <c>true</c> to receive package's usage; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.ReceivePackageLog">
+            <summary>
+            Gets or sets a value to indicate if the manager subscribes to package's log updates.
+            </summary>
+            <value>
+              <c>true</c> to receive package's log; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Control.ControlManager.ReceiveSentinelUpdates">
+            <summary>
+            Gets or sets a value to indicate if the manager subscribes to sentinel's updates.
+            </summary>
+            <value>
+              <c>true</c> to receive sentinel updates; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.LogEntryReceived">
+            <summary>
+            Occurs when log entry is received.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.PackageStateUpdated">
+            <summary>
+            Occurs when package's state is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.PackageUsageUpdated">
+            <summary>
+            Occurs when package's usage is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.PackagesListUpdated">
+            <summary>
+            Occurs when packages's list is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.PackageDescriptorUpdated">
+            <summary>
+            Occurs when PackageDescriptor is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.SentinelUpdated">
+            <summary>
+            Occurs when Sentinel is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Control.ControlManager.SentinelsListUpdated">
+            <summary>
+            Occurs when Sentinels list is updated.
+            </summary>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.AddToControlGroup(System.String)">
+            <summary>
+            Adds to control group.
+            </summary>
+            <param name="group">The group.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RemoveToControlGroup(System.String)">
+            <summary>
+            Removes to control group.
+            </summary>
+            <param name="group">The group.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RequestSentinelsList">
+            <summary>
+            Request the sentinels list.
+            </summary>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RequestSentinelUpdates">
+            <summary>
+            Request update for all sentinels.
+            </summary>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RequestPackagesList(System.String)">
+            <summary>
+            Requests the packages list for a specified sentinel.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RequestPackageDescriptor(System.String)">
+            <summary>
+            Requests the PackageDescriptor for a specifed package.
+            </summary>
+            <param name="package">The package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.PurgeStateObjects(System.String,System.String,System.String,System.String)">
+            <summary>
+            Purges state objects on the Constellation.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.ReloadServerConfiguration(System.Boolean)">
+            <summary>
+            Reload the server configuration.
+            </summary>
+            <param name="deployConfiguration">if set to <c>true</c> deploy configuration on Constellation to all sentinels.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.StartPackage(System.String,System.String)">
+            <summary>
+            Starts the specified package on specified sentinel.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.RestartPackage(System.String,System.String)">
+            <summary>
+            Restarts the specified package on specified sentinel.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.StopPackage(System.String,System.String)">
+            <summary>
+            Stops the specified package on specified sentinel.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.ReloadPackage(System.String,System.String)">
+            <summary>
+            Reloads the specified package on specified sentinel.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.UpdatePackageSettings(System.String,System.String)">
+            <summary>
+            Push settings on specified package.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Control.ControlManager"/> class.
+            </summary>
+            <param name="serverUri">The server URI.</param>
+            <param name="accessKey">The access key.</param>
+            <param name="friendlyName">Name of the friendly.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.#ctor(Microsoft.AspNet.SignalR.Client.HubConnection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Control.ControlManager"/> class.
+            </summary>
+            <param name="constellationConnection">The constellation connection.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.InitializeControlManager(Microsoft.AspNet.SignalR.Client.HubConnection)">
+            <summary>
+            Initializes the control manager from a HubConnection.
+            </summary>
+            <param name="constellationConnection">The constellation connection.</param>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.OnConnected">
+            <summary>
+            Called when connected.
+            </summary>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.AttachHubEvents">
+            <summary>
+            Attaches the hub events.
+            </summary>
+        </member>
+        <member name="M:Constellation.Control.ControlManager.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.PackageManifest">
+            <summary>
+            The PackageManifest Configuration Section.
+            </summary>
+            <summary>
+            Represent the PackageManifest information
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.PackageManifestSectionName">
+            <summary>
+            The XML name of the PackageManifest Configuration Section.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Instance">
+            <summary>
+            Gets the PackageManifest instance.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.XmlnsPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Xmlns"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Xmlns">
+            <summary>
+            Gets the XML namespace of this Configuration Section.
+            </summary>
+            <remarks>
+            This property makes sure that if the configuration file contains the XML namespace,
+            the parser doesn't throw an exception because it encounters the unknown "xmlns" attribute.
+            </remarks>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifest.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.NamePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Name"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Name">
+            <summary>
+            Gets or sets the Name.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.VersionPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Version"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Version">
+            <summary>
+            Gets or sets the Version.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.AuthorPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Author"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Author">
+            <summary>
+            Gets or sets the Author.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.DescriptionPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Description"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Description">
+            <summary>
+            Gets or sets the Description.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.URLPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.URL"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.URL">
+            <summary>
+            Gets or sets the URL.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.IconPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Icon"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Icon">
+            <summary>
+            Gets or sets the Icon.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.EnableControlHubPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.EnableControlHub"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.EnableControlHub">
+            <summary>
+            Gets or sets the EnableControlHub.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.ExecutableFilenamePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.ExecutableFilename"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.ExecutableFilename">
+            <summary>
+            Gets or sets the ExecutableFilename.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.RequestLastStateObjectsOnStartPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.RequestLastStateObjectsOnStart"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.RequestLastStateObjectsOnStart">
+            <summary>
+            Gets or sets the RequestLastStateObjectsOnStart.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.PackageUrlPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.PackageUrl"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.PackageUrl">
+            <summary>
+            Gets or sets the PackageUrl.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.SettingsPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Settings"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Settings">
+            <summary>
+            Gets or sets the Settings.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.CompatibilityPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PackageManifest.Compatibility"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifest.Compatibility">
+            <summary>
+            Gets or sets the Compatibility.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifest.ConstellationVersion">
+            <summary>
+            The constellation client lib version
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifest.IsCompliantOnPlatform(System.PlatformID)">
+            <summary>
+            Determines whether the package is compliant on the specified platform.
+            </summary>
+            <param name="platform">The platform.</param>
+            <returns><c>true</c> if compliant</returns>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifest.Load(System.Xml.XmlReader)">
+            <summary>
+            Loads the PackageManifest from a XML reader.
+            </summary>
+            <param name="reader">The XML reader.</param>
+        </member>
+        <member name="T:Constellation.Deployment.SettingElement">
+            <summary>
+            The SettingElement Configuration Element.
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.SettingElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.NamePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.Name"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.Name">
+            <summary>
+            Gets or sets the Name.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.TypePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.Type"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.Type">
+            <summary>
+            Gets or sets type of the Setting element
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.IsRequiredPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.IsRequired"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.IsRequired">
+            <summary>
+            Gets or sets the IsRequired.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.SchemaXSDPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.SchemaXSD"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.SchemaXSD">
+            <summary>
+            Gets or sets the SchemaXSD.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.DescriptionPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.Description"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.Description">
+            <summary>
+            Gets or sets the Description.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.DefaultValuePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.DefaultValue"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.DefaultValue">
+            <summary>
+            Gets or sets the DefaultValue.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.IgnoreLocalValuePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.IgnoreLocalValue"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.IgnoreLocalValue">
+            <summary>
+            Gets or sets the IgnoreLocalValue.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.IgnoreDefaultValuePropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.IgnoreDefaultValue"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.IgnoreDefaultValue">
+            <summary>
+            Gets or sets the IgnoreDefaultValue.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingElement.DefaultContentPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.SettingElement.DefaultContent"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.DefaultContent">
+            <summary>
+            Gets or sets the DefaultContent.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingElement.DefaultSettingValue">
+            <summary>
+            Gets the default setting value (eg. the DefaultContent if exist, otherwise the DefaultValue attribute, otherwise a string.Empty)
+            </summary>
+            <value>
+            The setting value (eg. the DefaultContent if exist, otherwise the DefaultValue attribute, otherwise a string.Empty).
+            </value>
+        </member>
+        <member name="T:Constellation.Deployment.SettingsCollection">
+            <summary>
+            A collection of SettingElement instances.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingsCollection.SettingElementPropertyName">
+            <summary>
+            The XML name of the individual <see cref="T:Constellation.Deployment.SettingElement"/> instances in this collection.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.SettingsCollection.CollectionType">
+            <summary>
+            Gets the type of the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <returns>The <see cref="T:System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        </member>
+        <member name="P:Constellation.Deployment.SettingsCollection.ElementName">
+            <summary>
+            Gets the name used to identify this collection of elements
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.IsElementName(System.String)">
+            <summary>
+            Indicates whether the specified <see cref="T:System.Configuration.ConfigurationElement"/> exists in the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="elementName">The name of the element to verify.</param>
+            <returns>
+            <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            Gets the element key for the specified configuration element.
+            </summary>
+            <param name="element">The <see cref="T:System.Configuration.ConfigurationElement"/> to return the key for.</param>
+            <returns>
+            An <see cref="T:System.Object"/> that acts as the key for the specified <see cref="T:System.Configuration.ConfigurationElement"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.CreateNewElement">
+            <summary>
+            Creates a new <see cref="T:Constellation.Deployment.SettingElement"/>.
+            </summary>
+            <returns>
+            A new <see cref="T:Constellation.Deployment.SettingElement"/>.
+            </returns>
+        </member>
+        <member name="P:Constellation.Deployment.SettingsCollection.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.SettingElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Deployment.SettingElement"/> to retrieve.</param>
+        </member>
+        <member name="P:Constellation.Deployment.SettingsCollection.Item(System.Object)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.SettingElement"/> with the specified key.
+            </summary>
+            <param name="name">The key of the <see cref="T:Constellation.Deployment.SettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.Add(Constellation.Deployment.SettingElement)">
+            <summary>
+            Adds the specified <see cref="T:Constellation.Deployment.SettingElement"/> to the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="Setting">The <see cref="T:Constellation.Deployment.SettingElement"/> to add.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.Remove(Constellation.Deployment.SettingElement)">
+            <summary>
+            Removes the specified <see cref="T:Constellation.Deployment.SettingElement"/> from the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="Setting">The <see cref="T:Constellation.Deployment.SettingElement"/> to remove.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.GetItemAt(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.SettingElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Deployment.SettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.GetItemByKey(System.String)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.SettingElement"/> with the specified key.
+            </summary>
+            <param name="name">The key of the <see cref="T:Constellation.Deployment.SettingElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingsCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.CompatibilityElement">
+            <summary>
+            The CompatibilityElement Configuration Element.
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.CompatibilityElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.CompatibilityElement.ConstellationVersionPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.CompatibilityElement.ConstellationVersion"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.CompatibilityElement.ConstellationVersion">
+            <summary>
+            Gets or sets the ConstellationVersion.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.CompatibilityElement.DotNetTargetPlatformPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.CompatibilityElement.DotNetTargetPlatform"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.CompatibilityElement.DotNetTargetPlatform">
+            <summary>
+            Gets or sets .NET Target Platform (eg. net40 or net45)
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.CompatibilityElement.PlatformsPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.CompatibilityElement.Platforms"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.CompatibilityElement.Platforms">
+            <summary>
+            Gets or sets the Platforms.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.PlatformCollection">
+            <summary>
+            A collection of PlatformElement instances.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PlatformCollection.PlatformElementPropertyName">
+            <summary>
+            The XML name of the individual <see cref="T:Constellation.Deployment.PlatformElement"/> instances in this collection.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformCollection.CollectionType">
+            <summary>
+            Gets the type of the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <returns>The <see cref="T:System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformCollection.ElementName">
+            <summary>
+            Gets the name used to identify this collection of elements
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.IsElementName(System.String)">
+            <summary>
+            Indicates whether the specified <see cref="T:System.Configuration.ConfigurationElement"/> exists in the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="elementName">The name of the element to verify.</param>
+            <returns>
+            <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            Gets the element key for the specified configuration element.
+            </summary>
+            <param name="element">The <see cref="T:System.Configuration.ConfigurationElement"/> to return the key for.</param>
+            <returns>
+            An <see cref="T:System.Object"/> that acts as the key for the specified <see cref="T:System.Configuration.ConfigurationElement"/>.
+            </returns>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.CreateNewElement">
+            <summary>
+            Creates a new <see cref="T:Constellation.Deployment.PlatformElement"/>.
+            </summary>
+            <returns>
+            A new <see cref="T:Constellation.Deployment.PlatformElement"/>.
+            </returns>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformCollection.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.PlatformElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Deployment.PlatformElement"/> to retrieve.</param>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformCollection.Item(System.Object)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.PlatformElement"/> with the specified key.
+            </summary>
+            <param name="id">The key of the <see cref="T:Constellation.Deployment.PlatformElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.Add(Constellation.Deployment.PlatformElement)">
+            <summary>
+            Adds the specified <see cref="T:Constellation.Deployment.PlatformElement"/> to the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="Platform">The <see cref="T:Constellation.Deployment.PlatformElement"/> to add.</param>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.Remove(Constellation.Deployment.PlatformElement)">
+            <summary>
+            Removes the specified <see cref="T:Constellation.Deployment.PlatformElement"/> from the <see cref="T:System.Configuration.ConfigurationElementCollection"/>.
+            </summary>
+            <param name="Platform">The <see cref="T:Constellation.Deployment.PlatformElement"/> to remove.</param>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.GetItemAt(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.PlatformElement"/> at the specified index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Constellation.Deployment.PlatformElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.GetItemByKey(System.String)">
+            <summary>
+            Gets the <see cref="T:Constellation.Deployment.PlatformElement"/> with the specified key.
+            </summary>
+            <param name="id">The key of the <see cref="T:Constellation.Deployment.PlatformElement"/> to retrieve.</param>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.PlatformElement">
+            <summary>
+            The PlatformElement Configuration Element.
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.PlatformElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PlatformElement.IDPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PlatformElement.ID"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformElement.ID">
+            <summary>
+            Gets or sets supported : Win32NT, Unix, MacOS
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PlatformElement.IsCompliantPropertyName">
+            <summary>
+            The XML name of the <see cref="P:Constellation.Deployment.PlatformElement.IsCompliant"/> property.
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PlatformElement.IsCompliant">
+            <summary>
+            Gets or sets the IsCompliant.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.SettingContentElement">
+            <summary>
+            The SettingContentElement Configuration Element.
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.SettingContentElement.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the element is read-only.
+            </summary>
+        </member>
+        <member name="M:Constellation.Deployment.SettingContentElement.OnDeserializeUnrecognizedElement(System.String,System.Xml.XmlReader)">
+            <summary>
+            Gets a value indicating whether an unknown element is encountered during deserialization.
+            </summary>
+            <param name="elementName">The name of the unknown subelement.</param>
+            <param name="reader">The <see cref="T:System.Xml.XmlReader"/> being used for deserialization.</param>
+            <returns>
+            <see langword="true"/> when an unknown element is encountered while deserializing; otherwise, <see langword="false"/>.
+            </returns>
+            <exception cref="T:System.Configuration.ConfigurationErrorsException">The element identified by <paramref name="elementName"/> is locked.- or -One or more of the element's attributes is locked.- or -<paramref name="elementName"/> is unrecognized, or the element has an unrecognized attribute.- or -The element has a Boolean attribute with an invalid value.- or -An attempt was made to deserialize a property more than once.- or -An attempt was made to deserialize a property that is not a valid member of the element.- or -The element cannot contain a CDATA or text element.</exception>
+        </member>
+        <member name="P:Constellation.Deployment.SettingContentElement.Value">
+            <summary>
+            Gets the content value as string.
+            </summary>
+            <value>
+            The content value as string.
+            </value>
+        </member>
+        <member name="M:Constellation.Deployment.SettingContentElement.DeserializeElement(System.Xml.XmlReader,System.Boolean)">
+            <summary>
+            Reads XML from the configuration file.
+            </summary>
+            <param name="reader">The <see cref="T:System.Xml.XmlReader" /> that reads from the configuration file.</param>
+            <param name="serializeCollectionKey">true to serialize only the collection key properties; otherwise, false.</param>
+        </member>
+        <member name="M:Constellation.Deployment.SettingContentElement.HandleUnrecognizedElement(System.String,System.Xml.XmlReader)">
+            <summary>
+            Handles the unrecognized element.
+            </summary>
+            <param name="elementName">Name of the element.</param>
+            <param name="reader">The reader.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Constellation.Deployment.SettingType">
+            <summary>
+            SettingType.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.Boolean">
+            <summary>
+            Boolean.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.String">
+            <summary>
+            String.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.Double">
+            <summary>
+            Double.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.Int32">
+            <summary>
+            Int32.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.Int64">
+            <summary>
+            Int64.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.ConfigurationSection">
+            <summary>
+            ConfigurationSection.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.DateTime">
+            <summary>
+            DateTime.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.TimeSpan">
+            <summary>
+            TimeSpan.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.XmlDocument">
+            <summary>
+            XmlDocument.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.SettingType.JsonObject">
+            <summary>
+            JsonObject.
+            </summary>
+        </member>
+        <member name="T:Constellation.Deployment.PackageManifestHelper">
+            <summary>
+            Provides access to PackageManifest.
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifestHelper.PACKAGE_MANIFEST_FILENAME">
+            <summary>
+            The package manifest filename
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifestHelper.xmlRootNodeRegex">
+            <summary>
+            The XML root node regex
+            </summary>
+        </member>
+        <member name="F:Constellation.Deployment.PackageManifestHelper.currentPackageManifest">
+            <summary>
+            The current package manifest
+            </summary>
+        </member>
+        <member name="P:Constellation.Deployment.PackageManifestHelper.CurrentPackageManifest">
+            <summary>
+            Gets the current package manifest.
+            </summary>
+            <value>
+            The current package manifest.
+            </value>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifestHelper.ExistPackageManifest(System.String)">
+            <summary>
+             Determines whether the package manifest exists in the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns><c>true</c> if exist</returns>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifestHelper.GetPackageManifestFromDirectory(System.String,System.Boolean)">
+            <summary>
+            Gets the package manifest in the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="throwException">if set to <c>false</c> return null and not throw exception.</param>
+            <returns>The Package Manifest</returns>
+        </member>
+        <member name="M:Constellation.Deployment.PackageManifestHelper.GetPackageManifestFromXML(System.String,System.Boolean)">
+            <summary>
+            Gets the package manifest from XML.
+            </summary>
+            <param name="xml">The XML.</param>
+            <param name="throwException">if set to <c>false</c> return null and not throw exception.</param>
+            <returns>
+            The Package Manifest
+            </returns>
+        </member>
+        <member name="T:Constellation.LogLevel">
+            <summary>
+            Specifies the level for log message.
+            </summary>
+        </member>
+        <member name="F:Constellation.LogLevel.Debug">
+            <summary>
+            Debug level (never send to the Constellation hub)
+            </summary>
+        </member>
+        <member name="F:Constellation.LogLevel.Info">
+            <summary>
+            Information level
+            </summary>
+        </member>
+        <member name="F:Constellation.LogLevel.Warn">
+            <summary>
+            Warning level
+            </summary>
+        </member>
+        <member name="F:Constellation.LogLevel.Error">
+            <summary>
+            Error level
+            </summary>
+        </member>
+        <member name="F:Constellation.LogLevel.Fatal">
+            <summary>
+            Fatal error level
+            </summary>
+        </member>
+        <member name="T:Constellation.MessageEventArgs">
+            <summary>
+            Provides data for message received or sent events.
+            </summary>
+        </member>
+        <member name="P:Constellation.MessageEventArgs.Sender">
+            <summary>
+            Gets or sets the sender.
+            </summary>
+            <value>
+            The sender.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageEventArgs.Scope">
+            <summary>
+            Gets or sets the scope.
+            </summary>
+            <value>
+            The scope.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageEventArgs.Key">
+            <summary>
+            Gets or sets the message key.
+            </summary>
+            <value>
+            The message key.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageEventArgs.Data">
+            <summary>
+            Gets or sets the message data.
+            </summary>
+            <value>
+            The message data.
+            </value>
+        </member>
+        <member name="T:Constellation.MessageScope">
+            <summary>
+            Represent a Scope where send a Constellation's message
+            </summary>
+        </member>
+        <member name="P:Constellation.MessageScope.SagaId">
+            <summary>
+            Gets or sets the saga identifier for this scope.
+            </summary>
+            <value>
+            The saga identifier.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageScope.IsSaga">
+            <summary>
+            Gets a value indicating whether this scope is a saga.
+            </summary>
+            <value>
+              <c>true</c> if this scope is a saga; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageScope.Scope">
+            <summary>
+            Gets or sets the type of the scope.
+            </summary>
+            <value>
+            The type of the scope.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageScope.Args">
+            <summary>
+            Gets or sets the arguments of the scope.
+            </summary>
+            <value>
+            The arguments of the scope.
+            </value>
+        </member>
+        <member name="M:Constellation.MessageScope.#ctor(Constellation.MessageScope.ScopeType,System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.MessageScope"/> class.
+            </summary>
+            <param name="scope">The type of the scope.</param>
+            <param name="args">The arguments of the scope.</param>
+        </member>
+        <member name="M:Constellation.MessageScope.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Constellation.MessageScope.Create(System.String)">
+            <summary>
+            Creates a scope to the specified package.
+            </summary>
+            <param name="package">The package.</param>
+            <returns>MessageScope</returns>
+        </member>
+        <member name="M:Constellation.MessageScope.Create(Constellation.MessageScope.ScopeType,System.String[])">
+            <summary>
+            Creates a scope.
+            </summary>
+            <param name="scope">The type of the scope.</param>
+            <param name="args">The arguments of the scope.</param>
+            <returns>MessageScope</returns>
+        </member>
+        <member name="T:Constellation.MessageScope.ScopeType">
+            <summary>
+            Specifies the different types of scope
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.None">
+            <summary>
+            Empty scope
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.Group">
+            <summary>
+            Send message to specific group(s) define in the arguments
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.Package">
+            <summary>
+            Send message to specific package(s) define in the arguments
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.Sentinel">
+            <summary>
+            Send message to specific sentinel(s) define in the arguments
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.Others">
+            <summary>
+            Send message to other connected packages
+            </summary>
+        </member>
+        <member name="F:Constellation.MessageScope.ScopeType.All">
+            <summary>
+            Send message to other connected packages and control applications
+            </summary>
+        </member>
+        <member name="T:Constellation.MessageSender">
+            <summary>
+            Represent a sender of message on Constellation.
+            </summary>
+        </member>
+        <member name="T:Constellation.MessageSender.SenderType">
+            <summary>
+            Specifies the different types of sender
+            </summary>
+        </member>
+        <member name="P:Constellation.MessageSender.ConnectionId">
+            <summary>
+            Gets or sets the connection identifier on the hub.
+            </summary>
+            <value>
+            The connection identifier on the hub.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageSender.Type">
+            <summary>
+            Gets or sets the type of sender.
+            </summary>
+            <value>
+            The type of sender.
+            </value>
+        </member>
+        <member name="P:Constellation.MessageSender.FriendlyName">
+            <summary>
+            Gets or sets the friendly name of the sender.
+            Note: if the Type is ConstellationHub, the FriendlyName is the Package instance id.
+            </summary>
+            <value>
+            The friendly name.
+            </value>
+        </member>
+        <member name="M:Constellation.MessageSender.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Constellation.PackageControlAction">
+            <summary>
+            Specifies the different control actions on a package
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageControlAction.Start">
+            <summary>
+            Start the package
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageControlAction.Stop">
+            <summary>
+            Stop the package
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageControlAction.Restart">
+            <summary>
+            Restart the package
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageControlAction.Reload">
+            <summary>
+            Reload the package
+            </summary>
+        </member>
+        <member name="T:Constellation.PackageDescription">
+            <summary>
+            Represent a package's description
+            </summary>
+        </member>
+        <member name="P:Constellation.PackageDescription.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescription.PackageFile">
+            <summary>
+            Gets or sets the package file.
+            </summary>
+            <value>
+            The package file.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescription.AutoStart">
+            <summary>
+            Gets or sets a value indicating whether the package is automatically start.
+            </summary>
+            <value>
+              <c>true</c> if the package is automatically start; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescription.AccessKey">
+            <summary>
+            Gets or sets the access key for this package.
+            </summary>
+            <value>
+            The access key.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescription.RecoveryOptions">
+            <summary>
+            Gets or sets the recovery options.
+            </summary>
+            <value>
+            The recovery options.
+            </value>
+        </member>
+        <member name="T:Constellation.PackageDescriptor">
+            <summary>
+            Represent a description of the MessageCallbacks and StateObjects for a package
+            </summary>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.PackageName">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbacks">
+            <summary>
+            Gets or sets the message callbacks desciptions.
+            </summary>
+            <value>
+            The message callbacks.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbackTypes">
+            <summary>
+            Gets or sets the message callback types.
+            </summary>
+            <value>
+            The message callback types.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.StateObjectTypes">
+            <summary>
+            Gets or sets the state object types.
+            </summary>
+            <value>
+            The state object types.
+            </value>
+        </member>
+        <member name="M:Constellation.PackageDescriptor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.PackageDescriptor"/> class.
+            </summary>
+        </member>
+        <member name="T:Constellation.PackageDescriptor.MessageCallbackDescriptor">
+            <summary>
+            Represent a MessageCallback description
+            </summary>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbackDescriptor.MessageKey">
+            <summary>
+            Gets or sets the message key.
+            </summary>
+            <value>
+            The message key.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbackDescriptor.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbackDescriptor.ResponseType">
+            <summary>
+            Gets or sets the type of the response.
+            </summary>
+            <value>
+            The type of the response.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MessageCallbackDescriptor.Parameters">
+            <summary>
+            Gets or sets the parameters.
+            </summary>
+            <value>
+            The parameters.
+            </value>
+        </member>
+        <member name="M:Constellation.PackageDescriptor.MessageCallbackDescriptor.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Constellation.PackageDescriptor.TypeDescriptor">
+            <summary>
+            Represent a type description
+            </summary>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.IsGeneric">
+            <summary>
+            Gets or sets a value indicating whether this type is a generic.
+            </summary>
+            <value>
+            <c>true</c> if this type is a generic; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.IsArray">
+            <summary>
+            Gets or sets a value indicating whether this type is an array.
+            </summary>
+            <value>
+              <c>true</c> if this type is an array; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.GenericParameters">
+            <summary>
+            Gets or sets the generic parameters.
+            </summary>
+            <value>
+            The generic parameters.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.IsEnum">
+            <summary>
+            Gets or sets a value indicating whether this type is an enum.
+            </summary>
+            <value>
+              <c>true</c> if this type is an enum; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.EnumValues">
+            <summary>
+            Gets or sets the enum values.
+            </summary>
+            <value>
+            The enum values.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.TypeName">
+            <summary>
+            Gets or sets the name of the type.
+            </summary>
+            <value>
+            The name of the type.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.TypeFullname">
+            <summary>
+            Gets or sets the fullname of the type.
+            </summary>
+            <value>
+            The fullname of the type.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.TypeDescriptor.Properties">
+            <summary>
+            Gets or sets the properties of the type.
+            </summary>
+            <value>
+            The properties of the type.
+            </value>
+        </member>
+        <member name="M:Constellation.PackageDescriptor.TypeDescriptor.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Constellation.PackageDescriptor.MemberDescriptor">
+            <summary>
+            Represent a member description
+            </summary>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MemberDescriptor.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MemberDescriptor.TypeName">
+            <summary>
+            Gets or sets the name of the type.
+            </summary>
+            <value>
+            The name of the type.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MemberDescriptor.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:Constellation.PackageDescriptor.MemberDescriptor.Type">
+            <summary>
+            Gets or sets the member's type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="T:Constellation.PackageDescriptor.MemberDescriptor.MemberType">
+            <summary>
+            Specifies the different type of a MemberDescriptor
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageDescriptor.MemberDescriptor.MemberType.EnumValue">
+            <summary>
+            An enum value
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageDescriptor.MemberDescriptor.MemberType.Property">
+            <summary>
+            A property
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageDescriptor.MemberDescriptor.MemberType.MethodParameter">
+            <summary>
+            A method parameter
+            </summary>
+        </member>
+        <member name="T:Constellation.PackageState">
+            <summary>
+            Specifies the different states of a package
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageState.Unknown">
+            <summary>
+            State unknown
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageState.Stopping">
+            <summary>
+            The package is stopping
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageState.Stopped">
+            <summary>
+            The package is stopped
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageState.Starting">
+            <summary>
+            The package is starting
+            </summary>
+        </member>
+        <member name="F:Constellation.PackageState.Started">
+            <summary>
+            The package is started
+            </summary>
+        </member>
+        <member name="T:Constellation.RecoveryOptions">
+            <summary>
+            Represent the package's recovery options
+            </summary>
+        </member>
+        <member name="P:Constellation.RecoveryOptions.RestartAfterFailure">
+            <summary>
+            Gets or sets a value indicating whether the package must restart after failure.
+            </summary>
+            <value>
+              <c>true</c> if the package package must restart after failure; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.RecoveryOptions.NumberOfRetry">
+            <summary>
+            Gets or sets the number of retry.
+            </summary>
+            <value>
+            The number of retry.
+            </value>
+        </member>
+        <member name="P:Constellation.RecoveryOptions.ResetCounterAfterMinutes">
+            <summary>
+            Gets or sets the timeout in minutes for resetting counter.
+            </summary>
+            <value>
+            The timeout in minutes for resetting counter.
+            </value>
+        </member>
+        <member name="P:Constellation.RecoveryOptions.RestartPackageAfterSeconds">
+            <summary>
+            Gets or sets the pause time in second to restart package.
+            </summary>
+            <value>
+            The pause time in second to restart package.
+            </value>
+        </member>
+        <member name="T:Constellation.SentinelDescription">
+            <summary>
+            Represent the Sentinel's description
+            </summary>
+        </member>
+        <member name="P:Constellation.SentinelDescription.SentinelName">
+            <summary>
+            Gets or sets the name of the sentinel.
+            </summary>
+            <value>
+            The name of the sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.MachineName">
+            <summary>
+            Gets or sets the name of the machine.
+            Note : this is the NetBIOS name of local computer read from registry
+            </summary>
+            <value>
+            The name of the machine.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.OSVersion">
+            <summary>
+            Gets or sets the OS version.
+            </summary>
+            <value>
+            The OS version.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.Platform">
+            <summary>
+            Gets or sets the OS platform.
+            </summary>
+            <value>
+            The OS platform.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.CLRVersion">
+            <summary>
+            Gets or sets of the common language runtime version.
+            </summary>
+            <value>
+            The version of the common language runtime.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.Version">
+            <summary>
+            Gets or sets the version of the Sentinel.
+            </summary>
+            <value>
+            The version of the Sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.DnsHostName">
+            <summary>
+            Gets or sets the name of the DNS host.
+            Note : this is the host name of computer which refers to a domain name that has one or more associated IP adresses.
+            </summary>
+            <value>
+            The name of the DNS host.
+            </value>
+        </member>
+        <member name="P:Constellation.SentinelDescription.IPAddresses">
+            <summary>
+            Gets or sets the IP addresses.
+            </summary>
+            <value>
+            The IP addresses.
+            </value>
+        </member>
+        <member name="M:Constellation.SentinelDescription.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Constellation.StateObject">
+            <summary>
+            Represent a Constellation's StateObject
+            </summary>
+        </member>
+        <member name="P:Constellation.StateObject.SentinelName">
+            <summary>
+            Gets or sets the name of the Sentinel.
+            </summary>
+            <value>
+            The name of the Sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.PackageName">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.Type">
+            <summary>
+            Gets or sets the type of the StateObject.
+            </summary>
+            <value>
+            The type of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.Metadatas">
+            <summary>
+            Gets or sets the metadatas of the StateObject.
+            </summary>
+            <value>
+            The metadatas of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.LastUpdate">
+            <summary>
+            Gets or sets the last update of the StateObject.
+            </summary>
+            <value>
+            The last update of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.Lifetime">
+            <summary>
+            Gets or sets the number of seconds to expire the StateObject.
+            </summary>
+            <value>
+            The number of seconds to expire the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.IsExpired">
+            <summary>
+            Gets a value indicating whether this StateObject is expired.
+            </summary>
+            <value>
+            <c>true</c> if this StateObject is expired; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.Name">
+            <summary>
+            Gets or sets the name of the StateObject.
+            </summary>
+            <value>
+            The name of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.Value">
+            <summary>
+            Gets or sets the value of the StateObject.
+            </summary>
+            <value>
+            The value of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.StateObject.DynamicValue">
+            <summary>
+            Gets the value of the StateObject as dynamic.
+            </summary>
+            <returns>The value of the StateObject as dynamic.</returns>
+        </member>
+        <member name="M:Constellation.StateObject.GetValue``1">
+            <summary>
+            Gets the StateObject's value as T.
+            </summary>
+            <typeparam name="T">Type of the value</typeparam>
+            <returns>The value as T</returns>
+        </member>
+        <member name="M:Constellation.StateObject.TryGetValue``1(``0@)">
+            <summary>
+            Converts the StateObject's value as T. A return value indicates whether the conversion succeeded.
+            </summary>
+            <typeparam name="T">Type of the value</typeparam>
+            <returns><c>true</c> if the value was converted successfully; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:Constellation.StateObjectUpdatedEventArgs">
+            <summary>
+            Provides data for the StateObjectUpdated event.
+            </summary>
+        </member>
+        <member name="P:Constellation.StateObjectUpdatedEventArgs.StateObject">
+            <summary>
+            Gets or sets the <see cref="P:Constellation.StateObjectUpdatedEventArgs.StateObject"/>.
+            </summary>
+            <value>
+            The <see cref="P:Constellation.StateObjectUpdatedEventArgs.StateObject"/>.
+            </value>
+        </member>
+        <member name="T:Constellation.StateObjectsListEventArgs">
+            <summary>
+            Provides data for <see cref="T:Constellation.StateObject"/> list events.
+            </summary>
+        </member>
+        <member name="P:Constellation.StateObjectsListEventArgs.StateObjects">
+            <summary>
+            Gets or sets the <see cref="T:Constellation.StateObject"/> list.
+            </summary>
+            <value>
+            The <see cref="T:Constellation.StateObject"/> list.
+            </value>
+        </member>
+        <member name="T:Constellation.Package.StateObjectAttribute">
+            <summary>
+            Specifies the class as a StateObject object to describe the type on Constellation
+            </summary>
+        </member>
+        <member name="T:Constellation.Package.StateObjectKnownTypesAttribute">
+            <summary>
+            Specifies types that should be recognized as StateObject for the package's description on the Constellation
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.StateObjectKnownTypesAttribute.StateObjectKnownTypes">
+            <summary>
+            Gets or sets the StateObject known types.
+            </summary>
+            <value>
+            The StateObject known types.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.StateObjectKnownTypesAttribute.#ctor(System.Type[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.StateObjectKnownTypesAttribute"/> class.
+            </summary>
+            <param name="knownType">Type known as StateObject.</param>
+        </member>
+        <member name="T:Constellation.Package.StateObjectLinkAttribute">
+            <summary>
+            Specifies that the property is attach to StateObject.
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.StateObjectLinkAttribute.Sentinel">
+            <summary>
+            Gets or sets the name of the sentinel.
+            </summary>
+            <value>
+            The name of the sentinel.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectLinkAttribute.Package">
+            <summary>
+            Gets or sets the name of the package.
+            </summary>
+            <value>
+            The name of the package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectLinkAttribute.Name">
+            <summary>
+            Gets or sets the name of the StateObject.
+            </summary>
+            <value>
+            The name of the StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectLinkAttribute.Type">
+            <summary>
+            Gets or sets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectLinkAttribute.RequestValueOnInit">
+            <summary>
+            Gets or sets a value indicating whether request the StateObject on initialize the property.
+            </summary>
+            <value>
+            <c>true</c> if request the StateObject on initialize the property; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.StateObjectLinkAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.StateObjectLinkAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.StateObjectLinkAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.StateObjectLinkAttribute"/> class.
+            </summary>
+            <param name="package">Name of the package.</param>
+            <param name="name">The StateObject key.</param>
+        </member>
+        <member name="M:Constellation.Package.StateObjectLinkAttribute.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.StateObjectLinkAttribute"/> class.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+            <param name="name">The StateObject name.</param>
+        </member>
+        <member name="M:Constellation.Package.StateObjectLinkAttribute.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.StateObjectLinkAttribute"/> class.
+            </summary>
+            <param name="sentinelName">Name of the sentinel.</param>
+            <param name="packageName">Name of the package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="T:Constellation.Package.MessageCallbackAttribute">
+            <summary>
+            Declares the method as a MessageCallback on Constellation
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.MessageCallbackAttribute.Key">
+            <summary>
+            Gets or sets the message key for this MessageCallback.
+            By default, the key is the method's name
+            </summary>
+            <value>
+            The message key.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageCallbackAttribute.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageCallbackAttribute.IsHidden">
+            <summary>
+            Gets or sets a value indicating whether this MessageCallback is hidden on Constellation.
+            </summary>
+            <value>
+              <c>true</c> to hide this MessageCallback on Constellation; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageCallbackAttribute.ResponseType">
+            <summary>
+            Gets or sets the type of the response.
+            </summary>
+            <value>
+            The type of the response.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.MessageCallbackAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.MessageCallbackAttribute" /> class.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.MessageCallbackAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.MessageCallbackAttribute" /> class.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Constellation.Package.MessageCallbackAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.MessageCallbackAttribute" /> class.
+            </summary>
+            <param name="responseType">Type of the response.</param>
+        </member>
+        <member name="M:Constellation.Package.MessageCallbackAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.MessageCallbackAttribute" /> class.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="responseType">Type of the response.</param>
+        </member>
+        <member name="T:Constellation.Package.MessageContext">
+            <summary>
+            Represent a context of receiving a message
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.Current">
+            <summary>
+            Gets or sets the current context.
+            </summary>
+            <value>
+            The current context.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.None">
+            <summary>
+            Returns an empty context.
+            </summary>
+            <value>
+            An empty context.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.HasContext">
+            <summary>
+            Gets a value indicating if there is a current context.
+            </summary>
+            <value>
+            <c>true</c> if there is a current context; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.IsSaga">
+            <summary>
+            Gets a value indicating whether the current context is saga.
+            </summary>
+            <value>
+              <c>true</c> if the current context is saga; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.SagaId">
+            <summary>
+            Gets the saga identifier.
+            </summary>
+            <value>
+            The saga identifier.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.Scope">
+            <summary>
+            Gets or sets the scope.
+            </summary>
+            <value>
+            The scope.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.MessageContext.Sender">
+            <summary>
+            Gets or sets the sender.
+            </summary>
+            <value>
+            The sender.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.MessageContext.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.MessageContext"/> class.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Constellation.Package.MessageExtension" -->
+        <member name="M:Constellation.Package.MessageExtension.WithSaga(Constellation.MessageScope,System.String)">
+            <summary>
+            Adds saga identifier to the scope.
+            </summary>
+            <param name="scope">The scope.</param>
+            <param name="sagaId">The saga identifier.</param>
+            <returns>MessageScope</returns>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.OnSagaResponse``1(Constellation.MessageScope,System.Action{``0})">
+            <summary>
+            Add handler when a saga response is received.
+            </summary>
+            <typeparam name="TResponse">The type of the response.</typeparam>
+            <param name="scope">The scope.</param>
+            <param name="onResponse">The callback called when the response is received.</param>
+            <returns>
+            MessageScope
+            </returns>
+            <exception cref="T:System.ArgumentNullException">handler</exception>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.OnSagaResponse(Constellation.MessageScope,System.Action{System.Object})">
+            <summary>
+            Add handler when a saga response is received.
+            </summary>
+            <param name="scope">The scope.</param>
+            <param name="onResponse">The callback called when the response is received.</param>
+            <returns>MessageScope</returns>
+            <exception cref="T:System.ArgumentNullException">handler</exception>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.CreateResponseScope(Constellation.Package.MessageContext)">
+            <summary>
+            Creates the response scope.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>MessageScope</returns>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.SendResponseMessage(Constellation.MessageScope,System.Object)">
+            <summary>
+            Sends a response.
+            </summary>
+            <param name="scope">The scope.</param>
+            <param name="message">The response message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.SendResponse(Constellation.Package.MessageContext,System.Object)">
+            <summary>
+            Sends a response.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="message">The response message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.MessageExtension.GetProxy(Constellation.MessageScope)">
+            <summary>
+            Gets the dynamic proxy to send message.
+            </summary>
+            <param name="scope">The scope.</param>
+            <returns>The dynamic proxy.</returns>
+        </member>
+        <member name="T:Constellation.Package.IPackage">
+            <summary>
+            Defines a Constellation package
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.IPackage.OnStart">
+            <summary>
+            Called when the package is started.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.IPackage.OnPreShutdown">
+            <summary>
+            Called before shutdown the package (the package is still connected to Constellation).
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.IPackage.OnShutdown">
+            <summary>
+            Called when the package is shutdown (disconnected from Constellation)
+            </summary>
+        </member>
+        <member name="T:Constellation.Package.PackageBase">
+            <summary>
+            Provides the base implementation used to create Constellation package.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageBase.OnStart">
+            <summary>
+            Called when the package is started.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageBase.OnPreShutdown">
+            <summary>
+            Called before shutdown the package (the package is still connected to Constellation).
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageBase.OnShutdown">
+            <summary>
+            Called when the package is shutdown (disconnected from Constellation)
+            </summary>
+        </member>
+        <member name="T:Constellation.Package.PackageHost">
+            <summary>
+            Represent the PackageHost
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.RetryConnectionInterval">
+            <summary>
+            Retry connection interval (3 seconds)
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.emptyMetadatas">
+            <summary>
+            The empty metadatas object
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.packageType">
+            <summary>
+            The package type
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.constellationConnection">
+            <summary>
+            The hub connection
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.messageGroups">
+            <summary>
+            Message groups of this Connection
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.stateObjectSubscriptions">
+            <summary>
+            StaeObjects subscriptions for this Connection
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.PackageHost.messageCallbacksAttached">
+            <summary>
+            The message callbacks attached
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.PackageHost.SettingsUpdated">
+            <summary>
+            Occurs when the settings is updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.PackageHost.StateObjectUpdated">
+            <summary>
+            Occurs when state object updated.
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.PackageHost.LastStateObjectsReceived">
+            <summary>
+            Occurs when the server send the last StateObject's list of your package.
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.PackageHost.ConnectionStateChanged">
+            <summary>
+            Occurs when Constellation's hub connection state changed.
+            Note : you should re-push your StateObjects on (re)connection !
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.Package">
+            <summary>
+            Gets the current package.
+            </summary>
+            <value>
+            The current package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageManifest">
+            <summary>
+            Gets the manifest of the current Constellation package.
+            </summary>
+            <value>
+            The manifest of the current Constellation package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageName">
+            <summary>
+            Gets the name of the current package.
+            </summary>
+            <value>
+            The name of the current package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageInstanceName">
+            <summary>
+            Gets the name of the current instance.
+            </summary>
+            <value>
+            The name of the current instance.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageAssemblyVersion">
+            <summary>
+            Gets the version of the current Constellation package.
+            </summary>
+            <value>
+            The version of the current Constellation package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageVersion">
+            <summary>
+            Gets the version of the current Constellation package.
+            </summary>
+            <value>
+            The version of the current Constellation package.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.SentinelName">
+            <summary>
+            Gets the name of the current sentinel (Can be null if IsStandAlone).
+            </summary>
+            <value>
+            The name of the current sentinel (Can be null if IsStandAlone).
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.ConstellationClientVersion">
+            <summary>
+            Gets the version of the current Constellation Client lib.
+            </summary>
+            <value>
+            The version of the current Constellation Client lib.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.ConstellationHub">
+            <summary>
+            Gets the constellation hub.
+            </summary>
+            <value>
+            The constellation hub.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.IsRunning">
+            <summary>
+            Gets a value indicating whether this package is running.
+            </summary>
+            <value>
+            <c>true</c> if this package is running; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.IsConnected">
+            <summary>
+            Gets a value indicating whether this package is connected to the Constellation's hub.
+            </summary>
+            <value>
+            <c>true</c> if this package is connected o the Constellation's hub; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.AutoReconnect">
+            <summary>
+            Gets or sets a value indicating whether this package auto reconnect to the hub.
+            </summary>
+            <value>
+              <c>true</c> if automatic reconnect enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.IsStandAlone">
+            <summary>
+            Gets a value indicating whether this package is stand alone.
+            </summary>
+            <value>
+            <c>true</c> if this package is stand alone; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.Settings">
+            <summary>
+            Gets the package settings.
+            </summary>
+            <value>
+            The package settings.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.PackageDescriptor">
+            <summary>
+            Gets the package descriptor.
+            </summary>
+            <value>
+            The package descriptor.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.HasControlManager">
+            <summary>
+            Gets a value indicating whether this instance has control manager.
+            </summary>
+            <value>
+            <c>true</c> if this instance has control manager; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.PackageHost.ControlManager">
+            <summary>
+            Gets the ControlManager instance.
+            </summary>
+            <value>
+            The ControlManager instance.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.Start``1(System.String[])">
+            <summary>
+            Starts the Constellation's package.
+            </summary>
+            <typeparam name="TPackage">The type of the package start class.</typeparam>
+            <param name="args">The arguments.</param>
+            <exception cref="T:System.Exception">The package is already started !</exception>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.Start(System.Type,System.String[])">
+            <summary>
+            Starts the Constellation's package.
+            </summary>
+            <param name="packageType">Type of the package.</param>
+            <param name="args">The arguments.</param>
+            <exception cref="T:System.Exception">The package is already started !</exception>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.Start(System.Type,System.String,System.String,System.String,System.String)">
+            <summary>
+            Starts the Constellation's package.
+            </summary>
+            <param name="packageType">Type of the package.</param>
+            <param name="constellationUri">The Constellation server URI.</param>
+            <param name="sentinelName">The sentinel name.</param>
+            <param name="packageName">The package name.</param>
+            <param name="accessKey">The access key.</param>
+            <exception cref="T:System.Exception">The package is already started !</exception>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterMessageCallbacks(System.Object)">
+            <summary>
+            Registers all methods flagged with MesageCallback attribute on a specified class.
+            </summary>
+            <param name="source">The class source.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterStateObjectCallback(System.Action{Constellation.StateObject},System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Registers the StateObject callback on update.
+            </summary>
+            <param name="callBack">The callback.</param>
+            <param name="sentinel">The sentinel.</param>
+            <param name="package">The package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+            <param name="requestValueOnInit">if set to <c>true</c> request value on initialize.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterStateObjectLinks(System.Object)">
+            <summary>
+            Registers all properties flagged with StateObjectLink attribute on a specified class.
+            </summary>
+            <param name="instance">The object whose contains StateObjectLinks.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterStateObjectLinks``1(System.Object)">
+            <summary>
+            Registers all properties flagged with StateObjectLink attribute on a specified class.
+            </summary>
+            <typeparam name="T">The type of the class to register.</typeparam>
+            <param name="instance">The object whose contains StateObjectLinks (leave 'null' for static instance).</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterStateObjectLinks(System.Type,System.Object)">
+            <summary>
+            Registers all properties flagged with StateObjectLink attribute on a specified class.
+            </summary>
+            <param name="type">The type of the class to register.</param>
+            <param name="instance">The object whose contains StateObjectLinks (leave 'null' for static instance).</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.DescribeStateObjectTypes(System.Type[])">
+            <summary>
+            Describe the StateObjects in Package Descriptor.
+            </summary>
+            <param name="stateObjectTypes">The StateObject types.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.DescribeStateObjectTypesFromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Describes the state object types from an Assembly. If not specified, the StateObjects in the Entry Assembly will be loaded.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.DeclarePackageDescriptor">
+            <summary>
+            Declares the Package descriptor on Constellation Server.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterSagaResponseCallback``1(System.String,System.Action{``0})">
+            <summary>
+            Registers the message response callback for a specified saga.
+            </summary>
+            <typeparam name="TResponse">The type of the response.</typeparam>
+            <param name="sagaId">The saga identifier.</param>
+            <param name="onResponse">On response callback.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterSagaResponseCallback(System.String,System.Action{System.Object})">
+            <summary>
+            Registers the message response callback for a specified saga.
+            </summary>
+            <param name="sagaId">The saga identifier.</param>
+            <param name="onResponse">On response callback.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterMessageCallback``1(System.String,System.Action{``0})">
+            <summary>
+            Registers a callback on message received.
+            </summary>
+            <typeparam name="TMessage">The type of the message.</typeparam>
+            <param name="key">The key of the message.</param>
+            <param name="onData">The callback.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RegisterMessageCallback(System.String,System.Action{System.Object})">
+            <summary>
+            Registers a callback on message received.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="onData">The on data.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.ContainsSetting(System.String)">
+            <summary>
+            Determines whether the package's settings contains the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>true if the setting with the specified key exists; otherwise, false.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingValue(System.String)">
+            <summary>
+            Gets the setting value as String.
+            </summary>
+            <param name="key">The key of the setting.</param>
+            <returns>
+            The setting value as String
+            </returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingValue``1(System.String)">
+            <summary>
+            Gets the setting value as T.
+            </summary>
+            <typeparam name="T">Type of the setting.</typeparam>
+            <param name="key">The key of the setting.</param>
+            <returns>
+            The setting value as T
+            </returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.TryGetSettingValue``1(System.String,``0@,``0)">
+            <summary>
+            Gets the setting value and return value indicates the success of the operation.
+            </summary>
+            <typeparam name="T">The type of the setting.</typeparam>
+            <param name="key">The key.</param>
+            <param name="result">The result.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingAsJsonObject(System.String,System.Boolean)">
+            <summary>
+            Gets the setting value from JSON.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="throwException">if set to <c>true</c> [throw exception].</param>
+            <returns>The deserialized object from the setting JSON value.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.TryGetSettingAsJsonObject(System.String,System.Object@)">
+            <summary>
+            Gets the setting value from JSON and return value indicates the success of the operation.
+            </summary>
+            <typeparam name="T">The type of the setting.</typeparam>
+            <param name="key">The key.</param>
+            <param name="result">The result.</param>
+            <returns><c>true</c> if no error</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingAsJsonObject``1(System.String,System.Boolean)">
+            <summary>
+            Gets the setting value from JSON.
+            </summary>
+            <typeparam name="T">The type of the object to deserialize to.</typeparam>
+            <param name="key">The key.</param>
+            <param name="throwException">if set to <c>true</c> [throw exception].</param>
+            <returns>The deserialized object from the setting JSON value.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.TryGetSettingAsJsonObject``1(System.String,``0@)">
+            <summary>
+            Gets the setting value from JSON and return value indicates the success of the operation.
+            </summary>
+            <typeparam name="T">The type of the setting.</typeparam>
+            <param name="key">The key.</param>
+            <param name="result">The result.</param>
+            <returns><c>true</c> if no error</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingAsConfigurationSection``1(System.String,System.Boolean)">
+            <summary>
+            Gets the ConfigurationSection of the setting.
+            </summary>
+            <typeparam name="TConfigurationSection">Type of ConfigurationSection</typeparam>
+            <param name="key">The key.</param>
+            <returns>
+            The ConfigurationSection of the setting.
+            </returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.TryGetSettingAsConfigurationSection``1(System.String,``0@)">
+            <summary>
+            Gets the ConfigurationSection of the setting and return value indicates the success of the operation.
+            </summary>
+            <typeparam name="TConfigurationSection">The type of the configuration section.</typeparam>
+            <param name="key">The key.</param>
+            <param name="result">The result.</param>
+            <returns><c>true</c> if no error</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetSettingAsXmlDocument(System.String,System.Boolean)">
+            <summary>
+            Gets the XmlDocument of the setting.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="throwException">if set to <c>true</c> [throw exception].</param>
+            <returns>The XmlDocument of the setting.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.TryGetSettingAsXmlDocument(System.String,System.Xml.XmlDocument@)">
+            <summary>
+            Gets the XmlDocument of the setting and return value indicates the success of the operation.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="result">The result.</param>
+            <returns><c>true</c> if no error</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RequestSettings">
+            <summary>
+            Request the settings from the Constellation server if connected.
+            </summary>
+            <returns><c>true</c> if the request is sent</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.CreateMessageProxy(System.String)">
+            <summary>
+            Creates a MessageScope and return the proxy to send message
+            </summary>
+            <param name="package">The package.</param>
+            <returns>The dynamic proxy.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.CreateMessageProxy(Constellation.MessageScope.ScopeType,System.String[])">
+            <summary>
+            Creates a MessageScope and return the proxy to send message
+            </summary>
+            <param name="type">The scope type.</param>
+            <param name="args">The scope arguments.</param>
+            <returns>The dynamic proxy.</returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.SendMessage``1(Constellation.MessageScope,System.String,``0)">
+            <summary>
+            Sends the message to the Constellation hub.
+            </summary>
+            <typeparam name="TMessage">The type of the message.</typeparam>
+            <param name="scope">The scope.</param>
+            <param name="key">The key of the message.</param>
+            <param name="value">The message data.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.SendMessage(Constellation.MessageScope,System.String,System.Object)">
+            <summary>
+            Sends the message to the Constellation hub.
+            </summary>
+            <param name="scope">The scope.</param>
+            <param name="key">The key of the message.</param>
+            <param name="value">The message data.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.SubscribeMessages(System.String)">
+            <summary>
+            Subscribes to the messages of a specified group.
+            </summary>
+            <param name="groupName">Name of the group.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.UnSubscribeMessages(System.String)">
+            <summary>
+            Unsubscribes to the messages of a specified group.
+            </summary>
+            <param name="groupName">Name of the group.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.PushStateObject``1(System.String,``0,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32)">
+            <summary>
+            Pushes the state object.
+            </summary>
+            <typeparam name="TStateObject">The type of the state object.</typeparam>
+            <param name="name">The name of the state object.</param>
+            <param name="value">The value of the state object.</param>
+            <param name="type">The type (optionnal: if empty the type is the Full type name of the value).</param>
+            <param name="metadatas">The metadatas.</param>
+            <param name="lifetime">The number of seconds to expire the StateObjects. 0 for no expiration.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.PushStateObject(System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32)">
+            <summary>
+            Pushes the state object.
+            </summary>
+            <param name="name">The name of the state object.</param>
+            <param name="value">The value of the state object.</param>
+            <param name="type">The type (optionnal: if empty the type is the Full type name of the value).</param>
+            <param name="metadatas">The metadatas.</param>
+            <param name="lifetime">The number of seconds to expire the StateObjects. 0 for no expiration.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.PurgeStateObjects(System.String,System.String)">
+            <summary>
+            Purges the state objects.
+            </summary>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.RequestStateObjects(System.String,System.String,System.String,System.String)">
+            <summary>
+            Requests the state objects.
+            </summary>
+            <param name="sentinel">The sentinel.</param>
+            <param name="package">The package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.SubscribeStateObjects(System.String,System.String,System.String,System.String)">
+            <summary>
+            Subscribes to StateObject.
+            </summary>
+            <param name="sentinel">The sentinel.</param>
+            <param name="package">The package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.UnSubscribeStateObjects(System.String,System.String,System.String,System.String)">
+            <summary>
+            UnSubscribes to StateObject.
+            </summary>
+            <param name="sentinel">The sentinel.</param>
+            <param name="package">The package.</param>
+            <param name="name">The StateObject name.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WriteDebug(System.String,System.Object[])">
+            <summary>
+            Writes the debug message on the console (never sent on the Constellation hub)
+            </summary>
+            <param name="format">The format.</param>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WriteError(System.String,System.Object[])">
+            <summary>
+            Writes the error message on the console and on the Constellation hub if connected.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WriteInfo(System.String,System.Object[])">
+            <summary>
+            Writes the message on the console and on the Constellation hub if connected.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WriteWarn(System.String,System.Object[])">
+            <summary>
+            Writes the error message on the console and on the Constellation hub if connected.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WriteLog(Constellation.LogLevel,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Writes the message on the console and on the Constellation hub if connected.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="await">if set to <c>true</c> wait to WriteLog on the ConstellationHub.</param>
+            <param name="catchException">if set to <c>true</c> catch exception.</param>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.Shutdown">
+            <summary>
+            Shutdowns the current package
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.CheckConstellationConnection(System.Boolean)">
+            <summary>
+            Checks the constellation connection.
+            </summary>
+            <param name="throwException">if set to <c>true</c> throw exception if not connected.</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">
+            You aren't connected to the Constellation !
+            </exception>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.WaitForSettings">
+            <summary>
+            Request and wait the settings from the Constellation server or in local configuration file if not connected.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.LoadSettingsFromLocalConfigurationFile(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Loads the settings from local configuration file.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.CheckSettingsFromManisfest(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Checks the settings from manisfest.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.AttachHubEvents">
+            <summary>
+            Attaches to the hub events.
+            </summary>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetMessageArguments(System.Object,System.Reflection.ParameterInfo[])">
+            <summary>
+            Gets the message arguments.
+            </summary>
+            <param name="data">The data.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Invalid parameter count;data</exception>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetParametersDescription(System.Reflection.ParameterInfo[],System.Collections.Generic.List{Constellation.PackageDescriptor.TypeDescriptor})">
+            <summary>
+            Gets the parameters description.
+            </summary>
+            <param name="parametersInfo">Types of the parameters.</param>
+            <param name="knowTypes">The know types.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.DescribeType(System.Type,System.Collections.Generic.List{Constellation.PackageDescriptor.TypeDescriptor})">
+            <summary>
+            Gets the type description.
+            </summary>
+            <param name="parameterType">Type of the parameter.</param>
+            <param name="knowTypes">The know types.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetMemberDescriptor(Constellation.PackageDescriptor.MemberDescriptor.MemberType,System.String,System.Type,System.Collections.Generic.List{Constellation.PackageDescriptor.TypeDescriptor})">
+            <summary>
+            Gets the member descriptor.
+            </summary>
+            <param name="memberName">Name of the member.</param>
+            <param name="parameterType">Type of the parameter.</param>
+            <param name="knowTypes">The know types.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.GetStateObjectTypeName(System.Object)">
+            <summary>
+            Gets the Type name of the StateObject.
+            </summary>
+            <param name="stateObject">The state object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.PackageHost.AttachToParent">
+            <summary>
+            Attaches to the parent process.
+            </summary>
+        </member>
+        <member name="T:Constellation.Package.SendMessageProxy">
+            <summary>
+            Represent a dynamic proxy to send message into the Constellation
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.SendMessageProxy.Scope">
+            <summary>
+            Gets or sets the scope of this proxy.
+            </summary>
+            <value>
+            The scope of this proxy.
+            </value>
+        </member>
+        <member name="M:Constellation.Package.SendMessageProxy.#ctor(Constellation.MessageScope)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Constellation.Package.SendMessageProxy"/> class.
+            </summary>
+            <param name="scope">The scope.</param>
+        </member>
+        <member name="M:Constellation.Package.SendMessageProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)">
+            <summary>
+            Provides the implementation for operations that invoke a member. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as calling a method.
+            </summary>
+            <param name="binder">Provides information about the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the statement sampleObject.SampleMethod(100), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, binder.Name returns "SampleMethod". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
+            <param name="args">The arguments that are passed to the object member during the invoke operation. For example, for the statement sampleObject.SampleMethod(100), where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, <paramref name="args[0][0]" /> is equal to 100.</param>
+            <param name="result">The result of the member invocation.</param>
+            <returns>
+            true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
+            </returns>
+        </member>
+        <member name="T:Constellation.Package.StateObjectCollectionNotifier">
+            <summary>
+            Represent an observable collection of <see cref="T:Constellation.Package.StateObjectNotifier"/>
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.StateObjectCollectionNotifier.STATE_OBJECT_FULLNAME_SEPARATOR">
+            <summary>
+            The StateObject fullname separator
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.StateObjectCollectionNotifier.ValueChanged">
+            <summary>
+            Occurs when a StateObject value changes.
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.StateObjectCollectionNotifier.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:Constellation.StateObject"/> with the specified fullkey.
+            The "FullKey" can be :
+                1) the StateObject Name
+                2) packageName::soName
+                3) sentinelName::packageName::soName
+                4) sentinelName::packageName::soName::type
+            </summary>
+            <value>
+            The <see cref="T:Constellation.StateObject"/>.
+            </value>
+            <param name="fullkey">The fullkey.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Package.StateObjectCollectionNotifier.ContainsStateObject(System.String)">
+            <summary>
+            Determines if the <see cref="T:Constellation.StateObject"/> with the specified fullkey exist.
+            The "FullKey" can be :
+                1) the StateObject Name
+                2) packageName::soName
+                3) sentinelName::packageName::soName
+                4) sentinelName::packageName::soName::type
+            </summary>
+            <param name="fullkey">The fullkey.</param>
+            <returns>true if exist</returns>
+        </member>
+        <member name="M:Constellation.Package.StateObjectCollectionNotifier.UpdateStateObject(Constellation.StateObject)">
+            <summary>
+            Updates the state object.
+            </summary>
+            <param name="stateObject">The state object.</param>
+        </member>
+        <member name="T:Constellation.Package.StateObjectNotifier">
+            <summary>
+            StateObject container with events when the <see cref="T:Constellation.StateObject"/> changes.
+            </summary>
+        </member>
+        <member name="F:Constellation.Package.StateObjectNotifier._value">
+            <summary>
+            The value of the StateObject
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.StateObjectNotifier.PropertyChanged">
+            <summary>
+            Occurs when a property value changes.
+            </summary>
+        </member>
+        <member name="E:Constellation.Package.StateObjectNotifier.ValueChanged">
+            <summary>
+            Occurs when the <see cref="T:Constellation.StateObject"/> changes.
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.StateObjectNotifier.DynamicValue">
+            <summary>
+            Gets the dynamic value of the <see cref="T:Constellation.StateObject"/> (shortcut to 'this.Value.DynamicValue').
+            </summary>
+            <value>
+            The dynamic value of the <see cref="T:Constellation.StateObject"/> (shortcut to 'this.Value.DynamicValue').
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectNotifier.Value">
+            <summary>
+            Gets or sets the <see cref="T:Constellation.StateObject"/>.
+            </summary>
+            <value>
+            The <see cref="T:Constellation.StateObject"/>.
+            </value>
+        </member>
+        <member name="T:Constellation.Package.StateObjectChangedEventArgs">
+            <summary>
+            Provides data for various <see cref="T:Constellation.StateObject"/> changed events.
+            </summary>
+        </member>
+        <member name="P:Constellation.Package.StateObjectChangedEventArgs.OldState">
+            <summary>
+            Gets or sets the <see cref="T:Constellation.StateObject"/> before the change.
+            </summary>
+            <value>
+            The old StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectChangedEventArgs.NewState">
+            <summary>
+            Gets or sets the <see cref="T:Constellation.StateObject"/> after the change.
+            </summary>
+            <value>
+            The new StateObject.
+            </value>
+        </member>
+        <member name="P:Constellation.Package.StateObjectChangedEventArgs.IsNew">
+            <summary>
+            Gets a value indicating if it's a new <see cref="T:Constellation.StateObject"/> (= the OldValue is null)
+            </summary>
+            <value>
+              <c>true</c> if the OldValue is null; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Constellation.Utils.AttributeHelper">
+            <summary>
+            Provides helper to get attributes
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.AttributeHelper.GetCustomAttribute``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Gets the custom attribute.
+            </summary>
+            <typeparam name="TAttribute">The type of the attribute.</typeparam>
+            <param name="member">The member.</param>
+            <param name="inherit">if set to <c>true</c> inherit.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Constellation.Utils.FrameworkTools">
+            <summary>
+            Framework detection and specific implementations.
+            </summary>
+        </member>
+        <member name="P:Constellation.Utils.FrameworkTools.IsMono">
+            <summary>Gets a value indicating whether application is running under mono runtime.</summary>
+        </member>
+        <member name="M:Constellation.Utils.FrameworkTools.GetGenericTypeArguments(System.Dynamic.InvokeMemberBinder)">
+            <summary>Extension method allowing to easyly extract generic type arguments from <see cref="T:System.Dynamic.InvokeMemberBinder"/>.</summary>
+            <param name="binder">Binder from which get type arguments.</param>
+            <returns>List of types passed as generic parameters.</returns>
+        </member>
+        <member name="T:Constellation.Utils.ObjectConverter">
+            <summary>
+            Provides methods to convert objects
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.ObjectConverter.ConvertNewtonsoftToObject``1(System.Object)">
+            <summary>
+            Converts Newtonsoft JObject/JArray/JValue to object.
+            </summary>
+            <typeparam name="T">Result type</typeparam>
+            <param name="source">The object source.</param>
+            <returns>The object source as T</returns>
+        </member>
+        <member name="M:Constellation.Utils.ObjectConverter.ConvertNewtonsoftToObject(System.Object,System.Type)">
+            <summary>
+            Converts Newtonsoft JObject/JArray/JValue to object.
+            </summary>
+            <param name="source">The object source.</param>
+            <param name="objectType">Result type.</param>
+            <returns>The object source as T</returns>
+        </member>
+        <member name="T:Constellation.Utils.SerializationHelper">
+            <summary>
+            Provides methods to serialize and deserialize object from/to file or string
+            </summary>
+        </member>
+        <member name="P:Constellation.Utils.SerializationHelper.DataContractSerializer">
+            <summary>
+            Gets the DataContract serializer.
+            </summary>
+            <value>
+            The DataContract serializer.
+            </value>
+        </member>
+        <member name="P:Constellation.Utils.SerializationHelper.JsonSerializer">
+            <summary>
+            Gets the Newtonsoft JSON serializer.
+            </summary>
+            <value>
+            The Newtonsoft JSON serializer.
+            </value>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.SerializeToFile``1(``0,System.String,Constellation.Utils.SerializationHelper.ISerializer)">
+            <summary>
+            Serializes object to file.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="value">The value.</param>
+            <param name="file">The file.</param>
+            <param name="serializer">The serializer.</param>
+            <returns>
+            The result
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.DeserializeFromFile``1(System.String,Constellation.Utils.SerializationHelper.ISerializer)">
+            <summary>
+            Deserializes object from file.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="file">The file.</param>
+            <param name="serializer">The serializer.</param>
+            <returns>
+            The object deserialized
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.SerializeToString``1(``0,Constellation.Utils.SerializationHelper.ISerializer)">
+            <summary>
+            Serializes object to string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="value">The value.</param>
+            <param name="serializer">The serializer.</param>
+            <returns>
+            The string object serialized
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.DeserializeFromString``1(System.String,Constellation.Utils.SerializationHelper.ISerializer)">
+            <summary>
+            Deserializes object from string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="content">The content.</param>
+            <param name="serializer">The serializer.</param>
+            <returns>
+            The object deserialized
+            </returns>
+        </member>
+        <member name="T:Constellation.Utils.SerializationHelper.ISerializer">
+            <summary>
+            Defines a serializer
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.ISerializer.SerializeToString``1(``0)">
+            <summary>
+            Serializes object to string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            The string object serialized
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.SerializationHelper.ISerializer.DeserializeFromString``1(System.String)">
+            <summary>
+            Deserializes object from string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="content">The content.</param>
+            <returns>
+            The object deserialized
+            </returns>
+        </member>
+        <member name="T:Constellation.Utils.Serializers.DataContractSerializer">
+            <summary>
+            Class to serialize and deserialize object by using the .NET DataContractSerializer
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.Serializers.DataContractSerializer.SerializeToString``1(``0)">
+            <summary>
+            Serializes object to string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            The string object serialized
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.Serializers.DataContractSerializer.DeserializeFromString``1(System.String)">
+            <summary>
+            Deserializes object from string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="content">The content.</param>
+            <returns>
+            The object deserialized
+            </returns>
+        </member>
+        <member name="T:Constellation.Utils.Serializers.JsonSerializer">
+            <summary>
+            Class to serialize and deserialize object by using the Newtonsoft JSON Serializer
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.Serializers.JsonSerializer.SerializeToString``1(``0)">
+            <summary>
+            Serializes object to string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            The string object serialized
+            </returns>
+        </member>
+        <member name="M:Constellation.Utils.Serializers.JsonSerializer.DeserializeFromString``1(System.String)">
+            <summary>
+            Deserializes object from string.
+            </summary>
+            <typeparam name="T">Type of object</typeparam>
+            <param name="content">The content.</param>
+            <returns>
+            The object deserialized
+            </returns>
+        </member>
+        <member name="T:Constellation.Utils.XmlDocumentationReader">
+            <summary>
+            Helper to read the XML documentation
+            </summary>
+        </member>
+        <member name="F:Constellation.Utils.XmlDocumentationReader.crefRegex">
+            <summary>
+            Regex to extract the cref attribute
+            </summary>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.AddEnumXmlComment(System.String,System.Type,Constellation.PackageDescriptor.MemberDescriptor)">
+            <summary>
+            Adds the enum XML comment.
+            </summary>
+            <param name="enumValue">The enum value.</param>
+            <param name="enumType">Type of the enum.</param>
+            <param name="descriptor">The descriptor.</param>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.AddXmlComment(System.Type,Constellation.PackageDescriptor.TypeDescriptor)">
+            <summary>
+            Adds the XML comment for a type.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="descriptor">The descriptor.</param>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.AddXmlComment(System.Reflection.PropertyInfo,Constellation.PackageDescriptor.MemberDescriptor)">
+            <summary>
+            Adds the XML comment for a property.
+            </summary>
+            <param name="property">The property.</param>
+            <param name="descriptor">The descriptor.</param>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.AddXmlComment(System.Reflection.MethodInfo,Constellation.PackageDescriptor.MessageCallbackDescriptor)">
+            <summary>
+            Adds the XML comment for a method.
+            </summary>
+            <param name="method">The method.</param>
+            <param name="descriptor">The descriptor.</param>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.GetXmlCommentNode(System.Type,System.String)">
+            <summary>
+            Gets the XML comment node.
+            </summary>
+            <param name="typeSource">The source type.</param>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.GetDescriptionText(System.String)">
+            <summary>
+            Gets the text description.
+            </summary>
+            <param name="xml">The xml description.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Constellation.Utils.XmlDocumentationReader.StripTagsCharArray(System.String)">
+            <summary>
+            Strips all XML tags form a text source.
+            </summary>
+            <param name="source">The source.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
