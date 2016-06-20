@@ -1,0 +1,14 @@
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\PackageInfo.xml
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Packages.exe.config
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Packages.XML
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Packages.exe
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Packages.pdb
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Constellation.Common.dll
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Microsoft.AspNet.SignalR.Client.dll
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Constellation.Common.xml
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Microsoft.AspNet.SignalR.Client.xml
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\obj\Debug\Date.csprojResolveAssemblyReference.cache
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\obj\Debug\Packages.exe
+C:\Users\Ultiko\Documents\Visual Studio 2015\Projects\projet\projetVEL\Date\Packages\obj\Debug\Packages.pdb
