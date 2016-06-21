@@ -25,7 +25,7 @@ namespace AlgorithmePackage
             var1["sentinel"] = "DESKTOP-FQMIBUN";
             var1["package"] = "ConstellationPackageConsole1";
             var1["variable"] = "myValue";            
-            cond1.variables = var1;
+            cond1.Variables = var1;
             cond1.Value = 6;
             cond1.OperationTested = Operations.StrictlyLower;
             Condition cond2 = new Condition();
@@ -33,7 +33,7 @@ namespace AlgorithmePackage
             var11["sentinel"] = "DESKTOP-FQMIBUN";
             var11["package"] = "ConstellationPackageConsole1";
             var11["variable"] = "mValue";
-            cond2.variables = var11;
+            cond2.Variables = var11;
             cond2.Value = "2";
             cond2.OperationTested = Operations.Different;
             Condition cond3 = new Condition();
@@ -41,7 +41,7 @@ namespace AlgorithmePackage
             var111["sentinel"] = "DESKTOP-FQMIBUN";
             var111["package"] = "ConstellationPackageConsole1";
             var111["variable"] = "myValue";
-            cond3.variables = var111;
+            cond3.Variables = var111;
             cond3.Value = 0;
             cond3.OperationTested = Operations.Upper;
 
@@ -53,7 +53,7 @@ namespace AlgorithmePackage
             real1.Variables = var2;
             List<dynamic> maListe = new List<dynamic>();
             maListe.Add(24);
-            maListe.Add("test2");
+            maListe.Add("entre 0 et 5");
             real1.Arguments = maListe;
 
             Execution real2 = new Execution();
@@ -64,7 +64,7 @@ namespace AlgorithmePackage
             real2.Variables = var22;
             List<dynamic> maListe2 = new List<dynamic>();
             maListe2.Add(42);
-            maListe2.Add("test");
+            maListe2.Add("a 30s");
             real2.Arguments = maListe2;
 
             List<Condition> conditions = new List<Condition>();
@@ -81,7 +81,7 @@ namespace AlgorithmePackage
             var21["sentinel"] = "DESKTOP-FQMIBUN";
             var21["package"] = "ConstellationPackageConsole1";
             var21["variable"] = "myValue";
-            cond21.variables = var21;
+            cond21.Variables = var21;
             cond21.Value = 0;
             cond21.OperationTested = Operations.Upper;
            
@@ -111,17 +111,17 @@ namespace AlgorithmePackage
             algo1.Waiting = 2;
 
             TimeSlot schedule = new TimeSlot();
-            schedule.Begin.Month = 1;
-            schedule.End.Month = 12;
-            schedule.Begin.Day = 20;
-            schedule.End.Day = 21;
+            schedule.Begin.Month = 2;
+            schedule.End.Month = 6;
+            schedule.Begin.Day = 5;
+            schedule.End.Day = 23;
             schedule.Begin.Hour = 0;
-            schedule.End.Hour = 1;
-            schedule.Begin.Minute = 9;
-            schedule.End.Minute = 10;
-            schedule.Begin.Second = 0;
-            schedule.End.Second = 59;
-            schedule.Week = new WeekDays(false, false, true, false, false);
+            schedule.End.Hour = 23;
+            schedule.Begin.Minute = 0;
+            schedule.End.Minute = 59;
+            schedule.Begin.Second = 30;
+            schedule.End.Second = 30;
+           // schedule.Week = new WeekDays(false, false, true, false, true, false, true);
             schedule.ReactivationPeriode = "Minutes";
             //algo1.DisableAfterRealisation = true;
             algo1.Schedule = schedule;
@@ -162,7 +162,7 @@ namespace AlgorithmePackage
             };*/
 /////////
            AddAlgorithme(algo1);
-           //AddAlgorithme(algo2);
+          // AddAlgorithme(algo2);
 /////////            
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
@@ -180,7 +180,7 @@ namespace AlgorithmePackage
             {
                 foreach (Condition cond in algo.Conditions)
                 {
-                    SubscribeStateObject(cond.variables);
+                    SubscribeStateObject(cond.Variables);
                 }
             }
         }
@@ -241,7 +241,7 @@ namespace AlgorithmePackage
                     //suppression de l'algo de la bdd et du package en cours                    
                     foreach (Condition cond in algo.CloneConditions())
                     {
-                        UnSubscribeStateObject(cond.variables);
+                        UnSubscribeStateObject(cond.Variables);
                     }
                     m_algorithmes.Remove(algo);
                     return;
@@ -255,7 +255,7 @@ namespace AlgorithmePackage
                     //suppression de l'algo de la bdd et du package en cours                    
                     foreach (Condition cond in algo.CloneConditions())
                     {
-                        UnSubscribeStateObject(cond.variables);
+                        UnSubscribeStateObject(cond.Variables);
                     }
                     m_pausedAlgorithmes.Remove(algo);
                     return;
@@ -269,29 +269,46 @@ namespace AlgorithmePackage
         /// Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
         /// </summary>
         /// <param name="name">Le nom de l'algorithme à metre en pause</param>
+        /// <param name="enableByHoraire">permet de changer le boolan IsActiv de l'algo, ainsi on ne le change que lorsque 
+        /// l'utilisateur demande a mettre en pause l'algo et non lorsqu'il se met en pause tout seul en sortant de sa Schedule
+        ///  ou apres un Wainting</param>
         [MessageCallback(Key = "PauseResumeAlgo")]
         public static void EnableDisableAlgorithme(String name, Boolean enableByHoraire = false)
         {
+            Boolean paused = true;
             foreach (Algorithme algo in m_algorithmes)
-            {
-                if(algo.Name == name)
-                {                    
-                    if (!enableByHoraire) algo.EnableOrDisable();
-                    m_pausedAlgorithmes.Add(algo);
-                    m_algorithmes.Remove(algo);
-                    return;
-                }
-            }
-            foreach (Algorithme algo in m_pausedAlgorithmes)
             {
                 if (algo.Name == name)
                 {
+                    paused = false;
                     if (!enableByHoraire) algo.EnableOrDisable();
-                    m_algorithmes.Add(algo);
-                    m_pausedAlgorithmes.Remove(algo);
-                    return;
+                    m_pausedAlgorithmes.Add(algo);
+                    m_algorithmes.Remove(algo);                    
+                    foreach (Condition cond in algo.Conditions)
+                    {
+                        UnSubscribeStateObject(cond.Variables);
+                    }
+                    break;  
                 }
             }
+            if(paused)
+            {
+                foreach (Algorithme algo in m_pausedAlgorithmes)
+                {
+                    if (algo.Name == name)
+                    {
+                        if (!enableByHoraire) algo.EnableOrDisable();
+                        m_algorithmes.Add(algo);
+                        m_pausedAlgorithmes.Remove(algo);
+                        foreach (Condition cond in algo.Conditions)
+                        {
+                            SubscribeStateObject(cond.Variables);
+                        }
+                        break;
+                    }
+                }
+            }
+                        
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
         }
@@ -312,20 +329,21 @@ namespace AlgorithmePackage
             List<String> algoToDisable = new List<string>(); //on ne peux modifier la liste m_algo pendant son traitement foreach
             foreach (Algorithme algo in m_algorithmes)
             {
-                if(!algo.Schedule.IsInTimeSlot())
+                if(algo.Schedule != null && !algo.Schedule.IsInTimeSlot())
                 {
-                    PackageHost.WriteError($"not in schedule {algo.Schedule.NextSlotBegin(false)}");
+                    if (algo.Schedule.NextSlotBegin(false)<1.2) continue;
+  /**/              PackageHost.WriteError($"not in schedule, reactive in {algo.Schedule.NextSlotBegin(false)}");
                     algoToDisable.Add(algo.Name);
                     m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(false));
                     continue;
                 }
-                if (//!algo.IsTimeRestricted && 
+                if ( 
                     algo.SetDynamicValue(sentinel, package, name, dynamicValue))
-                {
+                {                    
                     ExecuteAlgorithme(algo.Executions);
                     if (algo.Waiting != 0)
                     {//si on doit attendre X sec entre chaque execution
-                        PackageHost.WriteError($"wait {DateTime.Now}");
+   /**/                 PackageHost.WriteError($"wait for {algo.Waiting}");
                         algoToDisable.Add(algo.Name);
                         m_reactivationAlgo.Add(algo.Name, algo.Waiting);
                         continue;
@@ -334,19 +352,19 @@ namespace AlgorithmePackage
                     {//si l'algo doit se desactiver apres execution
                         algoToDisable.Add(algo.Name);
                         if(algo.Schedule.ReactivationPeriode != null)
-                        {//si l'algo a une plage de restriction horaire, il se reactivera alors pour la prochaine plage
-                            PackageHost.WriteError($"reactive in {algo.Schedule.NextSlotBegin()}");
-                            m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin());                            
+                        {//si l'algo a une plage de restriction horaire, il se reactivera alors pour la prochaine plage                           
+      /**/                  PackageHost.WriteError($"reactive in {algo.Schedule.NextSlotBegin(true)}");
+                            m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(true));                            
                         }
                     }
-                }
+                }               
             }
             foreach(String algoName in algoToDisable)
             {
                 EnableDisableAlgorithme(algoName, true);
             }
         }
-        private void SubscribeStateObject(Dictionary<String, String> var)
+        private static void SubscribeStateObject(Dictionary<String, String> var)
         {
             PackageHost.SubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
@@ -355,7 +373,7 @@ namespace AlgorithmePackage
         /// il faut donc bien faire attention à disable l'Algorithme qui utilise ce StateObject au préalable
         /// </summary>
         /// <param name="var">dictionnaire définissant le StateObject"</param>
-        private void UnSubscribeStateObject(Dictionary<String, String> var)
+        private static void UnSubscribeStateObject(Dictionary<String, String> var)
         {
             foreach(Algorithme algo in m_algorithmes)
             {
@@ -410,7 +428,6 @@ namespace AlgorithmePackage
                     myKeys.Add(item.Key);
                     if (item.Value < 0.2)
                     {
-                        PackageHost.WriteError($"in schedule : {DateTime.Now}");
                         algoToEnable.Add(item.Key);
                     }
                 }
@@ -420,8 +437,9 @@ namespace AlgorithmePackage
                 }
                 foreach (String algoName in algoToEnable)
                 {
-                    EnableDisableAlgorithme(algoName);
+  /**/              PackageHost.WriteWarn("reAble");
                     m_reactivationAlgo.Remove(algoName);
+                    EnableDisableAlgorithme(algoName, true);                    
                 }                
                 Thread.Sleep(200);
                 count++;

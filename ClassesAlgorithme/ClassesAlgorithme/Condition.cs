@@ -71,7 +71,7 @@ namespace ClassesAlgorithm
             str += $"{Value}";
             return str;
         }
-        public Dictionary<String, String> variables
+        public Dictionary<String, String> Variables
         {
             set { m_variables = value; }
             get { return m_variables; }
@@ -81,7 +81,7 @@ namespace ClassesAlgorithm
             Condition returnedCondition = new Condition();
             if (m_variables != null)
             {
-                returnedCondition.variables = new Dictionary<string, string>(m_variables);
+                returnedCondition.Variables = new Dictionary<string, string>(m_variables);
             }
             return returnedCondition;
         }

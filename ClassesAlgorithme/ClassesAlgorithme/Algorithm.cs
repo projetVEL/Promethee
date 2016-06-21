@@ -14,14 +14,14 @@ namespace ClassesAlgorithm
         public List<Execution> Executions { get; set; }
         public String Name { set; get; }
         public Boolean DisableAfterRealisation { get; set; } = false; //met en pause l'algo apres une realisation
-        public TimeSlot Schedule { get; set; } = new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
+        public TimeSlot Schedule { get; set; } = null;// new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
 
         public Boolean IsUsingStateObject(String sentinel, String package, String name)
         {//retourne true si toutes les conditions sont vérifiées
             foreach (Condition cond in Conditions)
             {
-                if (cond.variables["sentinel"] == sentinel && cond.variables["package"] ==
-                    package && cond.variables["variable"] == name)
+                if (cond.Variables["sentinel"] == sentinel && cond.Variables["package"] ==
+                    package && cond.Variables["variable"] == name)
                 {
                     return true;
                 }
@@ -34,8 +34,8 @@ namespace ClassesAlgorithm
             Boolean isChanged = false;
             foreach (Condition cond in Conditions)
             {
-                if (cond.variables["sentinel"] == sentinel && cond.variables["package"] ==
-                    package && cond.variables["variable"] == name)
+                if (cond.Variables["sentinel"] == sentinel && cond.Variables["package"] ==
+                    package && cond.Variables["variable"] == name)
                 {
                     cond.DynamicValue = dynamicValue;
                     isChanged = true;

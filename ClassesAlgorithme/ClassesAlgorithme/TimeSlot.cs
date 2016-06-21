@@ -65,14 +65,19 @@ namespace ClassesAlgorithm
         public double NextSlotBegin(Boolean inSlope = true)
         {
             Time time = new Time();
-            time.Second = Begin.Second;
-            time.Minute = Begin.Minute;
-            time.Hour = Begin.Hour;
-            time.Day = Begin.Day;
-            time.Month = Begin.Month;
+            time.Second = DateTime.Now.Second;
+            time.Minute = DateTime.Now.Minute;
+            time.Hour = DateTime.Now.Hour;
+            time.Day = DateTime.Now.Day;
+            time.Month = DateTime.Now.Month;
 
-            if(inSlope)
+            if (inSlope)
             {
+                time.Second = Begin.Second;
+                time.Minute = Begin.Minute;
+                time.Hour = Begin.Hour;
+                time.Day = Begin.Day;
+                time.Month = Begin.Month;
                 switch (ReactivationPeriode)
                 {
                     case "Hours":
@@ -88,7 +93,7 @@ namespace ClassesAlgorithm
                         }
                         break;
                     case "Days":
-                        DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
+                        DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOkFromToday());
                         if (inRange(date.Day, Begin.Day, End.Day))
                         {
                             time.Day = date.Day;
@@ -126,97 +131,87 @@ namespace ClassesAlgorithm
             }
             else
             {
-                if(inRange(DateTime.Now.Month, Begin.Month, End.Month))
-                {//alors verifie si les jours sont inRange
-                    if (inRange(DateTime.Now.Day, Begin.Day, End.Day))
-                    {//alors verifie si les heures sont inRange
-                        if (inRange(DateTime.Now.Hour, Begin.Hour, End.Hour))
-                        {//alors verif si les min sont inRange
-                            if (inRange(DateTime.Now.Minute, Begin.Minute, End.Minute))
-                            {//c'est alors que les Secondes ne sont pas inRange 
-                                time.Minute = DateTime.Now.Minute;
-                                time.Hour = DateTime.Now.Hour;
-                                time.Day = DateTime.Now.Day;
-                                time.Month = DateTime.Now.Month;
-                                if (DateTime.Now.Second > Begin.Second)
-                                {
-                                    time.Minute = DateTime.Now.Minute;
-                                    do
-                                    {
-                                        time.Minute = (time.Minute + 1) % 60;
-                                        if (time.Minute == 0)
-                                        {
-                                            time.Hour = DateTime.Now.Hour;
-                                            do
-                                            {
-                                                time.Hour = (time.Hour + 1) % 24;
-                                                if (time.Hour == 0)
-                                                {
-                                                    DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
-                                                    time.Day = date.Day;
-                                                    time.Month = date.Month;
-                                                }
-                                            } while (!inRange(time.Hour, Begin.Hour, End.Hour));
-                                        }
-                                    } while (!inRange(time.Minute, Begin.Minute, End.Minute));
-
-                                }
-                            }
-                            else
-                            {
-                                time.Hour = DateTime.Now.Hour;
-                                time.Day = DateTime.Now.Day;
-                                time.Month = DateTime.Now.Month;
-                                if (DateTime.Now.Minute > Begin.Minute)
-                                {
-                                    time.Hour = DateTime.Now.Hour;
-                                    do
-                                    {
-                                        time.Hour = (time.Hour + 1) % 24;
-                                        if (time.Hour == 0)
-                                        {
-                                            DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
-                                            time.Day = date.Day;
-                                            time.Month = date.Month;
-                                        }
-                                    } while (!inRange(time.Hour, Begin.Hour, End.Hour));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (DateTime.Now.Hour < Begin.Hour)
-                            {
-                                time.Day = DateTime.Now.Day;
-                                time.Month = DateTime.Now.Month;
-                            }
-                            else
-                            {
-                                DateTime date = DateTime.Now.AddDays(Week.NumberOfDaysTillOk());
-                                time.Day = date.Day;
-                                time.Month = date.Month;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if(DateTime.Now.Day < Begin.Day) time.Month = DateTime.Now.Month;
-                        else
-                        {
-                            time.Month = DateTime.Now.Month + 1;
-                            if (time.Month % 13 == 0)
-                            {
-                                time.Month = 1;
-                            }
-                        }
-                    }
-
-                }
+                time = checkRangeSecondes(time);
             }
             
             DateTime date2 = new DateTime(DateTime.Now.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
             double summSeconds = date2.Subtract(DateTime.Now).TotalSeconds;
+            if (summSeconds < 0) summSeconds = DateTime.Now.Subtract(date2).TotalSeconds; ;
             return summSeconds;
         }
+
+
+        private Time checkRangeSecondes(Time time)
+        {            
+            if(time.Second > End.Second)
+            {
+                time.AddMinutes(1);
+            }
+            time.Second = Begin.Second;
+            time = checkRangeMinutes(time);
+            return time;
+        }
+        private Time checkRangeMinutes(Time time)
+        {
+            if (!inRange(time.Minute, Begin.Minute, End.Minute))
+            {                
+                if (time.Minute > End.Minute)
+                {
+                    time.AddHours(1);
+                }
+                time.Minute = Begin.Minute;
+            }
+            time = checkRangeHours(time);
+            return time;
+        }
+        private Time checkRangeHours(Time time)
+        {
+            if (!inRange(time.Hour, Begin.Hour, End.Hour))
+            {
+                time.Minute = Begin.Minute;
+                if (time.Hour > End.Hour)
+                {
+                    time.AddDays(1);
+                }
+                time.Hour = Begin.Hour;
+            }
+            time = checkRangeDays(time);
+            return time;
+        }
+
+        private Time checkRangeDays(Time time)
+        {
+            if (!inRange(time.Day, Begin.Day, End.Day))
+            {
+                time.Hour = Begin.Hour;
+                time.Minute = Begin.Minute;  
+                if (time.Day > End.Day)
+                {
+                    time.AddMonths(1);                                        
+                }
+                time.Day = Begin.Day;
+            }
+            if (!Week.DayOk(time))
+            {
+                time.Hour = Begin.Hour;
+                time.Minute = Begin.Minute;
+                time.AddDays(Week.NumberOfDaysTillOk(time));
+                time = checkRangeDays(time);
+            }
+            time = checkRangeMonths(time);
+            return time;
+        }
+        private Time checkRangeMonths(Time time)
+        {
+            if (!inRange(time.Month, Begin.Month, End.Month))
+            {
+                time.Day = Begin.Day;
+                time.Hour = Begin.Hour;
+                time.Minute = Begin.Minute;
+                time.Month = Begin.Month;                
+            }
+            return time;
+        }    
+
     }
 }

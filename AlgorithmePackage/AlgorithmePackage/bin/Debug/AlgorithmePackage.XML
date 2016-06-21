@@ -26,6 +26,9 @@
             Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
             </summary>
             <param name="name">Le nom de l'algorithme à metre en pause</param>
+            <param name="enableByHoraire">permet de changer le boolan IsActiv de l'algo, ainsi on ne le change que lorsque 
+            l'utilisateur demande a mettre en pause l'algo et non lorsqu'il se met en pause tout seul en sortant de sa Schedule
+             ou apres un Wainting</param>
         </member>
         <member name="M:AlgorithmePackage.Program.UnSubscribeStateObject(System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>

@@ -18,6 +18,26 @@ namespace ClassesAlgorithm
             this.Add(DayOfWeek.Thursday, thu);
             this.Add(DayOfWeek.Friday, fri);
             this.Add(DayOfWeek.Saturday, sat);
+            Boolean allFalse = true;
+            foreach(var item in this)
+            {//evite le cas all false
+                if (item.Value)
+                {
+                    allFalse = false;
+                    break;
+                }
+            }
+            if(allFalse)
+            {
+                this.Clear();
+                this.Add(DayOfWeek.Sunday, true);
+                this.Add(DayOfWeek.Monday, true);
+                this.Add(DayOfWeek.Tuesday, true);
+                this.Add(DayOfWeek.Wednesday, true);
+                this.Add(DayOfWeek.Thursday, true);
+                this.Add(DayOfWeek.Friday, true);
+                this.Add(DayOfWeek.Saturday, true);
+            }
         }
         public Boolean Today
         {
@@ -26,13 +46,24 @@ namespace ClassesAlgorithm
                 return this[DateTime.Now.DayOfWeek];
             }
         }
-        public int NumberOfDaysTillOk()
+        public int NumberOfDaysTillOkFromToday()
+        {
+            Time time = new Time();
+            time.Second = DateTime.Now.Second;
+            time.Minute = DateTime.Now.Minute;
+            time.Hour = DateTime.Now.Hour;
+            time.Day = DateTime.Now.Day;
+            time.Month = DateTime.Now.Month;
+            return NumberOfDaysTillOk(time);
+        }
+        public int NumberOfDaysTillOk(Time time)
         {
             int returnValue = 0;
             Boolean start = false;
+            DateTime date = time.ToDate();
             foreach (var item in this)
             {
-                if(item.Key == DateTime.Now.DayOfWeek)
+                if(item.Key == date.DayOfWeek)
                 {
                     start = true;
                 }
@@ -54,6 +85,11 @@ namespace ClassesAlgorithm
                 returnValue++;                
             }
             return returnValue;
+        }
+        public Boolean DayOk(Time time)
+        {
+            DateTime date = time.ToDate();
+            return this[date.DayOfWeek];
         }
     }
 }
