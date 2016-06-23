@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Date", "Packages\Date.csproj", "{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beeper", "Beeper\Beeper.csproj", "{35994161-1B47-4FCC-8F99-37A94378EA7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Date", "Date\Date.csproj", "{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timer", "Timer\Timer.csproj", "{21BDE523-B521-4F21-B536-7F77A4705BEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35994161-1B47-4FCC-8F99-37A94378EA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35994161-1B47-4FCC-8F99-37A94378EA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35994161-1B47-4FCC-8F99-37A94378EA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35994161-1B47-4FCC-8F99-37A94378EA7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E7E84FC-8C51-4A81-A71B-15F1EE43F407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21BDE523-B521-4F21-B536-7F77A4705BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21BDE523-B521-4F21-B536-7F77A4705BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21BDE523-B521-4F21-B536-7F77A4705BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21BDE523-B521-4F21-B536-7F77A4705BEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
