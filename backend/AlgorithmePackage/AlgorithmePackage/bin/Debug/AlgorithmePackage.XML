@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AlgorithmePackage</name>
+    </assembly>
+    <members>
+        <member name="M:AlgorithmePackage.Program.AddAlgorithme(ClassesAlgorithm.Algorithme)">
+            <summary>
+            Ajout d'un algorithme, si un algorithme au nom identique existe deja, il sera ecrase par celui-ci.
+            </summary>
+            <param name="algo">
+            L'algorithme qui sera ajouté.
+            </param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.DeleteAlgorithme(System.String)">
+            <summary>
+            Supprime l'algorithme correspondant au nom donne, il ne sera plus stocke ni realise
+            </summary>
+            <param name="name">
+            Le nom identifiant l'algorithme
+            </param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.EnableDisableAlgorithme(System.String,System.Boolean)">
+            <summary>
+            Met l'algorithme en pause ou le relance.
+            Peut servir pour désactiver manuellement des action ponctuelles (alarmes, ...)
+            </summary>
+            <param name="name">Le nom de l'algorithme à metre en pause</param>
+            <param name="enableByHoraire">permet de changer le boolan IsActiv de l'algo, ainsi on ne le change que lorsque 
+            l'utilisateur demande a mettre en pause l'algo et non lorsqu'il se met en pause tout seul en sortant de sa Schedule
+             ou apres un Wainting</param>
+        </member>
+        <member name="M:AlgorithmePackage.Program.UnSubscribeStateObject(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            se desincrit du stateObject definit par Sentinelle/pckg/nom si ce So n'est pas utile à un autre Algorithme enabled,
+            il faut donc bien faire attention à disable l'Algorithme qui utilise ce StateObject au préalable
+            </summary>
+            <param name="var">dictionnaire définissant le StateObject"</param>
+        </member>
+    </members>
+</doc>

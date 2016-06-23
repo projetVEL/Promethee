@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Package xmlns="http://schemas.myconstellation.io/Constellation/1.8/PackageManifest"
+         Name="AlgorithmePackage"
+         Version="1.0"
+         Author="psyked"
+         URL="http://www.mywebsite.com"
+         Description="AlgorithmePackage Copyright ©  2016"
+         EnableControlHub="false"
+         RequestLastStateObjectsOnStart ="true">
+  <Compatibility constellationVersion="1.8" dotNetTargetPlatform="net45" />
+  <Settings>
+    <!-- Add your package's settings here -->
+  </Settings>
+</Package>

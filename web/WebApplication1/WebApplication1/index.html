@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>1 Col Portfolio - Start Bootstrap Template</title>
+
+    <script src="scripts/jQuery.Bootstrap.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="Content/1-col-portfolio.css" rel="stylesheet">
+
+    <script src="scripts/jquery-1.6.4.min.js"></script>
+    <script src="scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/ngConstellation-1.8.0.js"></script>
+    <script src="scripts/ngApp.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div ng-app="mainApp">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">projetVEL</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="https://github.com/projetVEL/projetVEL">About</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/projetVEL/projetVEL">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+        <!-- Page Content -->
+        <div class="container">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Liste des Algorithmes créés
+                    </h1>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row" ng-controller="controller1">
+                <div class="col-md-7">
+                    <a href="#">
+                        <img class="img-responsive" src="http://www.erecapluriel.fr/wp-content/uploads/creer-votre-entreprise.jpg" width="700" alt="">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <h3>Nouvel Algorithme</h3>
+                    <a ng-click="toggle = !toggle" class="btn btn-primary" href="#">Nouveau <span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <hr>
+            <div class="row" ng-show="toggle">
+                <div class="col-md-7">
+                    <a href="#">
+                        <img class="img-responsive" src="http://loremflickr.com/700/300/clock" alt="">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <h3>Algo.Name</h3>
+                    <h4>Description</h4>
+                    <p>Algo.Description : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+                    <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <hr>
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>projetVEL @ISEN-CIR59</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
