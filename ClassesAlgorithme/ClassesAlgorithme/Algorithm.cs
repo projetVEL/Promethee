@@ -16,6 +16,14 @@ namespace ClassesAlgorithm
         public Boolean DisableAfterRealisation { get; set; } = false; //met en pause l'algo apres une realisation
         public TimeSlot Schedule { get; set; } = null;// new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
 
+        public void ResetDynamicValue()
+        {
+            foreach(Condition cond in Conditions)
+            {
+                cond.ResetDynamicValue();
+            }
+        }
+
         public Boolean IsUsingStateObject(String sentinel, String package, String name)
         {//retourne true si toutes les conditions sont vérifiées
             foreach (Condition cond in Conditions)

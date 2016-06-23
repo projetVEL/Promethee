@@ -280,6 +280,7 @@ namespace AlgorithmePackage
             {
                 if (algo.Name == name)
                 {
+                    algo.ResetDynamicValue();
                     paused = false;
                     if (!enableByHoraire) algo.EnableOrDisable();
                     m_pausedAlgorithmes.Add(algo);

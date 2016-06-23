@@ -40,6 +40,10 @@ namespace ClassesAlgorithm
             }
         }
 
+        public void ResetDynamicValue()
+        {
+            DynamicValue = null;
+        }
         public String toString()
         {
             String str = "variables : ";
