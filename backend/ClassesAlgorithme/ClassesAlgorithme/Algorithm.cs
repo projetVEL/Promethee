@@ -9,11 +9,11 @@ namespace ClassesAlgorithm
     {
         public int Waiting { get; set; } = 0; //temps a attendre entre chaque execution
         public Boolean IsActive { get; set; } = false; //permet de ne pas lancer l'algo lors de l'add
-        public List<Condition> Conditions { get; set; } 
+        public List<Condition> Conditions { get; set; }
         public List<Execution> Executions { get; set; }
         public String Name { set; get; }
         public Boolean DisableAfterRealisation { get; set; } = false; //met en pause l'algo apres une realisation
-        public TimeSlot Schedule { get; set; } = null;// new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
+        public TimeSlot Schedule { get; set; } = new TimeSlot(); //plages horaire d'execution de l'algo (ex : tous les jours de 14-18H de 20-30min)
         public String Description = null;
         public String URLPhotoDescription = "http://www.erecapluriel.fr/wp-content/uploads/creer-votre-entreprise.jpg";
 

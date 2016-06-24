@@ -52,7 +52,7 @@ namespace ClassesAlgorithm
                 + " jours de la semaine :";
             foreach (var item in Week)
             {
-                if (item.Value) str += $"{item.Key},";
+                if (item.Value) str += $" {item.Key},";
             }
             return str;
         }
