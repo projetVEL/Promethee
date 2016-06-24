@@ -1,41 +1,55 @@
-﻿var demo = angular.module('demoApp', ['ngConstellation']); console.log(0);
-var constellation = $.signalR.createConstellationConsumer("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "Test API");
-var controller = $.signalR.createConstellationController("http://localhost:8088", "789", "TestAPI");
+﻿angular
+    .module("demo", ['ngConstellation'])
+    .controller('mycontroller', ['$scope', 'constellationConsumer',
+    function ($scope, constellation) {
 
-console.log(0.5);
-demo.controller('MyController', ['$scope', 'constellationConsumer', 'constellationController', function ($scope, constellation, controller) {
-    console.log(1);
-    constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "Test API"); console.log(2);
-    controller.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "Test API"); console.log(3);
+        //votre controlleur
 
-    var constellationA = $.signalR.createConstellationConsumer("http://127.0.0.1:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "AConstellation"); console.log(4);
+        $scope.state = false;
+        $scope.listeAlgos = [];
 
-    controller.onReceiveLogMessage(function (log) {
-        console.log(log);
-    });
+        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "test");
 
-    controller.onConnectionStateChanged(function (change) {
-        console.log("Controller", change.newState);
-    });
+        constellation.onUpdateStateObject(function (stateobject) {
+            $scope.$apply(function () {
 
-    constellation.onUpdateStateObject(function (message) {
-        $scope.$apply(function () {
-            $scope[message.Name] = message;
+                if ($scope[stateobject.SentinelName] == undefined) {
+                    $scope[stateobject.SentinelName] = {};
+                }
+                if ($scope[stateobject.SentinelName][stateobject.PackageName] == undefined) {
+                    $scope[stateobject.SentinelName][stateobject.PackageName] = {}; 
+                }
+                $scope[stateobject.SentinelName][stateobject.PackageName][stateobject.Name] = stateobject;
+                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
+                    
+                    $scope.listeAlgos[0] = $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'];
+                }
+                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['Algorithmes'] != undefined) {
+
+                    $scope.listeAlgos[1] = $scope['Developer']['AlgorithmePackage']['Algorithmes'];
+                }
+            });
         });
-    });
+        //$scope.state; équivaut à $scope['state'];
 
-    constellation.onConnectionStateChanged(function (change) {
-        console.log("Consumer", change.newState);
-        if (change.newState === $.signalR.connectionState.connected) {
-            constellation.requestSubscribeStateObjects("*", "DemoPackage", "*", "*");
-        }
-    });
+        constellation.onConnectionStateChanged(function (change) {
+            $scope.$apply(function () {
+                $scope.state = change.newState == $.signalR.connectionState.connected;
+                var a = $scope.state;
+            });
 
-    $scope.Test = function () {
-        constellation.sendMessage({ Scope: 'Package', Args: ['DemoPackage'] }, 'TestSebXParam', ['input', 12, 6, false]);
-        constellation.sendMessageWithSaga({ Scope: 'Package', Args: ['DemoPackage'] }, 'TestSebXParam', ['input', 12, 6, false], function (msg) { console.log("RESP", msg); });
-    };
+            if (change.newState == $.signalR.connectionState.connected) {
+                constellation.requestSubscribeStateObjects("*", "AlgorithmePackage", "*", "*");
+            }
+        });
 
-    constellation.connect();
-    controller.connect();
-}]);
+
+
+
+        $scope.Test = function () {
+            constellation.sendMessage({ Scope: 'Package', Args: ['ConstellationPackageConsole1'] }, 'changeVal', [42, "send from angular"]);
+        };
+
+        constellation.connect();
+
+    }]);
