@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Constellation IFTTT</title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet">
+    <script src="myJavaScripts1.js"></script>
+    <script src="myJavaScripts2.js"></script>
+</head>
+<body onload="getData();">
+    
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Constellation IFTT</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>*
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm-offset-1 col-sm-4">
+            <div class="well">
+                <thead>
+                    <tr>
+                        <th><h3>IF</h3></th>
+                        <th style="width: 1px;"></th>
+                    </tr>
+                </thead>
+                <div id="blankIf">
+
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" onclick="addElement('If')">ADD</button>
+            </div>
+        </div>
+
+        <div class="col-sm-offset-1 col-sm-4">
+            <div class="well">
+                <thead>
+                    <tr>
+                        <th><h3>THEN</h3></th>
+                        <th style="width: 1px;"></th>
+                    </tr>
+                </thead>
+                <div id="blankThen">
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" onclick="addElement('Then')">ADD</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary col-sm-offset-1 col-sm-3" onclick="save()">SAVE</button>
+
+    <script src="Scripts/jquery-1.9.1.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</body>
+
+
