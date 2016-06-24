@@ -136,10 +136,10 @@ namespace AlgorithmePackage
         public override void OnStart()
         {
             PackageHost.LastStateObjectsReceived += (s, e) =>
-            {                
+            {    
                 try
                 {
-                    Newtonsoft.Json.Linq.JArray algo = e.StateObjects[1].DynamicValue;
+                    Newtonsoft.Json.Linq.JArray algo = e.StateObjects[2].DynamicValue; //change 2 to 1 if disable the push of algos.count
                     List<Algorithme> algorithmes = JsonConvert.DeserializeObject<List<Algorithme>>(algo.ToString());
                     foreach(Algorithme alg in algorithmes)
                     {
@@ -159,10 +159,11 @@ namespace AlgorithmePackage
                 SubscribeAllStateObject();
                 PackageHost.PushStateObject("Algorithmes", m_algorithmes);
                 PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
+                PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count+m_algorithmes.Count);
             };
 /////////
-          // AddAlgorithme(algo1);
-          // AddAlgorithme(algo2);
+           AddAlgorithme(algo1);
+           AddAlgorithme(algo2);
 /////////            
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
@@ -193,6 +194,8 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
+            PackageHost.WriteError("receive algo");
+            PackageHost.WriteWarn(algo.toString());
             if (algo != null)
             {
                 foreach(Algorithme alg in m_algorithmes)
@@ -226,6 +229,7 @@ namespace AlgorithmePackage
             }
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
+            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         /// <summary>
         /// Supprime l'algorithme correspondant au nom donne, il ne sera plus stocke ni realise
@@ -266,6 +270,7 @@ namespace AlgorithmePackage
             }
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
+            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         /// <summary>
         /// Met l'algorithme en pause ou le relance.
@@ -315,6 +320,7 @@ namespace AlgorithmePackage
                         
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
+            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         private static void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
@@ -411,7 +417,8 @@ namespace AlgorithmePackage
         {
             //push the algos on constellation     
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
-            PackageHost.PushStateObject("PauseAlgorithmes", m_pausedAlgorithmes);     
+            PackageHost.PushStateObject("PauseAlgorithmes", m_pausedAlgorithmes);
+            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
             base.OnPreShutdown();
         }
         public override void OnShutdown()
