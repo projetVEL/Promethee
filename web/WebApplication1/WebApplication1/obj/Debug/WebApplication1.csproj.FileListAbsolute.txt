@@ -34,44 +34,6 @@ C:\Users\psyke\Documents\Visual Studio 2015\Projects\WebApplication1\WebApplicat
 C:\Users\psyke\Documents\Visual Studio 2015\Projects\WebApplication1\WebApplication1\bin\NBootstrap.dll
 C:\Users\psyke\Documents\Visual Studio 2015\Projects\WebApplication1\WebApplication1\bin\NHelpfulException.dll
 C:\Users\psyke\Documents\Visual Studio 2015\Projects\WebApplication1\WebApplication1\bin\NServiceLocator.dll
-<<<<<<< HEAD
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\ApplicationInsights.config
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\csc.exe
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\vbc.exe
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\VBCSCompiler.exe
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\WebApplication1.dll.config
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\WebApplication1.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\WebApplication1.pdb
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.Agent.Intercept.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.DependencyCollector.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.PerfCounterCollector.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.ServerTelemetryChannel.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.Web.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.WindowsServer.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.ApplicationInsights.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\NBootstrap.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\NHelpfulException.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\NServiceLocator.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.DependencyCollector.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.ServerTelemetryChannel.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.Web.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.AI.WindowsServer.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.ApplicationInsights.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
-C:\Users\psyke\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
-=======
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\ApplicationInsights.config
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\csc.exe
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -108,4 +70,3 @@ C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\bin\Micros
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\psyked\Desktop\projetVEL\web\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
->>>>>>> 515545784db5de93168ce3ace86d539c1fca9b2f
