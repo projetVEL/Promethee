@@ -1,4 +1,4 @@
-﻿var app = angular.module('mainApp', ['ngConstellation']);
+﻿var app = angular.module('app', ['ngConstellation']);
 app.controller('controller1', ['$scope', 'constellationConsumer', 'constellationController', function ($scope, constellation, controller) {
         
     constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "Test API");
