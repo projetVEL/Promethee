@@ -13,7 +13,7 @@ namespace AlgorithmePackage
         private static Algorithme algo1; //used 4 tests
         private static Algorithme algo2; //used 4 tests
 
-        private Thread thread = new Thread(new ThreadStart(CheckTimeSlot_ThreadLoop));
+        private Thread thread;
         private static Dictionary<String, double> m_reactivationAlgo = new Dictionary<String, double>();
         private static List<Algorithme> m_algorithmes = new List<Algorithme>();
         private static List<Algorithme> m_pausedAlgorithmes = new List<Algorithme>();
@@ -105,10 +105,13 @@ namespace AlgorithmePackage
             realisations2.Add(real21);
 
 
-            algo1 = new Algorithme(conditions, realisations, "1er algo", true);
+            algo1 = new Algorithme(conditions, realisations, "1er algo");
             algo2 = new Algorithme(conditions2, realisations2, "2e algo", true);
             algo2.Waiting = 2;
+            algo2.URLPhotoDescription = "http://www.imagespourtoi.com/lesimages/oui-oui/images-oui-oui-2.jpg";
+            algo2.Description = "hahahaha je ne sais plus ce que fait ce algo :D";
             algo1.Waiting = 2;
+            algo1.URLPhotoDescription = "http://tclhost.com/qYYO0UP.gif";
 
             TimeSlot schedule = new TimeSlot();
             schedule.Begin.Month = 1;
@@ -126,7 +129,7 @@ namespace AlgorithmePackage
             //algo1.DisableAfterRealisation = true;
             algo1.Schedule = schedule;
 
-            Console.WriteLine(algo1.toString(false));
+            //Console.WriteLine(algo1.toString(false));
 //fin test            
 
 
@@ -135,6 +138,8 @@ namespace AlgorithmePackage
 
         public override void OnStart()
         {
+            thread = new Thread(new ThreadStart(CheckTimeSlot_ThreadLoop));
+            /*
             PackageHost.LastStateObjectsReceived += (s, e) =>
             {    
                 try
@@ -160,9 +165,9 @@ namespace AlgorithmePackage
                 PackageHost.PushStateObject("Algorithmes", m_algorithmes);
                 PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
                 PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count+m_algorithmes.Count);
-            };
-/////////
-           AddAlgorithme(algo1);
+            };*/
+            /////////
+            AddAlgorithme(algo1);
            AddAlgorithme(algo2);
 /////////            
             //lorsqu'une des valeures souscrites change
@@ -194,8 +199,8 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
-            PackageHost.WriteError("receive algo");
-            PackageHost.WriteWarn(algo.toString());
+            //PackageHost.WriteError("receive algo");
+            //PackageHost.WriteWarn(algo.toString());
             if (algo != null)
             {
                 foreach(Algorithme alg in m_algorithmes)
@@ -280,8 +285,7 @@ namespace AlgorithmePackage
         /// <param name="enableByHoraire">permet de changer le boolan IsActiv de l'algo, ainsi on ne le change que lorsque 
         /// l'utilisateur demande a mettre en pause l'algo et non lorsqu'il se met en pause tout seul en sortant de sa Schedule
         ///  ou apres un Wainting</param>
-        [MessageCallback(Key = "PauseResumeAlgo")]
-        public static void EnableDisableAlgorithme(String name, Boolean enableByHoraire = false)
+        public void EnableDisableAlgorithme(String name, Boolean enableByHoraire = false)
         {
             Boolean paused = true;
             foreach (Algorithme algo in m_algorithmes)
@@ -322,7 +326,7 @@ namespace AlgorithmePackage
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
             PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
-        private static void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
+        private void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
             dynamic dynamicValue = null;
             String sentinel = null;
@@ -371,7 +375,7 @@ namespace AlgorithmePackage
             }
             foreach(String algoName in algoToDisable)
             {
-                EnableDisableAlgorithme(algoName, true);
+                this.EnableDisableAlgorithme(algoName, true);
             }
         }
         private static void SubscribeStateObject(Dictionary<String, String> var)
@@ -426,7 +430,7 @@ namespace AlgorithmePackage
             thread.Abort();
             base.OnShutdown();
         }
-        private static void CheckTimeSlot_ThreadLoop()
+        private void CheckTimeSlot_ThreadLoop()
         {
             int count = 0;
             while(Thread.CurrentThread.IsAlive)
@@ -448,7 +452,7 @@ namespace AlgorithmePackage
                 }
                 foreach (String algoName in algoToEnable)
                 {
-  /**/              PackageHost.WriteWarn("reAble");
+  /**/              //PackageHost.WriteWarn("reAble");
                     m_reactivationAlgo.Remove(algoName);
                     EnableDisableAlgorithme(algoName, true);                    
                 }                
