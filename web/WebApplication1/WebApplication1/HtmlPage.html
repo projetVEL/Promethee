@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="fr-fr" ng-app="algoApp">
+<head>
+    <script src="scripts/jQuery.Bootstrap.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="Content/1-col-portfolio.css" rel="stylesheet" />    <link href="Content/angular-slider.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.js"></script>
+    <script type="text/javascript" src="scripts/Constellation-1.8.0.js"></script>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script src="scripts/ngConstellation-1.8.0.js">   </script><script src="scripts/angular-slider.js"></script>
+    <script src="scripts/ng_algorithme.js"></script>
+
+    <title ng-controller="titleController">{{title}}</title>
+
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">projetVEL</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="https://github.com/projetVEL/projetVEL">About</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/projetVEL/projetVEL">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <div class="row" ng-controller="mainController">
+            {{sent}}
+            <div class="col-sm-offset-1 col-sm-4">
+                <h3>IF</h3>
+                <div class="well" ng-repeat="i in Algorithme.Conditions track by $index">
+                    <div>Sentinelle : {{Algorithme.Conditions[$index].Variables.sentinel}} </div>
+                    <div>Package : {{Algorithme.Conditions[$index].Variables.package}}</div>
+                    <div>
+                        Variable : {{Algorithme.Conditions[$index].Variables.variable}}
+                        <span> {{Algorithme.Conditions[$index].OperationTested}} </span>
+                        <span> {{Algorithme.Conditions[$index].Value}} </span>
+                    </div>
+                </div>
+                <h3>Plage horaire :</h3>
+                <div class="well">
+                    <div>
+                        boutons plus sexy à intégrer plus tard<br/>
+                        <label>
+                            Lundi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Monday">
+                        </label><br />
+                        <label>
+                            Mardi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Tuesday">
+                        </label><br />
+                        <label>
+                            Mercredi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Wednesday">
+                        </label><br />
+                        <label>
+                            Jeudi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Thursday">
+                        </label><br />
+                        <label>
+                            Vendredi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Friday">
+                        </label><br />
+                        <label>
+                            Samedi:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Saturday">
+                        </label><br />
+                        <label>
+                            Dimanche:
+                            <input type="checkbox" ng-model="Algorithme.Schedule.Week.Sunday">
+                        </label><br />
+                    </div>
+                    <div>
+                        {{Algorithme.Schedule.Begin.Second}} {{Algorithme.Schedule.End.Second}}
+                        Plages temporelles :
+
+
+
+
+                        <slider floor="10" ceiling="60" ng-model-low="Algorithme.Schedule.Begin.Second" ng-model-high="Algorithme.Schedule.End.Second"></slider>
+
+
+
+
+
+
+                    </div>
+                    <div>Plage de réactivation : {{Algorithme.Schedule.ReactivationPeriode}}</div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
+            </div>
+            <div class="col-sm-offset-1 col-sm-4">
+                <h3>THEN</h3>
+                <div class="well" ng-repeat="i in Algorithme.Executions track by $index">
+                    <div>Sentinelle : {{Algorithme.Executions[$index].Variables.sentinel}} </div>
+                    <div>Package : {{Algorithme.Executions[$index].Variables.package}}</div>
+                    <div>
+                        CallBack : {{Algorithme.Executions[$index].Variables.callBack}}(
+                        <span ng-repeat="i in Algorithme.Executions[$index].Arguments">{{Algorithme.Executions[$parent.$index].Arguments[$index]}}, </span>
+                        )
+                    </div>
+                </div>
+                <div class="well">
+                    <div></div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary col-sm-offset-1 col-sm-2 pull-right bottom">Envoyer à Constellation</button>
+        <button type="button" class="btn btn-primary col-sm-offset-1 col-sm-2 pull-left bottom">Retour Index</button>
+    </div>
+</body>
+</html>

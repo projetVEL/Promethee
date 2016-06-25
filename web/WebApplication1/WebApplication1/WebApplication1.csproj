@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1-col-portfolio.css" />
+    <Content Include="Content\angular-slider.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -115,11 +116,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="HtmlPage.html" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\angular-slider.js" />
     <Content Include="scripts\angular.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -152,12 +155,14 @@
     <None Include="scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="scripts\jquery-1.6.4.js" />
     <Content Include="scripts\jquery-1.6.4.min.js" />
+    <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jQuery.Bootstrap.js" />
     <Content Include="scripts\jQuery.Bootstrap.min.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="scripts\ngApp.js" />
     <Content Include="scripts\ngConstellation-1.8.0.js" />
+    <Content Include="scripts\ng_algorithme.js" />
     <Content Include="scripts\npm.js" />
     <Content Include="Web.config" />
   </ItemGroup>

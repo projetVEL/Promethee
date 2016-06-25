@@ -1,9 +1,7 @@
 ﻿angular
-    .module("demo", ['ngConstellation'])
-    .controller('mycontroller', ['$scope', 'constellationConsumer',
+    .module("algoApp", ['ngConstellation'])
+    .controller('mainController', ['$scope', 'constellationConsumer',
     function ($scope, constellation) {
-
-        //votre controlleur
 
         $scope.state = false;
         $scope.listeAlgos = [];
