@@ -53,111 +53,124 @@
                 <!-- /.navbar-collapse -->
             </div>
             <!-- /.container -->
-        </nav>
-        <!-- Page Content -->
-        <div class="container" ng-controller="mainController">
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Liste des Algorithmes
-                    </h1>
-                </div>
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-md-7">
-                    <a href="#">
-                        <img class="img-responsive" src="http://www.erecapluriel.fr/wp-content/uploads/creer-votre-entreprise.jpg" width="700" alt="" />
-                    </a>
-                </div>
-                <div class="col-md-5">
-                    <h3>Nouvel Algorithme</h3>
-                    <a ng-click="toggle = !toggle" class="btn btn-primary" href="/HtmlPage.html#?sentinel={{sent}}">
-                        Créer <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div>
-            </div>
-            <!-- /.row -->
-            <hr />
-            <h2>Algorithmes actifs : </h2>
-            <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
-                <div ng-if="algo.IsActive">
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <a href="">
-                                <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt=""/>
-                            </a>
-                        </div>
-                        <div class="col-md-5">
-                            <h3>{{algo.Name}}</h3>
-                            <h4>Description</h4>
-                            <p>{{algo.Description}}</p>
-                            <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sent}}">
-                            Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </listeAlgos>
-            <hr />
-            <h2>Algorithmes en pause : </h2>
-            <listeAlgos ng-repeat="algo in listeAlgos[1].Value ">
-                <div ng-if="algo.IsActive === false">
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <a href="">
-                                <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt=""
-                                     ng-style="{'filter': 'grayscale(100%)', '-webkit-filter' : 'grayscale(100%)',
-                                     '-moz-filter' : 'grayscale(100%)', '-ms-filter' : 'grayscale(100%)' , '-o-filter': 'grayscale(100%)'}" />
-                            </a>
-                        </div>
-                        <div class="col-md-5">
-                            <h3>{{algo.Name}}</h3>
-                            <h4>Description</h4>
-                            <p>{{algo.Description}}</p>
-                            <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sent}}">
-                            Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </listeAlgos>
-            <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
-                <div ng-if="algo.IsActive === false">
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <a href="">
-                                <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt=""
-                                     ng-style="{'filter': 'grayscale(100%)', '-webkit-filter' : 'grayscale(100%)',
-                                     '-moz-filter' : 'grayscale(100%)', '-ms-filter' : 'grayscale(100%)' , '-o-filter': 'grayscale(100%)'}" />
-                            </a>
-                        </div>
-                        <div class="col-md-5">
-                            <h3>{{algo.Name}}</h3>
-                            <h4>Description</h4>
-                            <p>{{algo.Description}}</p>
-                            <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sent}}">
-                            Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </listeAlgos>
-            <!-- /.row -->
-            <hr>
+        </nav>        
+            <!-- Page Content -->
+            <div class="container" ng-controller="mainController">
 
-            <!-- Footer -->
-            <footer>
+                <div class="alert alert-success" ng-show="ConnectionSuccess">
+                    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Connecté à Constellation</strong>, données récupérées depuis la sentinelle : {{sentinelName}}.
+                </div>
+                <div class="alert alert-info" ng-show="ConnectionWait">
+                    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>En attente de Constellation</strong>, recharger la page si la connection prend trop de temps.
+                </div>
+
+                <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>projetVEL @ISEN-CIR59</p>
+                        <h1 class="page-header">
+                            Liste des Algorithmes
+                        </h1>
                     </div>
                 </div>
                 <!-- /.row -->
-            </footer>
+                <div class="row">
+                    <div class="col-md-7">
+                        <a href="#">
+                            <img class="img-responsive" src="http://www.erecapluriel.fr/wp-content/uploads/creer-votre-entreprise.jpg" width="700" alt="" />
+                        </a>
+                    </div>
+                    <div class="col-md-5">
+                        <h3>Nouvel Algorithme</h3>
+                        <a ng-click="toggle = !toggle" class="btn btn-primary" href="/HtmlPage.html#?sentinel={{sentinelName}}">
+                            Créer <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <hr />
+                <h2>Algorithmes actifs : </h2>
+                <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
+                    <div ng-if="algo.IsActive">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <a href="">
+                                    <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt="" />
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <h3>{{algo.Name}}</h3>
+                                <h4>Description</h4>
+                                <p>{{algo.Description}}</p>
+                                <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sentinelName}}">
+                                    Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </listeAlgos>
+                <hr />
+                <h2>Algorithmes en pause : </h2>
+                <listeAlgos ng-repeat="algo in listeAlgos[1].Value ">
+                    <div ng-if="algo.IsActive === false">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <a href="">
+                                    <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt=""
+                                         ng-style="{'filter': 'grayscale(100%)', '-webkit-filter' : 'grayscale(100%)',
+                                     '-moz-filter' : 'grayscale(100%)', '-ms-filter' : 'grayscale(100%)' , '-o-filter': 'grayscale(100%)'}" />
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <h3>{{algo.Name}}</h3>
+                                <h4>Description</h4>
+                                <p>{{algo.Description}}</p>
+                                <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sentinelName}}">
+                                    Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </listeAlgos>
+                <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
+                    <div ng-if="algo.IsActive === false">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <a href="">
+                                    <img class="img-responsive" width="700" src="{{algo.URLPhotoDescription}}" alt=""
+                                         ng-style="{'filter': 'grayscale(100%)', '-webkit-filter' : 'grayscale(100%)',
+                                     '-moz-filter' : 'grayscale(100%)', '-ms-filter' : 'grayscale(100%)' , '-o-filter': 'grayscale(100%)'}" />
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <h3>{{algo.Name}}</h3>
+                                <h4>Description</h4>
+                                <p>{{algo.Description}}</p>
+                                <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sentinelName}}">
+                                    Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </listeAlgos>
+                <!-- /.row -->
+                <hr>
+
+                <!-- Footer -->
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>projetVEL @ISEN-CIR59</p>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </footer>
+            </div>
         </div>
-    </div>
 </body>
 
 </html>

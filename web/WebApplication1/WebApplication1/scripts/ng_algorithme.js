@@ -59,12 +59,13 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
                     "ReactivationPeriode": "Minutes"
                 }
             }
-        $scope.sent = "Developer";
+        $scope.ConnectionSuccess = false;
+        $scope.LoadingAlgoSuccess = false;
+
         if ($location.search().sentinel)
         {
             $scope.sent = $location.search().sentinel;
-        }
-        
+        }        
         $scope.algoName = undefined;
 
         if ($location.search().name) {
@@ -78,14 +79,17 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
-
+                //cree une nouvelle sentinelle
                 if ($scope[stateobject.SentinelName] == undefined) {
                     $scope[stateobject.SentinelName] = {};
                 }
+                //cree un nouveau package a la sentinelle
                 if ($scope[stateobject.SentinelName][stateobject.PackageName] == undefined) {
                     $scope[stateobject.SentinelName][stateobject.PackageName] = {};
                 }
+                //associe le SO au couple sentinel/package
                 $scope[stateobject.SentinelName][stateobject.PackageName][stateobject.Name] = stateobject;
+               
                 if ($scope[$scope.sent] != undefined && $scope[$scope.sent]['AlgorithmePackage'] != undefined && $scope[$scope.sent]['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
 
                     $scope.listeAlgos[0] = $scope[$scope.sent]['AlgorithmePackage']['PausedAlgorithmes'];
@@ -94,8 +98,9 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
 
                     $scope.listeAlgos[1] = $scope[$scope.sent]['AlgorithmePackage']['Algorithmes'];
                 }
-                if ($scope.listeAlgos.length == 2 && $scope.algoName != undefined) {
+                if ($scope.listeAlgos.length == 2) {
                     $scope.loadAlgo($scope.listeAlgos);
+                    $scope.LoadingAlgoSuccess = true;
                 }
             });
         });
@@ -106,8 +111,9 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
             });
 
             if (change.newState == $.signalR.connectionState.connected) {
-
-                constellation.requestSubscribeStateObjects("*", "AlgorithmePackage", "*", "*");
+                
+                constellation.requestStateObjects("*", "AlgorithmePackage", "*", "*");
+                $scope.ConnectionSuccess = true;
             }
         });
         $scope.loadAlgo = function (algos) {
@@ -128,6 +134,17 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
             $scope.Algorithme.Conditions.push($scope.ConditionsPrototype);
         }
 
+        $scope.verifAndSendAlgo = function()
+        {
+            //faire les verifs d'algo : conditions/exec vides, ...
+
+            //fonctionne
+            //constellation.sendMessage({ Scope: 'Package', Args: ['DESKTOP-E5D5ULL' + '/package1'] }, 'insert', 'hilihou');
+
+            // ! si on n'a qu'un seul argument a revoyer (ce qui est le cas ici), on renvoie un élément simple, pas un tableau
+            //constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
+            window.location = 'http://localhost:56215/';
+        }
 
 
         constellation.connect();

@@ -46,8 +46,25 @@
             </div>
         </nav>
         <div class="container">
-            <button type="button" class="btn btn-primary pull-right top">Envoyer à Constellation</button>
-            <button type="button" class="btn btn-primary pull-left top">Retour Index</button>
+            <div class="alert alert-success" ng-show="ConnectionSuccess && sent != undefined && LoadingAlgoSuccess">
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Connecté à Constellation</strong>, données récupérées depuis la sentinelle : {{sent}}.
+            </div>
+            <div class="alert alert-info" ng-show="!ConnectionSuccess && sent != undefined">
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>En attente de Constellation</strong>, recharger la page si le chargement est trop long.
+            </div>
+            <div class="alert alert-warning" ng-show="!LoadingAlgoSuccess && sent != undefined && ConnectionSuccess">
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Problème de connection avec la Sentinelle</strong>, retournez à l'index et rechargez l'Algorithme.
+            </div>
+            <div class="alert alert-danger" ng-show="sent == undefined">
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Sentinelle non communiquée</strong>, retournez à l'index et rechargez l'Algorithme.
+            </div>
+            <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined 
+                    && LoadingAlgoSuccess" ng-click="verifAndSendAlgo()">Envoyer à Constellation</button>
+            <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
             <div><h1 class="page-header" style="text-align:center">Nom (TextInput) : {{Algorithme.Name}}</h1></div>
             <div class="row">
                 <div class="col-md-7">

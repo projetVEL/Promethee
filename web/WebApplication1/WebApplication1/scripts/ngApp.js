@@ -3,51 +3,62 @@
     .controller('mainController', ['$scope', 'constellationConsumer',
     function ($scope, constellation) {
 
-        $scope.sent = "Developer";
         $scope.state = false;
         $scope.listeAlgos = [];
+        $scope.listeSentinelsName = [];
+        $scope.sentinelName = undefined;
+        $scope.ConnectionWait = true;
+        $scope.ConnectionSuccess = false;
 
         constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "test");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
-
+                //cree une nouvelle sentinelle
                 if ($scope[stateobject.SentinelName] == undefined) {
                     $scope[stateobject.SentinelName] = {};
+                    //on cree une liste de sentinelles ayant le package AlgorithmePackage
+                    $scope.listeSentinelsName.push(stateobject.SentinelName);
+                    $scope.sentinelName = stateobject.SentinelName;
                 }
+                //cree un nouveau package a la sentinelle
                 if ($scope[stateobject.SentinelName][stateobject.PackageName] == undefined) {
                     $scope[stateobject.SentinelName][stateobject.PackageName] = {}; 
                 }
+                //associe le SO au couple sentinel/package
                 $scope[stateobject.SentinelName][stateobject.PackageName][stateobject.Name] = stateobject;
-                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
-                    
-                    $scope.listeAlgos[0] = $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'];
-                }
-                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['Algorithmes'] != undefined) {
 
-                    $scope.listeAlgos[1] = $scope['Developer']['AlgorithmePackage']['Algorithmes'];
+                //definit la sentinelle a prendre (de preference pas Developer)
+                for (sentinel in $scope.listeSentinelsName)
+                {
+                    if ($scope.listeSentinelsName[sentinel] != "Developer")
+                    {
+                        $scope.sentinelName = $scope.listeSentinelsName[sentinel];
+                    }
+                }
+
+                if ($scope[$scope.sentinelName] != undefined && $scope[$scope.sentinelName]['AlgorithmePackage'] != undefined && $scope[$scope.sentinelName]['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
+                    
+                    $scope.listeAlgos[0] = $scope[$scope.sentinelName]['AlgorithmePackage']['PausedAlgorithmes'];
+                }
+                if ($scope[$scope.sentinelName] != undefined && $scope[$scope.sentinelName]['AlgorithmePackage'] != undefined && $scope[$scope.sentinelName]['AlgorithmePackage']['Algorithmes'] != undefined) {
+
+                    $scope.listeAlgos[1] = $scope[$scope.sentinelName]['AlgorithmePackage']['Algorithmes'];
                 }
             });
         });
-        //$scope.state; équivaut à $scope['state'];
-
         constellation.onConnectionStateChanged(function (change) {
             $scope.$apply(function () {
                 $scope.state = change.newState == $.signalR.connectionState.connected;
-                var a = $scope.state;
             });
 
             if (change.newState == $.signalR.connectionState.connected) {
-                constellation.requestSubscribeStateObjects("*", "AlgorithmePackage", "*", "*");
+                constellation.requestStateObjects("*", "AlgorithmePackage", "*", "*");
+                $scope.ConnectionSuccess = true;
+                $scope.ConnectionWait = false;
             }
         });
 
-
-
-
-        $scope.Test = function () {
-            constellation.sendMessage({ Scope: 'Package', Args: ['ConstellationPackageConsole1'] }, 'changeVal', [42, "send from angular"]);
-        };
 
         constellation.connect();
 
