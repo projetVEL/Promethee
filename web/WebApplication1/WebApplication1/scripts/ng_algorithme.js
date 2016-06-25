@@ -2,9 +2,9 @@ var algoApp = angular.module("algoApp", ['ngConstellation']);
 algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$location',
     function ($scope, constellation, $location) {
         $scope.ConditionsPrototype ={
-                "Value": 0,
+                "Value": undefined,
                 "DynamicValue": null,
-                "OperationTested": 3,
+                "OperationTested": undefined,
                 "IsTrue": false,
                 "Variables": {
                     "sentinel": "",
@@ -21,7 +21,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
         $scope.Algorithme =
             {
                 "Description": "",
-                "URLPhotoDescription": "",
+                "URLPhotoDescription": "http://lorempixel.com/700/300/technics/",
                 "Waiting": 0,
                 "IsActive": true,
                 "Conditions": [
@@ -59,8 +59,12 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
                     "ReactivationPeriode": "Minutes"
                 }
             }
-
-        $scope.sent = $location.search().sentinel;
+        $scope.sent = "Developer";
+        if ($location.search().sentinel)
+        {
+            $scope.sent = $location.search().sentinel;
+        }
+        
         $scope.algoName = undefined;
 
         if ($location.search().name) {
@@ -70,7 +74,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
         $scope.state = false;
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "test");
+        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "test");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -82,13 +86,13 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
                     $scope[stateobject.SentinelName][stateobject.PackageName] = {};
                 }
                 $scope[stateobject.SentinelName][stateobject.PackageName][stateobject.Name] = stateobject;
-                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
+                if ($scope[$scope.sent] != undefined && $scope[$scope.sent]['AlgorithmePackage'] != undefined && $scope[$scope.sent]['AlgorithmePackage']['PausedAlgorithmes'] != undefined) {
 
-                    $scope.listeAlgos[0] = $scope['Developer']['AlgorithmePackage']['PausedAlgorithmes'];
+                    $scope.listeAlgos[0] = $scope[$scope.sent]['AlgorithmePackage']['PausedAlgorithmes'];
                 }
-                if ($scope['Developer'] != undefined && $scope['Developer']['AlgorithmePackage'] != undefined && $scope['Developer']['AlgorithmePackage']['Algorithmes'] != undefined) {
+                if ($scope[$scope.sent] != undefined && $scope[$scope.sent]['AlgorithmePackage'] != undefined && $scope[$scope.sent]['AlgorithmePackage']['Algorithmes'] != undefined) {
 
-                    $scope.listeAlgos[1] = $scope['Developer']['AlgorithmePackage']['Algorithmes'];
+                    $scope.listeAlgos[1] = $scope[$scope.sent]['AlgorithmePackage']['Algorithmes'];
                 }
                 if ($scope.listeAlgos.length == 2 && $scope.algoName != undefined) {
                     $scope.loadAlgo($scope.listeAlgos);
@@ -131,8 +135,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
 algoApp.controller('titleController', ['$scope', '$location',
     function ($scope, $location) {
         $scope.title = "Nouvel Algorithme";
-        if ($location.search().algo) {
-            $scope.title = "Algorithme " + $location.search().algo;
+        if ($location.search().name) {
+            $scope.title = "Algorithme : " + $location.search().name;
         }
     }]);
-
