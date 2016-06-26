@@ -111,9 +111,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', '$locat
             });
 
             if (change.newState == $.signalR.connectionState.connected) {
-                
-                constellation.requestStateObjects("*", "AlgorithmePackage", "*", "*");
                 $scope.ConnectionSuccess = true;
+                constellation.requestStateObjects("*", "AlgorithmePackage", "*", "*");                
             }
         });
         $scope.loadAlgo = function (algos) {
