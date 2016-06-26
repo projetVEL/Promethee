@@ -78,8 +78,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
 
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "constellationAlgoApp");
-        controller.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "controllerAlogApp");
+        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "constellationAlgoApp");
+        controller.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "controllerAlogApp");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -131,11 +131,36 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         };
 
         $scope.addExecution = function () {
-            $scope.Algorithme.Executions.push($scope.ExecutionsPrototype);
-        }
+            ExecutionPrototype = {
+                "Arguments": [],
+                "Variables": {
+                    "sentinel": "",
+                    "package": "",
+                    "callBack": ""
+                }
+            };
+            $scope.Algorithme.Executions.push(ExecutionPrototype);
+        };
         $scope.addCondition = function () {
-            $scope.Algorithme.Conditions.push($scope.ConditionsPrototype);
-        }
+            ConditionsPrototype = {
+                "Value": undefined,
+                "DynamicValue": null,
+                "OperationTested": undefined,
+                "IsTrue": false,
+                "Variables": {
+                    "sentinel": "",
+                    "package": "",
+                    "variable": ""
+                }
+            };
+            $scope.Algorithme.Conditions.push(ConditionsPrototype);
+        };
+        $scope.deleteCondition = function () {
+            $scope.Algorithme.Conditions.pop();
+        };
+        $scope.deleteExecution = function () {
+            $scope.Algorithme.Executions.pop();
+        };
         $scope.verifAndSendAlgo = function () {
             //faire les verifs d'algo : conditions/exec vides, ...
 
@@ -178,43 +203,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         });        
 
         $scope.getSentinels = function () {
-            controller.requestSentinelsList();
-            //requestPackageDescriptor(message.PackageName)
-            //requestSentinelUpdates();
-            //requestPackagesList(sentinel.Description.SentinelName);
-            /*
-            $rootScope.controller.onUpdateSentinel(function (sentinel) {
-                $rootScope.$apply(function () {
-                    $rootScope.sentinels[sentinel.Description.SentinelName] = sentinel;
-                });
-                $rootScope.controller.requestPackagesList(sentinel.Description.SentinelName);
-            });
-            $rootScope.controller.onUpdatePackageList(function (message) {
-                for (var idx in message.List) {
-                    if ($rootScope.packages[message.SentinelName + "/" + message.List[idx].Package.Name] === undefined) {
-                        $rootScope.packages[message.SentinelName + "/" + message.List[idx].Package.Name] = message.List[idx];
-                        // For messages callbacks explorer :
-                        if ($rootScope.sentinelsByPackage[message.List[idx].Package.Name] === undefined) {
-                            $rootScope.sentinelsByPackage[message.List[idx].Package.Name] = [];
-                        }
-                        $rootScope.sentinelsByPackage[message.List[idx].Package.Name].push(message.SentinelName);
-                        $rootScope.controller.requestPackageDescriptor(message.List[idx].Package.Name);
-                    }
-                }
-                
-            $rootScope.controller.onUpdatePackageDescriptor(function (message) {
-                $rootScope.$apply(function () {
-                    $rootScope.packagesDescriptors[message.PackageName] = message.Descriptor;
-                    if (message.Descriptor != null && message.Descriptor.MessageCallbacks != null) {
-                        for (var idx in message.Descriptor.MessageCallbacks) {
-                            $rootScope.messagesCallbacks[message.PackageName + "/" + message.Descriptor.MessageCallbacks[idx].MessageKey] = { PackageName: message.PackageName, MessageCallback: message.Descriptor.MessageCallbacks[idx] };
-                        }
-                    }
-                });
-
-
-
-                */
+            controller.requestSentinelsList();           
         };
 
 

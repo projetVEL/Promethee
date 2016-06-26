@@ -101,35 +101,87 @@
             <div class="row, table-responsive">
                 <div class="col-sm-offset-1 col-sm-4">
                     <h1 style="text-align : center">IF</h1>
-                    <div class="well" ng-repeat="i in Algorithme.Conditions track by $index">
+                    <div class="well" ng-repeat="(keyCond, valueCond) in Algorithme.Conditions track by $index">
                         <div>
-                            Sentinelle : {{Algorithme.Conditions[$index].Variables.sentinel}}
-                            <select ng-model="Algorithme.Conditions[$index].Variables.sentinel">
+                            Sentinelle :
+                            <select ng-model="Algorithme.Conditions[keyCond].Variables.sentinel" ng-change="Algorithme.Conditions[keyCond].Variables.package='';
+                                    Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
                                 <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">{{key}}</option>
                             </select>
                         </div>
                         <div>
-                            Package : {{Algorithme.Conditions[$index].Variables.package}}
-                            <select ng-model="Algorithme.Conditions[$index].Variables.package">
-                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[$index].Variables.sentinel]"
+                            Package :
+                            <select ng-model="Algorithme.Conditions[keyCond].Variables.package" ng-show="Algorithme.Conditions[keyCond].Variables.sentinel!=''"
+                                    ng-change="Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
+                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
                                         value="{{key}}">
                                     {{key}}
                                 </option>
                             </select>
                         </div>
                         <div>
-                            Variable : {{Algorithme.Conditions[$index].Variables.variable}}
-                            <select ng-model="Algorithme.Conditions[$index].Variables.variable">
-                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[$index].Variables.sentinel]
-                                        [Algorithme.Conditions[$index].Variables.package]" ng-if="key != 'PackageDescriptor'" value="{{key}}">
-                                    {{key}}
+                            Variable :
+                            <select ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
+                                    ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
+                                <option ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
+                                        [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" value="{{keyVar}}">
+                                    {{keyVar}}
                                 </option>
                             </select>
-                            <span> (liste) {{Algorithme.Conditions[$index].OperationTested}} </span>
-                            <span> (zoneInputText) {{Algorithme.Conditions[$index].Value}} </span>
+                            <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0"/>
+                            <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
+                                <option value="1"> égal à </option>
+                                <option value="2"> différent de </option>
+                            </select>
+                            <select ng-model="Algorithme.Conditions[keyCond].OperationTested" 
+                                    ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )">
+                                <option value="1"> égal à </option>
+                                <option value="2"> différent de </option>
+                                <option value="3"> strictement inférieur à </option>
+                                <option value="4"> inférieur ou égal à </option>
+                                <option value="5"> strictement supérieur à </option>
+                                <option value="6"> supérieur ou égal à </option>
+                            </select>
+                            <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Boolean'">
+                                <option value="true"> est vrai </option>
+                                <option value="false"> est faux </option>
+                            </select>
+                            <input type="text" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
+                            <input type="number" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteCondition()">Supprimer</button>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="afficherPlageHoraire = !afficherPlageHoraire">
                         {{afficherPlageHoraire ? 'Moins' : 'Plus'}} d'options
                     </button>
@@ -182,16 +234,51 @@
 
                 <div class="col-sm-offset-1 col-sm-5">
                     <h1 style="text-align:center">THEN</h1>
-                    <div class="well" ng-repeat="i in Algorithme.Executions track by $index">
-                        <div>Sentinelle (liste) : {{Algorithme.Executions[$index].Variables.sentinel}} </div>
-                        <div>Package (liste) : {{Algorithme.Executions[$index].Variables.package}}</div>
+                    <div class="well" ng-repeat="(keyExec, valueExec) in Algorithme.Executions track by $index">
                         <div>
-                            CallBack (liste) : {{Algorithme.Executions[$index].Variables.callBack}}( (addButton : inputText)
-                            <span ng-repeat="i in Algorithme.Executions[$index].Arguments">{{Algorithme.Executions[$parent.$index].Arguments[$index]}}, </span>
-                            )
+                            Sentinelle :
+                            <select ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
+                                    Algorithme.Executions[keyExec].Variables.callBack='';">
+                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">{{key}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            Package :
+                            <select ng-model="Algorithme.Executions[keyExec].Variables.package" ng-show="Algorithme.Executions[keyExec].Variables.sentinel!=''"
+                                    ng-change="Algorithme.Executions[keyExec].Variables.Arguments=[];Algorithme.Executions[keyExec].callBack=undefined;">
+                                <option ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
+                                        value="{{key}}">
+                                    {{key}}
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            CallBack : 
+                            <select ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-show="Algorithme.Executions[keyExec].Variables.package!=''"
+                                    ng-change="Algorithme.Executions[keyExec].Variables.Arguments=[];">
+                                <option ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                                        .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
+                                        value="{{valuekk.MessageKey}}">
+                                    {{valuekk.MessageKey}}
+                                </option>
+                            </select>
+                            <span ng-repeat="(keyCB,valueCB) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                                  .PackageDescriptor.MessageCallbacks" ng-if="valueCB.MessageKey==Algorithme.Executions[keyExec].Variables.callBack">                                
+                                <span ng-repeat="(key, value) in valueCB.Parameters"><br />
+                                    {{value.Description ? 'Description' + value.Description : ''}} Type : {{value.TypeName}} Name : {{value.Name}} <br/>
+                                 <input type="text" ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'"/> 
+                                    <input type="number" ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
+                                           value.TypeName=='System.UInt64' || value.TypeName=='System.Double' || value.TypeName=='System.Single'" />                                    
+                                    <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'">
+                                        <option value="true"> est vrai </option>
+                                        <option value="false"> est faux </option>
+                                    </select>
+                                </span><br />
+                            </span>                          
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteExecution()">Supprimer</button>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="afficherDesactivation = !afficherDesactivation">
                         {{afficherDesactivation ? 'Moins' : 'Plus'}} d'options
                     </button>
