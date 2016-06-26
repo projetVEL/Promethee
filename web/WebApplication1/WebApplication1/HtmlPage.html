@@ -21,187 +21,206 @@
 
 </head>
 <body ng-controller="mainController">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">projetVEL</a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="https://github.com/projetVEL/projetVEL">About</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/projetVEL/projetVEL">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-        </nav>
-        <!-- alerts-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="alert alert-success" ng-show="ConnectionSuccess && sent != undefined && LoadingAlgoSuccess">
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Connecté à Constellation</strong>, données récupérées depuis la sentinelle : {{sent}}.
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">projetVEL</a>
             </div>
-            <div class="alert alert-info" ng-show="!ConnectionSuccess && sent != undefined">
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>En attente de Constellation</strong>, recharger la page si le chargement est trop long.
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="https://github.com/projetVEL/projetVEL">About</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/projetVEL/projetVEL">Contact</a>
+                    </li>
+                </ul>
             </div>
-            <div class="alert alert-warning" ng-show="!LoadingAlgoSuccess && sent != undefined && ConnectionSuccess">
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Problème de connection avec la Sentinelle</strong>, retournez à l'index et rechargez l'Algorithme.
-            </div>
-            <div class="alert alert-danger" ng-show="sent == undefined">
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Sentinelle non communiquée</strong>, retournez à l'index et rechargez l'Algorithme.
-            </div>
-            <!-- buttons -->
-            <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <!-- alerts-->
+    <div class="container">
+        <div class="alert alert-success" ng-show="ConnectionSuccess && sent != undefined && LoadingAlgoSuccess">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Connecté à Constellation</strong>, données récupérées depuis la sentinelle : {{sent}}.
+        </div>
+        <div class="alert alert-info" ng-show="!ConnectionSuccess && sent != undefined">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>En attente de Constellation</strong>, recharger la page si le chargement est trop long.
+        </div>
+        <div class="alert alert-warning" ng-show="!LoadingAlgoSuccess && sent != undefined && ConnectionSuccess">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Problème de connection avec la Sentinelle</strong>, retournez à l'index et rechargez l'Algorithme.
+        </div>
+        <div class="alert alert-danger" ng-show="sent == undefined">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Sentinelle non communiquée</strong>, retournez à l'index et rechargez l'Algorithme.
+        </div>
+        <!-- buttons -->
+        <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined
                     && LoadingAlgoSuccess" ng-click="verifAndSendAlgo()">
-                Envoyer à Constellation
-            </button>
-            <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
-            <!-- title then url's picture and description -->
-            <div ng-show="LoadingAlgoSuccess">
-                <div>                        
-                    <h1 class="page-header" style="text-align:center">                        
-                        Nom :
-                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset;
+            Envoyer à Constellation
+        </button>
+        <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
+        <!-- title then url's picture and description -->
+        <div ng-show="LoadingAlgoSuccess">
+            <div>
+                <h1 class="page-header" style="text-align:center">
+                    Nom :
+                    <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset;
                       height: 45px; width: 275px;" ng-model="Algorithme.Name" />
-                        Activation : <input type="checkbox" ng-model="Algorithme.IsActive">
-                    </h1>
+                    Activation : <input type="checkbox" ng-model="Algorithme.IsActive">
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
+                         width="700" style="max-height:290px;" />
                 </div>
-                <div class="row">
-                    <div class="col-md-7">
-                        <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
-                             width="700" style="max-height:290px;" />
+                <div class="col-md-5">
+                    <label>
+                        URL de la photo de présentation : <br />
+                        <input type="text" name="input" style="width:455px;" ng-model="Algorithme.URLPhotoDescription">
+                    </label>
+                    <label>
+                        Description : <br />
+                        <textarea class="form-control" style="height:215px; width:455px; max-width:455px; max-height:215px; resize:none;"
+                                  ng-model="Algorithme.Description"></textarea>
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <div class="row, table-responsive">
+                <div class="col-sm-offset-1 col-sm-4">
+                    <h1 style="text-align : center">IF</h1>
+                    <div class="well" ng-repeat="i in Algorithme.Conditions track by $index">
+                        <div>
+                            Sentinelle : {{Algorithme.Conditions[$index].Variables.sentinel}}
+                            <select ng-model="Algorithme.Conditions[$index].Variables.sentinel">
+                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">{{key}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            Package : {{Algorithme.Conditions[$index].Variables.package}}
+                            <select ng-model="Algorithme.Conditions[$index].Variables.package">
+                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[$index].Variables.sentinel]"
+                                        value="{{key}}">
+                                    {{key}}
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            Variable : {{Algorithme.Conditions[$index].Variables.variable}}
+                            <select ng-model="Algorithme.Conditions[$index].Variables.variable">
+                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[$index].Variables.sentinel]
+                                        [Algorithme.Conditions[$index].Variables.package]" ng-if="key != 'PackageDescriptor'" value="{{key}}">
+                                    {{key}}
+                                </option>
+                            </select>
+                            <span> (liste) {{Algorithme.Conditions[$index].OperationTested}} </span>
+                            <span> (zoneInputText) {{Algorithme.Conditions[$index].Value}} </span>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <label>
-                            URL de la photo de présentation : <br />
-                            <input type="text" name="input" style="width:455px;" ng-model="Algorithme.URLPhotoDescription">
-                        </label>
-                        <label>
-                            Description : <br />
-                            <textarea class="form-control" style="height:215px; width:455px; max-width:455px; max-height:215px; resize:none;"
-                                      ng-model="Algorithme.Description"></textarea>
-                        </label>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="afficherPlageHoraire = !afficherPlageHoraire">
+                        {{afficherPlageHoraire ? 'Moins' : 'Plus'}} d'options
+                    </button>
+                    <div ng-show="afficherPlageHoraire">
+                        <h3>Plage horaire :</h3>
+                        <div class="well">
+                            <div>
+                                <label>
+                                    Lundi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Monday">
+                                </label><br />
+                                <label>
+                                    Mardi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Tuesday">
+                                </label><br />
+                                <label>
+                                    Mercredi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Wednesday">
+                                </label><br />
+                                <label>
+                                    Jeudi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Thursday">
+                                </label><br />
+                                <label>
+                                    Vendredi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Friday">
+                                </label><br />
+                                <label>
+                                    Samedi:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Saturday">
+                                </label><br />
+                                <label>
+                                    Dimanche:
+                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Sunday">
+                                </label><br />
+                            </div>
+                            <div>
+                                Plages temporelles (range sliders) :
+
+                                <div>secondes</div>
+                                <div>min</div>
+                                <div>heures</div>
+                                <div>jours</div>
+                                <div>mois</div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row, table-responsive">
-                    <div class="col-sm-offset-1 col-sm-4">
-                        <h1 style="text-align : center">IF</h1>
-                        <div class="well" ng-repeat="i in Algorithme.Conditions track by $index">
-                            <div>Sentinelle (liste) : {{Algorithme.Conditions[$index].Variables.sentinel}} </div>
-                            <div>Package (liste) : {{Algorithme.Conditions[$index].Variables.package}}</div>
-                            <div>
-                                Variable (liste) : {{Algorithme.Conditions[$index].Variables.variable}}
-                                <span> (liste) {{Algorithme.Conditions[$index].OperationTested}} </span>
-                                <span> (zoneInputText) {{Algorithme.Conditions[$index].Value}} </span>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="afficherPlageHoraire = !afficherPlageHoraire">
-                            {{afficherPlageHoraire ? 'Moins' : 'Plus'}} d'options
-                        </button>
-                        <div ng-show="afficherPlageHoraire">
-                            <h3>Plage horaire (boutons plus sexy à intégrer plus tard) :</h3>
-                            <div class="well">
-                                <div>
-                                    <label>
-                                        Lundi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Monday">
-                                    </label><br />
-                                    <label>
-                                        Mardi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Tuesday">
-                                    </label><br />
-                                    <label>
-                                        Mercredi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Wednesday">
-                                    </label><br />
-                                    <label>
-                                        Jeudi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Thursday">
-                                    </label><br />
-                                    <label>
-                                        Vendredi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Friday">
-                                    </label><br />
-                                    <label>
-                                        Samedi:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Saturday">
-                                    </label><br />
-                                    <label>
-                                        Dimanche:
-                                        <input type="checkbox" ng-model="Algorithme.Schedule.Week.Sunday">
-                                    </label><br />
-                                </div>
-                                <div>
-                                    Plages temporelles (range sliders) :
 
-                                    <div>secondes</div>
-                                    <div>min</div>
-                                    <div>heures</div>
-                                    <div>jours</div>
-                                    <div>mois</div>
-
-                                </div>                                
-                            </div>
+                <div class="col-sm-offset-1 col-sm-5">
+                    <h1 style="text-align:center">THEN</h1>
+                    <div class="well" ng-repeat="i in Algorithme.Executions track by $index">
+                        <div>Sentinelle (liste) : {{Algorithme.Executions[$index].Variables.sentinel}} </div>
+                        <div>Package (liste) : {{Algorithme.Executions[$index].Variables.package}}</div>
+                        <div>
+                            CallBack (liste) : {{Algorithme.Executions[$index].Variables.callBack}}( (addButton : inputText)
+                            <span ng-repeat="i in Algorithme.Executions[$index].Arguments">{{Algorithme.Executions[$parent.$index].Arguments[$index]}}, </span>
+                            )
                         </div>
                     </div>
-
-                    <div class="col-sm-offset-1 col-sm-5">
-                        <h1 style="text-align:center">THEN</h1>
-                        <div class="well" ng-repeat="i in Algorithme.Executions track by $index">
-                            <div>Sentinelle (liste) : {{Algorithme.Executions[$index].Variables.sentinel}} </div>
-                            <div>Package (liste) : {{Algorithme.Executions[$index].Variables.package}}</div>
-                            <div>
-                                CallBack (liste) : {{Algorithme.Executions[$index].Variables.callBack}}( (addButton : inputText)
-                                <span ng-repeat="i in Algorithme.Executions[$index].Arguments">{{Algorithme.Executions[$parent.$index].Arguments[$index]}}, </span>
-                                )
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="afficherDesactivation = !afficherDesactivation">
-                            {{afficherDesactivation ? 'Moins' : 'Plus'}} d'options
-                        </button>
-                        <div ng-show="afficherDesactivation">
-                            <h3>Désactivation de l'Algorithme :</h3>
-                            <div class="well">                               
-                                    Temps d'attente :
-                                    <input type="number" min="0" ng-change="Algorithme.DisableAfterRealisation = false" 
-                                           ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
-                                    <label>
-                                        Désactiver après exécution :
-                                        <input type="checkbox" ng-click="!Algorithme.DisableAfterRealisation ? null : Algorithme.Waiting = 0"
-                                               ng-model="Algorithme.DisableAfterRealisation" />
-                                    </label>
-                                    <div ng-show="Algorithme.DisableAfterRealisation">
-                                        Se réactive chaque plage
-                                        d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
-                                        <select ng-model="Algorithme.Schedule.ReactivationPeriode">
-                                            <option value="Minutes">Minutes</option>
-                                            <option value="Hours">Heures</option>
-                                            <option value="Days">Jours</option>
-                                            <option value="Months">Mois</option>
-                                        </select>
-                                    </div>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="afficherDesactivation = !afficherDesactivation">
+                        {{afficherDesactivation ? 'Moins' : 'Plus'}} d'options
+                    </button>
+                    <div ng-show="afficherDesactivation">
+                        <h3>Désactivation de l'Algorithme :</h3>
+                        <div class="well">
+                            Temps d'attente :
+                            <input type="number" min="0" ng-change="Algorithme.DisableAfterRealisation = false"
+                                   ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
+                            <label>
+                                Désactiver après exécution :
+                                <input type="checkbox" ng-click="!Algorithme.DisableAfterRealisation ? null : Algorithme.Waiting = 0"
+                                       ng-model="Algorithme.DisableAfterRealisation" />
+                            </label>
+                            <div ng-show="Algorithme.DisableAfterRealisation">
+                                Se réactive chaque plage
+                                d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
+                                <select ng-model="Algorithme.Schedule.ReactivationPeriode">
+                                    <option value="Minutes">Minutes</option>
+                                    <option value="Hours">Heures</option>
+                                    <option value="Days">Jours</option>
+                                    <option value="Months">Mois</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
