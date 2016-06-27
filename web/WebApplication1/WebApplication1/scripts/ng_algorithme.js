@@ -64,6 +64,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             }
         $scope.ConnectionControllerSuccess = false;
         $scope.ConnectionSuccess = false;
+        $scope.AlgoLoaded = false;
         $scope.LoadingAlgoSuccess = false;
         $scope.arbre = {};
 
@@ -98,10 +99,9 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
 
                     $scope.listeAlgos[1] = $scope.arbre[$scope.sent]['AlgorithmePackage']['Algorithmes'];
                 }
-                if ($scope.listeAlgos.length == 2) {
+                if ($scope.listeAlgos[0]!=undefined && $scope.listeAlgos[1]!=undefined && !$scope.AlgoLoaded) {
                     $scope.loadAlgo($scope.listeAlgos);
                     $scope.LoadingAlgoSuccess = true;
-                   // console.log($scope.listeAlgos);
                 }
             });
         });
@@ -120,12 +120,13 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         $scope.loadAlgo = function (algos) {
             for (i in algos) {
                 for (j in algos[i].Value) {
-                   // console.log($scope.algName, algos[i].Value[j].Name);
                     if (algos[i].Value[j].Name == $scope.algoName) {
                         $scope.Algorithme = algos[i].Value[j];
+                        $scope.AlgoLoaded = true;
+                        return;
                     }
                 }
-            }
+            }            
         };
 
         $scope.addExecution = function () {
