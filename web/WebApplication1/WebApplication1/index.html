@@ -90,6 +90,25 @@
             <!-- /.row -->
             <hr />
             <h2>Algorithmes actifs : </h2>
+            <listeAlgos ng-repeat="algo in listeAlgos[1].Value ">
+                <div ng-if="algo.IsActive">
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <img class="img-responsive img-thumbnail center-block" width="700" style="max-height:290px;"
+                                 src="{{algo.URLPhotoDescription}}" />
+                        </div>
+                        <div class="col-md-5">
+                            <h3>{{algo.Name}}</h3>
+                            <h4>Description</h4>
+                            <p>{{algo.Description}}</p>
+                            <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sentinelName}}">
+                                Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </listeAlgos>
             <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
                 <div ng-if="algo.IsActive">
                     <hr>
@@ -110,30 +129,9 @@
                 </div>
             </listeAlgos>
             <hr />
-            <h2>Algorithmes en pause : </h2>
-            <listeAlgos ng-repeat="algo in listeAlgos[1].Value ">
-                <div ng-if="algo.IsActive === false">
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <img class="img-responsive img-thumbnail center-block" width="700" style="max-height:290px;"
-                                  src="{{algo.URLPhotoDescription}}" alt=""
-                                 ng-style="{'filter': 'grayscale(100%)', '-webkit-filter' : 'grayscale(100%)',
-                                     '-moz-filter' : 'grayscale(100%)', '-ms-filter' : 'grayscale(100%)' , '-o-filter': 'grayscale(100%)'}" />
-                        </div>
-                        <div class="col-md-5">
-                            <h3>{{algo.Name}}</h3>
-                            <h4>Description</h4>
-                            <p>{{algo.Description}}</p>
-                            <a class="btn btn-primary" href="/HtmlPage.html#?name={{algo.Name}}&sentinel={{sentinelName}}">
-                                Voir Algorithme <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </listeAlgos>
+            <h2>Algorithmes en pause : </h2>            
             <listeAlgos ng-repeat="algo in listeAlgos[0].Value">
-                <div ng-if="algo.IsActive === false">
+                <div ng-if="!algo.IsActive">
                     <hr>
                     <div class="row">
                         <div class="col-md-7">

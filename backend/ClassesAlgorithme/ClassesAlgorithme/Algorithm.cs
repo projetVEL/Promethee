@@ -159,7 +159,26 @@ namespace ClassesAlgorithm
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] digest = md5.ComputeHash(Encoding.UTF8.GetBytes(toString()));
             string base64digest = Convert.ToBase64String(digest, 0, digest.Length);
+
+            base64digest = base64digest.Replace('=', 'a');
+            base64digest = base64digest.Replace('&', 'b');
+            base64digest = base64digest.Replace('?', 'c');
+            base64digest = base64digest.Replace('/', 'd');
+            base64digest = base64digest.Replace('\\', 'a');
+            base64digest = base64digest.Replace('.', 'a');
+            base64digest = base64digest.Replace('-', 'a');
+            base64digest = base64digest.Replace('+', 'a');
+            base64digest = base64digest.Replace('%', 'a');
+            base64digest = base64digest.Replace('*', 'a');
+            base64digest = base64digest.Replace('$', 'a');
+            base64digest = base64digest.Replace('|', 'a');
+            base64digest = base64digest.Replace('#', 'a');
+            base64digest = base64digest.Replace('~', 'a');
+            base64digest = base64digest.Replace('@', 'a');
+
+
             Name = base64digest;
+
         }
     }
 }

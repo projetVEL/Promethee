@@ -245,7 +245,7 @@
                         <div>
                             Package :
                             <select ng-model="Algorithme.Executions[keyExec].Variables.package" ng-show="Algorithme.Executions[keyExec].Variables.sentinel!=''"
-                                    ng-change="Algorithme.Executions[keyExec].Variables.Arguments=[];Algorithme.Executions[keyExec].callBack=undefined;">
+                                    ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
                                 <option ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
                                         value="{{key}}">
                                     {{key}}
@@ -255,7 +255,7 @@
                         <div>
                             CallBack : 
                             <select ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-show="Algorithme.Executions[keyExec].Variables.package!=''"
-                                    ng-change="Algorithme.Executions[keyExec].Variables.Arguments=[];">
+                                    ng-change="Algorithme.Executions[keyExec].Arguments=[];">
                                 <option ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
                                         .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
                                         value="{{valuekk.MessageKey}}">

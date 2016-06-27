@@ -24,7 +24,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         $scope.Algorithme =
             {
                 "Description": "",
-                "URLPhotoDescription": "http://lorempixel.com/700/300/technics/",
+                "URLPhotoDescription": "http://wikitravel.org/upload/shared/thumb/8/8b/Tower_bridge_London_Twilight_-_November_2006.jpg/700px-Tower_bridge_London_Twilight_-_November_2006.jpg",
                 "Waiting": 0,
                 "IsActive": true,
                 "Conditions": [
@@ -70,16 +70,12 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         if ($location.search().sentinel) {
             $scope.sent = $location.search().sentinel;
         }
-        $scope.algoName = undefined;
-
-        if ($location.search().name) {
-            $scope.algoName = $location.search().name;
-        }
+        $scope.algoName = $location.search().name;
 
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "constellationAlgoApp");
-        controller.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "controllerAlogApp");
+        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "constellationAlgoApp");
+        controller.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "controllerAlogApp");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -105,6 +101,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
                 if ($scope.listeAlgos.length == 2) {
                     $scope.loadAlgo($scope.listeAlgos);
                     $scope.LoadingAlgoSuccess = true;
+                   // console.log($scope.listeAlgos);
                 }
             });
         });
@@ -123,6 +120,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         $scope.loadAlgo = function (algos) {
             for (i in algos) {
                 for (j in algos[i].Value) {
+                   // console.log($scope.algName, algos[i].Value[j].Name);
                     if (algos[i].Value[j].Name == $scope.algoName) {
                         $scope.Algorithme = algos[i].Value[j];
                     }
@@ -163,13 +161,33 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         };
         $scope.verifAndSendAlgo = function () {
             //faire les verifs d'algo : conditions/exec vides, ...
-
-            //fonctionne
-            //constellation.sendMessage({ Scope: 'Package', Args: ['DESKTOP-E5D5ULL' + '/package1'] }, 'insert', 'hilihou');
-
+            
+            conditionToDelete = [];
+            for (index in $scope.Algorithme.Conditions)
+            {
+                if ($scope.Algorithme.Conditions[index].Value == null) {
+                    conditionToDelete.push(index);
+                }
+            }
+            conditionToDelete.reverse();
+            for (index in conditionToDelete) {
+                $scope.Algorithme.Conditions.splice(conditionToDelete[index], 1);
+            }
+            executionToDelete = [];
+            for (index in $scope.Algorithme.Executions) {
+                if ($scope.Algorithme.Executions[index].Variables.callBack == "") {
+                    executionToDelete.push(index);
+                }
+            }
+            executionToDelete.reverse();
+            for (index in executionToDelete) {
+                $scope.Algorithme.Executions.splice(executionToDelete[index], 1);
+            }
+            
             // ! si on n'a qu'un seul argument a revoyer (ce qui est le cas ici), on renvoie un élément simple, pas un tableau
-            //constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
-            window.location = 'http://localhost:56215/';
+            constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
+            console.log($scope.Algorithme);
+            //window.location = 'http://localhost:56215/';
         }
         controller.onUpdateSentinelsList(function (sentinels) {
             $scope.$apply(function () {

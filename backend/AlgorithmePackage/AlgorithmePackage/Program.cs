@@ -22,49 +22,47 @@ namespace AlgorithmePackage
   //test : un package envoyant myValue = rand(0,10) et mValue = "a" -> fonctionne
             Condition cond1 = new Condition();
             Dictionary<String, String> var1 = new Dictionary<String, String>();
-            var1["sentinel"] = "DESKTOP-FQMIBUN";
-            var1["package"] = "ConstellationPackageConsole1";
-            var1["variable"] = "myValue";            
+            var1["sentinel"] = "DESKTOP-E5D5ULL";
+            var1["package"] = "Date";
+            var1["variable"] = "Seconds";            
             cond1.Variables = var1;
             cond1.Value = 6;
             cond1.OperationTested = Operations.StrictlyLower;
             Condition cond2 = new Condition();
             Dictionary<String, String> var11 = new Dictionary<String, String>();
-            var11["sentinel"] = "DESKTOP-FQMIBUN";
-            var11["package"] = "ConstellationPackageConsole1";
-            var11["variable"] = "mValue";
+            var11["sentinel"] = "DESKTOP-E5D5ULL";
+            var11["package"] = "Date";
+            var11["variable"] = "Seconds";
             cond2.Variables = var11;
             cond2.Value = "2";
             cond2.OperationTested = Operations.Different;
             Condition cond3 = new Condition();
             Dictionary<String, String> var111 = new Dictionary<String, String>();
-            var111["sentinel"] = "DESKTOP-FQMIBUN";
-            var111["package"] = "ConstellationPackageConsole1";
-            var111["variable"] = "myValue";
+            var111["sentinel"] = "DESKTOP-E5D5ULL";
+            var111["package"] = "Date";
+            var111["variable"] = "Seconds";
             cond3.Variables = var111;
             cond3.Value = 0;
             cond3.OperationTested = Operations.Upper;
 
             Execution real1 = new Execution();
             Dictionary<String, String> var2 = new Dictionary<String, String>();
-            var2["sentinel"] = "DESKTOP-FQMIBUN";
-            var2["package"] = "ConstellationPackageConsole1";
-            var2["callBack"] = "changeVal";
+            var2["sentinel"] = "DESKTOP-E5D5ULL";
+            var2["package"] = "Date";
+            var2["callBack"] = "fuseau";
             real1.Variables = var2;
             List<dynamic> maListe = new List<dynamic>();
-            maListe.Add(24);
-            maListe.Add("entre 0 et 5");
+            maListe.Add(2);
             real1.Arguments = maListe;
 
             Execution real2 = new Execution();
             Dictionary<String, String> var22 = new Dictionary<String, String>();
-            var22["sentinel"] = "DESKTOP-FQMIBUN";
-            var22["package"] = "ConstellationPackageConsole1";
-            var22["callBack"] = "changeVal";
+            var22["sentinel"] = "DESKTOP-E5D5ULL";
+            var22["package"] = "date";
+            var22["callBack"] = "fuseau";
             real2.Variables = var22;
             List<dynamic> maListe2 = new List<dynamic>();
-            maListe2.Add(42);
-            maListe2.Add("a 30s");
+            maListe2.Add(5);
             real2.Arguments = maListe2;
 
             List<Condition> conditions = new List<Condition>();
@@ -79,8 +77,8 @@ namespace AlgorithmePackage
             Condition cond21 = new Condition();
             Dictionary<String, String> var21 = new Dictionary<String, String>();
             var21["sentinel"] = "DESKTOP-FQMIBUN";
-            var21["package"] = "ConstellationPackageConsole1";
-            var21["variable"] = "myValue";
+            var21["package"] = "package1";
+            var21["variable"] = "what i got";
             cond21.Variables = var21;
             cond21.Value = 0;
             cond21.OperationTested = Operations.Upper;
@@ -139,12 +137,12 @@ namespace AlgorithmePackage
         public override void OnStart()
         {
             thread = new Thread(new ThreadStart(CheckTimeSlot_ThreadLoop));
-            /*
+            
             PackageHost.LastStateObjectsReceived += (s, e) =>
             {    
                 try
                 {
-                    Newtonsoft.Json.Linq.JArray algo = e.StateObjects[2].DynamicValue; //change 2 to 1 if disable the push of algos.count
+                    Newtonsoft.Json.Linq.JArray algo = e.StateObjects[1].DynamicValue; //change 2 to 1 if disable the push of algos.count
                     List<Algorithme> algorithmes = JsonConvert.DeserializeObject<List<Algorithme>>(algo.ToString());
                     foreach(Algorithme alg in algorithmes)
                     {
@@ -162,13 +160,10 @@ namespace AlgorithmePackage
                     PackageHost.WriteDebug(exp.ToString());
                 }
                 SubscribeAllStateObject();
-                PackageHost.PushStateObject("Algorithmes", m_algorithmes);
-                PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
-                PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count+m_algorithmes.Count);
-            };*/
+            };
             /////////
             AddAlgorithme(algo1);
-           AddAlgorithme(algo2);
+            AddAlgorithme(algo2);
 /////////            
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
@@ -199,15 +194,28 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
-            //PackageHost.WriteError("receive algo");
-            //PackageHost.WriteWarn(algo.toString());
+            PackageHost.WriteError("receive algo " + algo.Name);
+            if(algo.URLPhotoDescription == "" || algo.URLPhotoDescription == null)
+            {
+                algo.URLPhotoDescription = "http://www.laboiteverte.fr/wp-content/uploads/2015/01/scene-film-animation-05.gif";
+            }
+            if(algo.Name=="" || algo.Name == null)
+            {
+                algo.CreateHashName();
+            }
+            if(algo.Description == "" || algo.Description == null)
+            {
+                algo.Description = algo.toString(false);
+            }
             if (algo != null)
             {
+                String algoDelete = null;
                 foreach(Algorithme alg in m_algorithmes)
                 {
                     if (algo.Name == alg.Name)
                     {
-                        DeleteAlgorithme(alg.Name);
+                        PackageHost.WriteWarn("delete enable");
+                        algoDelete = alg.Name;
                         break;
                     }
                 }
@@ -215,26 +223,29 @@ namespace AlgorithmePackage
                 {
                     if (algo.Name == alg.Name)
                     {
-                        DeleteAlgorithme(alg.Name);
+                        PackageHost.WriteWarn("replace paused");
+                        algoDelete = alg.Name;
                         break;
                     }
+
                 }
-                if(algo.IsActive)
+                if(algoDelete != null)
+                {
+                    DeleteAlgorithme(algoDelete);
+                }
+                PackageHost.WriteWarn($"active : {algo.IsActive}");
+                if (algo.IsActive)
                 {
                     m_algorithmes.Add(algo);
                 }
                 else
                 {
                     m_pausedAlgorithmes.Add(algo);
-                }                
+                }
             }
-            if (algo.Description == null)
-            {
-                algo.Description = algo.toString(false);
-            }
+            PackageHost.WriteWarn("pushing add ");
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
-            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         /// <summary>
         /// Supprime l'algorithme correspondant au nom donne, il ne sera plus stocke ni realise
@@ -245,6 +256,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void DeleteAlgorithme(String name)
         {
+            PackageHost.WriteError("deleting " + name);
             foreach (Algorithme algo in m_algorithmes)
             {
                 if (algo.Name == name)
@@ -256,6 +268,9 @@ namespace AlgorithmePackage
                         UnSubscribeStateObject(cond.Variables);
                     }
                     m_algorithmes.Remove(algo);
+                    PackageHost.WriteWarn("pushing del enable");
+                    PackageHost.PushStateObject("Algorithmes", m_algorithmes);
+                    PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
                     return;
                 }
             }
@@ -270,12 +285,12 @@ namespace AlgorithmePackage
                         UnSubscribeStateObject(cond.Variables);
                     }
                     m_pausedAlgorithmes.Remove(algo);
+                    PackageHost.WriteWarn("pushing del paused");
+                    PackageHost.PushStateObject("Algorithmes", m_algorithmes);
+                    PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
                     return;
                 }
             }
-            PackageHost.PushStateObject("Algorithmes", m_algorithmes);
-            PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
-            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         /// <summary>
         /// Met l'algorithme en pause ou le relance.
@@ -321,10 +336,10 @@ namespace AlgorithmePackage
                     }
                 }
             }
-                        
+
+            PackageHost.WriteWarn("pushing en/dis");
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
-            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
         }
         private void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
@@ -418,11 +433,10 @@ namespace AlgorithmePackage
             }
         }
         public override void OnPreShutdown()
-        {
-            //push the algos on constellation     
+        { 
+            PackageHost.WriteWarn("pushing preshut");
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PauseAlgorithmes", m_pausedAlgorithmes);
-            PackageHost.PushStateObject("nombre d'algo", m_pausedAlgorithmes.Count + m_algorithmes.Count);
             base.OnPreShutdown();
         }
         public override void OnShutdown()
