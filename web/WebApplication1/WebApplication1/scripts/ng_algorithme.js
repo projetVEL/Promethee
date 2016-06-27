@@ -24,7 +24,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         $scope.Algorithme =
             {
                 "Description": "",
-                "URLPhotoDescription": "http://wikitravel.org/upload/shared/thumb/8/8b/Tower_bridge_London_Twilight_-_November_2006.jpg/700px-Tower_bridge_London_Twilight_-_November_2006.jpg",
+                "URLPhotoDescription": "http://localhost:56215/default.gif",
                 "Waiting": 0,
                 "IsActive": true,
                 "Conditions": [
@@ -75,8 +75,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
 
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "constellationAlgoApp");
-        controller.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "controllerAlogApp");
+        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "constellationAlgoApp");
+        controller.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "controllerAlogApp");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -123,6 +123,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
                     if (algos[i].Value[j].Name == $scope.algoName) {
                         $scope.Algorithme = algos[i].Value[j];
                         $scope.AlgoLoaded = true;
+                        console.log($scope.arbre);
                         return;
                     }
                 }
@@ -154,11 +155,11 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             };
             $scope.Algorithme.Conditions.push(ConditionsPrototype);
         };
-        $scope.deleteCondition = function () {
-            $scope.Algorithme.Conditions.pop();
+        $scope.deleteCondition = function (index) {
+            $scope.Algorithme.Conditions.splice(index,1);
         };
-        $scope.deleteExecution = function () {
-            $scope.Algorithme.Executions.pop();
+        $scope.deleteExecution = function (index) {
+            $scope.Algorithme.Executions.splice(index,1);
         };
         $scope.verifAndSendAlgo = function () {
             //faire les verifs d'algo : conditions/exec vides, ...
@@ -188,8 +189,13 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             // ! si on n'a qu'un seul argument a revoyer (ce qui est le cas ici), on renvoie un élément simple, pas un tableau
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
             console.log($scope.Algorithme);
-            //window.location = 'http://localhost:56215/';
+            window.location = 'http://localhost:56215/';
         }
+        $scope.deleteAlgo = function () {
+            constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'DeleteAlgorithme', $scope.Algorithme.Name);
+            window.location = 'http://localhost:56215/';
+        };
+
         controller.onUpdateSentinelsList(function (sentinels) {
             $scope.$apply(function () {
                 for (i in sentinels.List) {
@@ -219,13 +225,10 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
                     }
                 }
             });
-        });        
-
+        });
         $scope.getSentinels = function () {
             controller.requestSentinelsList();           
         };
-
-
 
         controller.connect();
         constellation.connect();

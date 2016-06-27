@@ -13,7 +13,9 @@ namespace AlgorithmePackage
         private static Algorithme algo1; //used 4 tests
         private static Algorithme algo2; //used 4 tests
 
+        private bool receiveLastSO = false;
         private Thread thread;
+        private Thread attenteReponseConstellation;
         private static Dictionary<String, double> m_reactivationAlgo = new Dictionary<String, double>();
         private static List<Algorithme> m_algorithmes = new List<Algorithme>();
         private static List<Algorithme> m_pausedAlgorithmes = new List<Algorithme>();
@@ -137,9 +139,10 @@ namespace AlgorithmePackage
         public override void OnStart()
         {
             thread = new Thread(new ThreadStart(CheckTimeSlot_ThreadLoop));
-            
+            attenteReponseConstellation = new Thread(new ThreadStart(WaitConstellation_ThreadLoop));
             PackageHost.LastStateObjectsReceived += (s, e) =>
-            {    
+            {
+                receiveLastSO = true;
                 try
                 {
                     Newtonsoft.Json.Linq.JArray algo = e.StateObjects[1].DynamicValue; //change 2 to 1 if disable the push of algos.count
@@ -162,8 +165,8 @@ namespace AlgorithmePackage
                 SubscribeAllStateObject();
             };
             /////////
-            AddAlgorithme(algo1);
-            AddAlgorithme(algo2);
+        //    AddAlgorithme(algo1);
+        //    AddAlgorithme(algo2);
 /////////            
             //lorsqu'une des valeures souscrites change
             PackageHost.StateObjectUpdated += (s, e) =>
@@ -174,6 +177,7 @@ namespace AlgorithmePackage
 
             //thread pour la reactivation des algos en pause
             thread.Start();
+            attenteReponseConstellation.Start();
         }
         private void SubscribeAllStateObject()
         {
@@ -194,7 +198,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
-            PackageHost.WriteError("receive algo " + algo.Name);
+            PackageHost.WriteError("receive algo :" + algo.toString());
             if(algo.URLPhotoDescription == "" || algo.URLPhotoDescription == null)
             {
                 algo.URLPhotoDescription = "http://www.laboiteverte.fr/wp-content/uploads/2015/01/scene-film-animation-05.gif";
@@ -257,11 +261,22 @@ namespace AlgorithmePackage
         public void DeleteAlgorithme(String name)
         {
             PackageHost.WriteError("deleting " + name);
+            var isInReactivation = false;
+            foreach(var item in m_reactivationAlgo)
+            {
+                if(item.Key == name)
+                {
+                    isInReactivation = true;
+                }
+            }
+            if(isInReactivation)
+            {
+                m_reactivationAlgo.Remove(name);
+            }
             foreach (Algorithme algo in m_algorithmes)
             {
                 if (algo.Name == name)
                 {
-                    //suppression de l'algo depuis la bdd ou constellation
                     //suppression de l'algo de la bdd et du package en cours                    
                     foreach (Condition cond in algo.CloneConditions())
                     {
@@ -278,7 +293,6 @@ namespace AlgorithmePackage
             {
                 if (algo.Name == name)
                 {
-                    //suppression de l'algo depuis la bdd ou constellation
                     //suppression de l'algo de la bdd et du package en cours                    
                     foreach (Condition cond in algo.CloneConditions())
                     {
@@ -336,10 +350,6 @@ namespace AlgorithmePackage
                     }
                 }
             }
-
-            PackageHost.WriteWarn("pushing en/dis");
-            PackageHost.PushStateObject("Algorithmes", m_algorithmes);
-            PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
         }
         private void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
         {
@@ -446,6 +456,7 @@ namespace AlgorithmePackage
         }
         private void CheckTimeSlot_ThreadLoop()
         {
+            PackageHost.WriteWarn("debut thread chackTimeSlot");
             int count = 0;
             while(Thread.CurrentThread.IsAlive)
             {
@@ -477,6 +488,21 @@ namespace AlgorithmePackage
                     CheckAlgorithmes(null);
                 }                
             }            
+        }
+        private void WaitConstellation_ThreadLoop()
+        {
+            var tour = 0;
+            PackageHost.WriteWarn($"debut du thread{receiveLastSO}");
+            while(tour<5 && !receiveLastSO)
+            {
+                PackageHost.WriteInfo("un tour dans le thread d'attente");
+                tour++;
+                Thread.Sleep(500);
+            }
+            PackageHost.PushStateObject("Algorithmes", m_algorithmes);
+            PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
+            PackageHost.WriteWarn($"pushing fin du thread{receiveLastSO} {tour}");
+            attenteReponseConstellation.Abort();
         }
     }
 }

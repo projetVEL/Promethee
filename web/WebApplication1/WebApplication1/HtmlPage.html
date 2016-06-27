@@ -1,24 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="fr-fr" ng-app="algoApp">
 <head>
+    <title ng-controller="titleController">{{title}}</title>
     <script src="scripts/jQuery.Bootstrap.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="Content/1-col-portfolio.css" rel="stylesheet" />
-    <link href="Content/rzslider.min.css" rel="stylesheet" />
-
     <script type="text/javascript" src="scripts/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.js"></script>
     <script type="text/javascript" src="scripts/Constellation-1.8.0.js"></script>
     <script type="text/javascript" src="scripts/angular.min.js"></script>
     <script src="scripts/ngConstellation-1.8.0.js"></script>
-    <script src="scripts/rzslider.min.js"></script>
     <script src="scripts/ng_algorithme.js"></script>
-
-    <title ng-controller="titleController">{{title}}</title>
-
 </head>
 <body ng-controller="mainController">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">projetVEL</a>
+                <a class="navbar-brand" href="http://localhost:56215/">projetVEL</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -70,6 +65,11 @@
             Envoyer à Constellation
         </button>
         <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
+         <button type="button" class="btn btn-primary pull-left top" ng-show="ConnectionSuccess && sent != undefined
+                    && LoadingAlgoSuccess" ng-click="deleteAlgo()">
+            Supprimer Algorithme
+        </button>
+
         <!-- title then url's picture and description -->
         <div ng-show="LoadingAlgoSuccess">
             <div>
@@ -122,20 +122,18 @@
                         </div>
                         <div>
                             Variable :{{Algorithme.Conditions[keyCond].Variables.variable}}
-                            <!--<select ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
+                            <select ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
                                     ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
                                 <option ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
                                         [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" value="{{keyVar}}">
                                     {{keyVar}}
                                 </option>
-                            </select>-->
-                            <select ng-model="Algorithme.Conditions[keyCond].Variables.variable"
+                            </select>
+          <!--                  <select ng-model="Algorithme.Conditions[keyCond].Variables.variable"
                                     ng-options="keyVar for (keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
                                         [Algorithme.Conditions[keyCond].Variables.package]">
-
-
                             </select>
-                            
+            -->             
                             
                             {{Algorithme.Conditions[keyCond].OperationTested}}
                             <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0"/>
@@ -188,10 +186,10 @@
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
-                        </div>
+                        </div>                        
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteCondition(keyCond)">Supprimer</button>
                     </div>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteCondition()">Supprimer</button>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="afficherPlageHoraire = !afficherPlageHoraire">
                         {{afficherPlageHoraire ? 'Moins' : 'Plus'}} d'options
                     </button>
@@ -246,32 +244,31 @@
                     <h1 style="text-align:center">THEN</h1>
                     <div class="well" ng-repeat="(keyExec, valueExec) in Algorithme.Executions track by $index">
                         <div>
-                            Sentinelle :
+                            Sentinelle :{{Algorithme.Executions[keyExec].Variables.sentinel}}
                             <select ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
                                     Algorithme.Executions[keyExec].Variables.callBack=''">
-                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}"
-                                        selected="{{Algorithme.Executions[keyExec].Variables.sentinel==key?'':'selected'}}">
+                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">
                                     {{key}}
                                 </option>
                             </select>
                         </div>
                         <div>
-                            Package :
+                            Package :{{Algorithme.Executions[keyExec].Variables.package}}
                             <select ng-model="Algorithme.Executions[keyExec].Variables.package" ng-if="Algorithme.Executions[keyExec].Variables.sentinel!=''"
                                     ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
                                 <option ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
-                                        value="{{key}}" selected="{{Algorithme.Executions[keyExec].Variables.package==key?'':'selected'}}">
+                                        value="{{key}}">
                                     {{key}}
                                 </option>
                             </select>
                         </div>
                         <div>
-                            CallBack : 
+                            CallBack : {{Algorithme.Executions[keyExec].Variables.callBack}}
                             <select ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-if="Algorithme.Executions[keyExec].Variables.package!=''"
                                     ng-change="Algorithme.Executions[keyExec].Arguments=[];">
                                 <option ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
                                         .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
-                                        value="{{valuekk.MessageKey}}" selected="{{Algorithme.Executions[keyExec].Variables.callBack==valuekk.MessageKey?'':'selected'}}">
+                                        value="{{valuekk.MessageKey}}">
                                     {{valuekk.MessageKey}}
                                 </option>
                             </select>
@@ -289,9 +286,9 @@
                                 </span><br />
                             </span>                          
                         </div>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteExecution(keyExec)">Supprimer</button>
                     </div>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteExecution()">Supprimer</button>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="afficherDesactivation = !afficherDesactivation">
                         {{afficherDesactivation ? 'Moins' : 'Plus'}} d'options
                     </button>
