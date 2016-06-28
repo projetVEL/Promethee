@@ -75,8 +75,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
 
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "1182b2384b6f311117b8fbbf4c37087982007885", "constellationAlgoApp");
-        controller.intializeClient("http://localhost:8088", "1182b2384b6f311117b8fbbf4c37087982007885", "controllerAlogApp");
+        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "constellationAlgoApp");
+        controller.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "controllerAlogApp");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -189,7 +189,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             // ! si on n'a qu'un seul argument a revoyer (ce qui est le cas ici), on renvoie un élément simple, pas un tableau
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
             console.log($scope.Algorithme);
-            window.location = 'http://localhost:56215/';
+           // window.location = 'http://localhost:56215/';
         }
         $scope.deleteAlgo = function () {
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'DeleteAlgorithme', $scope.Algorithme.Name);

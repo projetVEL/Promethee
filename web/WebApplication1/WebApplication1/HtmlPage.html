@@ -128,10 +128,10 @@
                                 <span class="glyphicon glyphicon-remove"></span>
                                 Supprimer Algorithme
                             </button>
-                            <label class="{{Algorithme.IsActive? 'btn btn-primary active':'btn btn-warning'}}" ng-click="Algorithme.IsActive = !Algorithme.IsActive" style="width:200px;resize:none;">
+                            <label class="{{Algorithme.IsActive? 'btn btn-success active':'btn btn-warning'}}" ng-click="Algorithme.IsActive = !Algorithme.IsActive" style="width:200px;resize:none;">
                                 <input type="checkbox">
                                 <span class="{{Algorithme.IsActive? 'glyphicon glyphicon-play':'glyphicon glyphicon-stop'}}"></span>
-                                {{Algorithme.IsActive? 'Activer  ':'Désactiver'}} Algorithme
+                                 Algorithme {{Algorithme.IsActive? 'Activé  ':'Désactivé'}}
                             </label>
                         </div>
                     </label>
@@ -158,7 +158,9 @@
                                         <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.sentinel" ng-change="Algorithme.Conditions[keyCond].Variables.package='';
                             Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
                                             <li>
-                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Conditions[keyCond].Variables.sentinel=key">
+                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Conditions[keyCond].Variables.sentinel=key;
+                                                   Algorithme.Conditions[keyCond].Variables.package=''; Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].OperationTested=0;
+                                                   Algorithme.Conditions[keyCond].Value=undefined;">
                                                     {{key}}
                                                 </a>
                                             </li>
@@ -172,7 +174,8 @@
                                         <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.package" ng-show="Algorithme.Conditions[keyCond].Variables.sentinel!=''"
                                             ng-change="Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
                                             <li>
-                                                <a ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'" ng-click="Algorithme.Conditions[keyCond].Variables.package=key">
+                                                <a ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'" ng-click="Algorithme.Conditions[keyCond].Variables.package=key;
+                                                    Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].OperationTested=0; Algorithme.Conditions[keyCond].Value=undefined;">
                                                     {{key}}
                                                 </a>
                                             </li>
@@ -187,7 +190,8 @@
                                             ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
                                             <li>
                                                 <a ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
-                                [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" ng-click="Algorithme.Conditions[keyCond].Variables.variable=keyVar">
+                                [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" ng-click="Algorithme.Conditions[keyCond].Variables.variable=keyVar;
+                                                   Algorithme.Conditions[keyCond].OperationTested=0; Algorithme.Conditions[keyCond].Value=undefined;">
                                                     {{keyVar}}
                                                 </a>
                                             </li>
@@ -248,7 +252,7 @@
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
                                     </span>
-                               
+                               <br/><br/>
                                 <button type="button" class="btn btn-danger" ng-click="deleteCondition(keyCond)">
                                     <span class="glyphicon glyphicon-remove"></span>Supprimer
                                 </button>
@@ -275,7 +279,9 @@
                                         </a>
                                         <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
                                     Algorithme.Executions[keyExec].Variables.callBack='';">
-                                            <li><a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key">{{key}} </a></li>
+                                            <li><a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key;
+                                                   Algorithme.Executions[keyExec].Variables.package='';Algorithme.Executions[keyExec].Variables.callBack='';Algorithme.Executions[keyExec].Arguments=[];"
+                                                   ">{{key}} </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-divider"></li>
@@ -287,7 +293,7 @@
                                             ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
                                             <li>
                                                 <a ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
-                                                   ng-click="Algorithme.Executions[keyExec].Variables.package=key">{{key}}</a>
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.package=key;Algorithme.Executions[keyExec].Variables.callBack='';Algorithme.Executions[keyExec].Arguments=[];">{{key}}</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -301,7 +307,7 @@
                                             <li>
                                                 <a ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
                                         .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
-                                                   ng-click="Algorithme.Executions[keyExec].Variables.callBack= valuekk.MessageKey">{{valuekk.MessageKey}}</a>
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.callBack= valuekk.MessageKey;Algorithme.Executions[keyExec].Arguments=[];">{{valuekk.MessageKey}}</a>
                                             </li>
                                         </ul>
                                     </li>                                </ul>
@@ -322,7 +328,7 @@
                                 <div>
                                     <br />
                                 </div>
-                                <button type="button" class="btn btn-danger" ng-click="deleteExecution(keyCond)">
+                                <button type="button" class="btn btn-danger" ng-click="deleteExecution(keyExec)">
                                     <span class="glyphicon glyphicon-remove"></span>Supprimer
                                 </button>
                             </li>
@@ -336,7 +342,7 @@
 
     <!--FOOTER-->
     <div id="footer">
-        <button class='btn btn-info col-sm-offset-2 col-sm-2' data-toggle='modal' data-target='#modalOption'>
+        <button class='btn btn-info col-sm-offset-2 col-sm-2' data-toggle='modal' data-target='#modalOption' ng-if="LoadingAlgoSuccess">
             <span class='glyphicon glyphicon-cog'></span>
             OPTION
         </button>

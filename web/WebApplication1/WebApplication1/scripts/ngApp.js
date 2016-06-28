@@ -10,7 +10,7 @@
         $scope.ConnectionWait = true;
         $scope.ConnectionSuccess = false;
 
-        constellation.intializeClient("http://localhost:8088", "1182b2384b6f311117b8fbbf4c37087982007885", "test");
+        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "test");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
