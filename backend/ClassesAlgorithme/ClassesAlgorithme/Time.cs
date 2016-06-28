@@ -37,6 +37,17 @@ namespace ClassesAlgorithm
         }
         public DateTime ToDate()
         {
+            try
+            {
+                new DateTime(DateTime.Now.Year, this.Month, this.Day, this.Hour, this.Minute, this.Second);
+            }
+            catch(Exception exp)
+            {
+                this.Day = 1;
+                this.Month = (this.Month + 1) % 12;
+                if (this.Month == 0) this.Month = 1;
+                if (this.Hour >= 24) this.Hour %= 24;
+            }
             return new DateTime(DateTime.Now.Year, this.Month, this.Day, this.Hour, this.Minute, this.Second);
         }
         public void AddDays(int days)
@@ -57,7 +68,7 @@ namespace ClassesAlgorithm
             if(Hour > 23)
             {
                 AddDays(Hour / 24);
-                Hour %= 23;
+                Hour %= 24;
             } 
         }
         public void AddMinutes(int mins)

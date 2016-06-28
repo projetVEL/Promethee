@@ -133,7 +133,17 @@ namespace ClassesAlgorithm
             {
                 time = checkRangeSecondes(time);
             }
-            
+            try
+            {
+                new DateTime(DateTime.Now.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+            }
+            catch (Exception exp)
+            {
+                time.Day = 1;
+                time.Month = (time.Month + 1) % 12;
+                if (time.Month == 0) time.Month = 1;
+                if (time.Hour >= 24) time.Hour %= 24;
+            }
             DateTime date2 = new DateTime(DateTime.Now.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
             double summSeconds = date2.Subtract(DateTime.Now).TotalSeconds;
             if (summSeconds < 0) summSeconds = DateTime.Now.Subtract(date2).TotalSeconds; ;

@@ -1,4 +1,4 @@
-var algoApp = angular.module("algoApp", ['ngConstellation']);
+var algoApp = angular.module("algoApp", ['ngConstellation','ui-rangeSlider']);
 algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'constellationController', '$location',
     function ($scope, constellation, controller, $location) {
 
@@ -75,8 +75,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
 
         $scope.listeAlgos = [];
 
-        constellation.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "constellationAlgoApp");
-        controller.intializeClient("http://localhost:8088", "8dea78b76b83d2ea291ed68db80e5cb1fd630ec8", "controllerAlogApp");
+        constellation.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "constellationAlgoApp");
+        controller.intializeClient("http://localhost:8088", "fcfd2cff6a98b16994233b6c25be3860b0caff04", "controllerAlogApp");
 
         constellation.onUpdateStateObject(function (stateobject) {
             $scope.$apply(function () {
@@ -163,6 +163,36 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         };
         $scope.verifAndSendAlgo = function () {
             //faire les verifs d'algo : conditions/exec vides, ...
+            for (i in $scope.Algorithme.Schedule.Begin)
+            {
+                if($scope.Algorithme.Schedule.Begin[i]==undefined)
+                {
+                    if (i == "Day" || i == "Month")
+                    {
+                        $scope.Algorithme.Schedule.Begin[i] = 1; continue;
+                    }
+                    else
+                    {
+                        $scope.Algorithme.Schedule.Begin[i] = 0;
+                    }
+                }                
+            }
+            for (i in $scope.Algorithme.Schedule.End) {
+                if ($scope.Algorithme.Schedule.End[i] == undefined) {
+                    if (i == "Month") {
+                        $scope.Algorithme.Schedule.End[i] = 12; continue;
+                    }
+                    if (i == "Day") {
+                        $scope.Algorithme.Schedule.End[i] = 31; continue;
+                    }
+                    if (i == "Hour") {
+                        $scope.Algorithme.Schedule.End[i] = 23; continue;
+                    }
+                    else {
+                        $scope.Algorithme.Schedule.End[i] = 59;
+                    }
+                }
+            }
             
             conditionToDelete = [];
             for (index in $scope.Algorithme.Conditions)
@@ -192,6 +222,7 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             window.location = 'http://localhost:56215/';
         }
         $scope.deleteAlgo = function () {
+            //console.log($scope.Algorithme.Name);
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'DeleteAlgorithme', $scope.Algorithme.Name);
             window.location = 'http://localhost:56215/';
         };
@@ -228,6 +259,43 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
         });
         $scope.getSentinels = function () {
             controller.requestSentinelsList();           
+        };
+        $scope.verifSecondes = function()
+        {
+            if($scope.Algorithme.Schedule.Begin.Second > $scope.Algorithme.Schedule.End.Second)
+            {
+                buffer = $scope.Algorithme.Schedule.Begin.Second;
+                $scope.Algorithme.Schedule.Begin.Second = $scope.Algorithme.Schedule.End.Second;
+                $scope.Algorithme.Schedule.End.Second = buffer;
+            }
+        };
+        $scope.verifMinutes = function () {
+            if ($scope.Algorithme.Schedule.Begin.Minute > $scope.Algorithme.Schedule.End.Minute) {
+                buffer = $scope.Algorithme.Schedule.Begin.Minute;
+                $scope.Algorithme.Schedule.Begin.Minute = $scope.Algorithme.Schedule.End.Minute;
+                $scope.Algorithme.Schedule.End.Minute = buffer;
+            }
+        };
+        $scope.verifHeures = function () {
+            if ($scope.Algorithme.Schedule.Begin.Hour > $scope.Algorithme.Schedule.End.Hour) {
+                buffer = $scope.Algorithme.Schedule.Begin.Hour;
+                $scope.Algorithme.Schedule.Begin.Hour = $scope.Algorithme.Schedule.End.Hour;
+                $scope.Algorithme.Schedule.End.Hour = buffer;
+            }
+        };
+        $scope.verifJours = function () {
+            if ($scope.Algorithme.Schedule.Begin.Day > $scope.Algorithme.Schedule.End.Day) {
+                buffer = $scope.Algorithme.Schedule.Begin.Day;
+                $scope.Algorithme.Schedule.Begin.Day = $scope.Algorithme.Schedule.End.Day;
+                $scope.Algorithme.Schedule.End.Day = buffer;
+            }
+        };
+        $scope.verifMois= function () {
+            if ($scope.Algorithme.Schedule.Begin.Month > $scope.Algorithme.Schedule.End.Month) {
+                buffer = $scope.Algorithme.Schedule.Begin.Month;
+                $scope.Algorithme.Schedule.Begin.Month = $scope.Algorithme.Schedule.End.Month;
+                $scope.Algorithme.Schedule.End.Month = buffer;
+            }
         };
 
         controller.connect();

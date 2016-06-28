@@ -7,11 +7,13 @@
     <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="Content/1-col-portfolio.css" rel="stylesheet" />
+    <link href="Content/angular.rangeSlider.css" rel="stylesheet">
 
     <script type="text/javascript" src="scripts/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.js"></script>
     <script type="text/javascript" src="scripts/Constellation-1.8.0.js"></script>
     <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script src="scripts/angular.rangeSlider.js"></script>
     <script src="scripts/ngConstellation-1.8.0.js"></script>
     <script src="scripts/ng_algorithme.js"></script>
 
@@ -73,8 +75,9 @@
         <!-- title then url's picture and description -->
         <div ng-show="LoadingAlgoSuccess">
             <div>
-                <h1 class="page-header" style="text-align:center">Construisez votre algorithme
-                 </h1>
+                <h1 class="page-header" style="text-align:center">
+                    Construisez votre algorithme
+                </h1>
             </div>
             <div class="row">
                 <!--IMAGE-->
@@ -83,7 +86,7 @@
                         <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
                              width="700" style="max-height:290px;" />
                     </button>
-                     <!--Modal Image-->
+                    <!--Modal Image-->
                     <div class='modal fade' id='modalImage' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
                         <div class='modal-dialog' role='document'>
                             <div class='modal-content'>
@@ -99,7 +102,7 @@
                                     <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
                                          width="700" style="max-height:290px;" />
                                     URL de la photo de présentation :
-                                    <input type="text" name="input" style="width:455px;" ng-model="Algorithme.URLPhotoDescription">
+                                    <input type="text" name="input" style="width:455px; background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px;" ng-model="Algorithme.URLPhotoDescription">
                                 </div>
                                 <!---->
                                 <!---->
@@ -115,8 +118,8 @@
                     <label>
                         <!--Chose name-->
                         Name : <br />
-                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset;
-                      height: 45px; width: 275px;" ng-model="Algorithme.Name"/>
+                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                               ng-model="Algorithme.Name" />
 
                     </label>
                     <label>
@@ -129,7 +132,7 @@
                             <label class="{{Algorithme.IsActive? 'btn btn-success active':'btn btn-warning'}}" ng-click="Algorithme.IsActive = !Algorithme.IsActive" style="width:200px;resize:none;">
                                 <input type="checkbox">
                                 <span class="{{Algorithme.IsActive? 'glyphicon glyphicon-play':'glyphicon glyphicon-stop'}}"></span>
-                                 Algorithme {{Algorithme.IsActive? 'Activé  ':'Désactivé'}}
+                                Algorithme {{Algorithme.IsActive? 'Activé  ':'Désactivé'}}
                             </label>
                         </div>
                     </label>
@@ -141,7 +144,7 @@
                 </div>
             </div>
             <hr />
-                <!--IF-->
+            <!--IF-->
             <div class="col-sm-5">
                 <div class="well">
                     <h1>IF</h1>
@@ -197,17 +200,17 @@
 
                                     </li>
                                 </ul>
-                                    <span>
-                                        
-                                        <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0" />
-                                        <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                <span>
+
+                                    <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0" />
+                                    <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
-                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
-                                            <option value="1"> égal à </option>
-                                            <option value="2"> différent de </option>
-                                        </select>
-                                        <select ng-model="Algorithme.Conditions[keyCond].OperationTested"
-                                                ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 200px;">
+                                        <option value="1"> égal à </option>
+                                        <option value="2"> différent de </option>
+                                    </select>
+                                    <select ng-model="Algorithme.Conditions[keyCond].OperationTested"
+                                            ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
@@ -219,24 +222,25 @@
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
-                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )">
-                                            <option value="1"> égal à </option>
-                                            <option value="2"> différent de </option>
-                                            <option value="3"> strictement inférieur à </option>
-                                            <option value="4"> inférieur ou égal à </option>
-                                            <option value="5"> strictement supérieur à </option>
-                                            <option value="6"> supérieur ou égal à </option>
-                                        </select>
-                                        <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 200px;">
+                                        <option value="1"> égal à </option>
+                                        <option value="2"> différent de </option>
+                                        <option value="3"> strictement inférieur à </option>
+                                        <option value="4"> inférieur ou égal à </option>
+                                        <option value="5"> strictement supérieur à </option>
+                                        <option value="6"> supérieur ou égal à </option>
+                                    </select>
+                                    <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
-                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Boolean'">
-                                            <option value="true"> est vrai </option>
-                                            <option value="false"> est faux </option>
-                                        </select>
-                                        <input type="text" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Boolean'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 75px;">
+                                        <option value="true"> est vrai </option>
+                                        <option value="false"> est faux </option>
+                                    </select>
+                                    <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                                           ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
-                                        <input type="number" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
@@ -249,21 +253,21 @@
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
-                                    </span>
-                               <br/><br/>
+                                </span>
+                                <br /><br />
                                 <button type="button" class="btn btn-danger" ng-click="deleteCondition(keyCond)">
                                     <span class="glyphicon glyphicon-remove"></span>Supprimer
                                 </button>
                             </li>
                         </span>
                     </ul>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
-                    </div>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
                 </div>
+            </div>
 
-                <div class="col-sm-2"></div>
+            <div class="col-sm-2"></div>
 
-                <!--THEN-->
+            <!--THEN-->
             <div class="col-sm-5">
                 <div class="well ">
                     <h1>THEN</h1>
@@ -277,9 +281,11 @@
                                         </a>
                                         <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
                                     Algorithme.Executions[keyExec].Variables.callBack='';">
-                                            <li><a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key;
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key;
                                                    Algorithme.Executions[keyExec].Variables.package='';Algorithme.Executions[keyExec].Variables.callBack='';Algorithme.Executions[keyExec].Arguments=[];"
-                                                   ">{{key}} </a></li>
+                                                   ">{{key}}</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="nav-divider"></li>
@@ -308,16 +314,19 @@
                                                    ng-click="Algorithme.Executions[keyExec].Variables.callBack= valuekk.MessageKey;Algorithme.Executions[keyExec].Arguments=[];">{{valuekk.MessageKey}}</a>
                                             </li>
                                         </ul>
-                                    </li>                                </ul>
+                                    </li>
+                                </ul>
                                 <div ng-repeat="(keyCB,valueCB) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
                                   .PackageDescriptor.MessageCallbacks" ng-if="valueCB.MessageKey==Algorithme.Executions[keyExec].Variables.callBack">
                                     <span ng-repeat="(key, value) in valueCB.Parameters">
                                         <br />
                                         {{value.Description ? 'Description' + value.Description : ''}} Type : {{value.TypeName}} Name : {{value.Name}} <br />
-                                        <input type="text" ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'" />
-                                        <input type="number" ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
+                                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                                               ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'" />
+                                        <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;"
+                                               ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
                                            value.TypeName=='System.UInt64' || value.TypeName=='System.Double' || value.TypeName=='System.Single'" />
-                                        <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'">
+                                        <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 75px;">
                                             <option value="true"> est vrai </option>
                                             <option value="false"> est faux </option>
                                         </select>
@@ -334,9 +343,9 @@
                     </ul>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
                 </div>
-            </div> 
-                </div>
-                </div>
+            </div>
+        </div>
+    </div>
 
     <!--FOOTER-->
     <div id="footer">
@@ -367,7 +376,8 @@
                             <h3>Désactivation de l'Algorithme :</h3>
                             <div class="well">
                                 Temps d'attente :
-                                <input type="number" min="0" ng-change="Algorithme.DisableAfterRealisation = false"
+                                <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;"
+                                       min="0" ng-change="Algorithme.DisableAfterRealisation = false"
                                        ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
                                 <label>
                                     Désactiver après exécution :
@@ -377,7 +387,7 @@
                                 <div ng-show="Algorithme.DisableAfterRealisation">
                                     Se réactive chaque plage
                                     d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
-                                    <select ng-model="Algorithme.Schedule.ReactivationPeriode">
+                                    <select ng-model="Algorithme.Schedule.ReactivationPeriode" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 100px;">
                                         <option value="Minutes">Minutes</option>
                                         <option value="Hours">Heures</option>
                                         <option value="Days">Jours</option>
@@ -421,33 +431,29 @@
                                     </label>
                                 </div>
                                 <div>
-                                    Plages temporelles (range sliders) :
+                                    Plages temporelles :
 
                                     <div>
                                         secondes :
-                                        de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Second">
-                                        à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Second">
+                                        <div range-slider min="0" max="59" model-min="Algorithme.Schedule.Begin.Second" model-max="Algorithme.Schedule.End.Second" style="width:400px"></div>
                                     </div>
                                     <div>
                                         min :
-                                        de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Minute">
-                                        à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Minute">
+                                        <div range-slider min="0" max="59" model-min="Algorithme.Schedule.Begin.Minute" model-max="Algorithme.Schedule.End.Minute" style="width:400px"></div>
                                     </div>
                                     <div>
                                         heures :
-                                        de <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.Begin.Hour">
-                                        à <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.End.Hour">
+                                        <div range-slider min="0" max="23" model-min="Algorithme.Schedule.Begin.Hour" model-max="Algorithme.Schedule.End.Hour" style="width:400px"></div>
                                     </div>
                                     <div>
                                         jours :
-                                        de <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.Begin.Day">
-                                        à <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.End.Day">
+                                        <div range-slider min="1" max="31" model-min="Algorithme.Schedule.Begin.Day" model-max="Algorithme.Schedule.End.Day" style="width:400px"></div>
                                     </div>
                                     <div>
                                         mois :
-                                        de <input type="number" min="1" max="12" ng-model="Algorithme.Schedule.Begin.Month">
-                                        à<input type="number" min="1" max="12" ng-model="Algorithme.Schedule.End.Month">
+                                        <div range-slider min="1" max="12" model-min="Algorithme.Schedule.Begin.Month" model-max="Algorithme.Schedule.End.Month" style="width:400px"></div>
                                     </div>
+
 
                                 </div>
 

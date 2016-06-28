@@ -198,7 +198,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
-            PackageHost.WriteError("receive algo :" + algo.toString());
+          //  PackageHost.WriteError("receive algo :" + algo.toString());
             if(algo.URLPhotoDescription == "" || algo.URLPhotoDescription == null)
             {
                 algo.URLPhotoDescription = "http://www.laboiteverte.fr/wp-content/uploads/2015/01/scene-film-animation-05.gif";
@@ -237,7 +237,7 @@ namespace AlgorithmePackage
                 {
                     DeleteAlgorithme(algoDelete);
                 }
-                PackageHost.WriteWarn($"algo {algo.Name} isActiv : {algo.IsActive}");
+               // PackageHost.WriteWarn($"algo {algo.Name} isActiv : {algo.IsActive}");
                 if (algo.IsActive)
                 {
                     m_algorithmes.Add(algo);
@@ -264,7 +264,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void DeleteAlgorithme(String name)
         {
-            PackageHost.WriteError("deleting " + name);
+            //PackageHost.WriteError("deleting " + name);
             var isInReactivation = false;
             foreach(var item in m_reactivationAlgo)
             {
@@ -357,7 +357,7 @@ namespace AlgorithmePackage
         }
         private void CheckAlgorithmes(StateObject SO)
         {
-            PackageHost.WriteError("check begin");
+          //  PackageHost.WriteError("check begin");
             dynamic dynamicValue = null;
             String sentinel = null;
             String package = null;
@@ -373,56 +373,56 @@ namespace AlgorithmePackage
             List<String> algoToDisable = new List<string>(); //on ne peux modifier la liste m_algo pendant son traitement foreach
             foreach (Algorithme algo in m_algorithmes)
             {
-                PackageHost.WriteWarn($"{algo.Name} in check loop");
-                PackageHost.WriteInfo($"{algo.Name} SO checked : {sentinel} {package} {name} {dynamicValue}");
+            //    PackageHost.WriteWarn($"{algo.Name} in check loop");
+             //   PackageHost.WriteInfo($"{algo.Name} SO checked : {sentinel} {package} {name} {dynamicValue}");
                 if (algo.Schedule != null && !algo.Schedule.IsInTimeSlot())
                 {
-                    PackageHost.WriteInfo($"{algo.Name} pas dans le timeSlot");
+               //     PackageHost.WriteInfo($"{algo.Name} pas dans le timeSlot");
                     if (algo.Schedule.NextSlotBegin(false)<1.2) continue;
   /**/      //        PackageHost.WriteError($"not in schedule, reactive in {algo.Schedule.NextSlotBegin(false)}");
                     algoToDisable.Add(algo.Name);
                     m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(false));
                     continue;
                 }
-                PackageHost.WriteInfo($"{algo.Name} in timeSlot");
+              //  PackageHost.WriteInfo($"{algo.Name} in timeSlot");
                 if (algo.SetDynamicValue(sentinel, package, name, dynamicValue))
                 {
-                   PackageHost.WriteInfo($"{algo.Name} executed");
+             //      PackageHost.WriteInfo($"{algo.Name} executed");
                     ExecuteAlgorithme(algo.Executions);
                     if (algo.Waiting != 0)
                     {//si on doit attendre X sec entre chaque executio
- /**/                   PackageHost.WriteError($"{algo.Name} waits for {algo.Waiting}");
+ /**/          //         PackageHost.WriteError($"{algo.Name} waits for {algo.Waiting}");
                         algoToDisable.Add(algo.Name);
                         m_reactivationAlgo.Add(algo.Name, algo.Waiting);
                         continue;
                     }
                     if (algo.DisableAfterRealisation)
                     {//si l'algo doit se desactiver apres execution
-                        PackageHost.WriteInfo($"{algo.Name} disable");
+                  //      PackageHost.WriteInfo($"{algo.Name} disable");
                         algoToDisable.Add(algo.Name);
                         if (algo.Schedule.ReactivationPeriode != null)
                         {//si l'algo a une plage de restriction horaire, il se reactivera alors pour la prochaine plage                           
-   /**/                     PackageHost.WriteError($"{algo.Name} reactived in {algo.Schedule.NextSlotBegin(true)}");
+   /**/                  //   PackageHost.WriteError($"{algo.Name} reactived in {algo.Schedule.NextSlotBegin(true)}");
                             m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(true));
                         }
                     }
                 }
                 else
                 {
-                   PackageHost.WriteInfo($"algo {algo.Name} didn't passed setDynVal");
+               //    PackageHost.WriteInfo($"algo {algo.Name} didn't passed setDynVal");
                 }
-                PackageHost.WriteInfo($"fin boucle");
+          //      PackageHost.WriteInfo($"fin boucle");
             }
-            PackageHost.WriteInfo($"sortie boucle");
+        //    PackageHost.WriteInfo($"sortie boucle");
             foreach (String algoName in algoToDisable)
             {
-                PackageHost.WriteError($"{algoName} goes in reactivation");
+              //  PackageHost.WriteError($"{algoName} goes in reactivation");
                 this.EnableDisableAlgorithme(algoName, true);
             }
         }
         private static void SubscribeStateObject(Dictionary<String, String> var)
         {
-            PackageHost.WriteWarn("subscribe");
+        //    PackageHost.WriteWarn("subscribe");
             PackageHost.SubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
         /// <summary>
@@ -432,7 +432,7 @@ namespace AlgorithmePackage
         /// <param name="var">dictionnaire définissant le StateObject"</param>
         private static void UnSubscribeStateObject(Dictionary<String, String> var)
         {
-            PackageHost.WriteWarn("unsubscribe");
+   //         PackageHost.WriteWarn("unsubscribe");
             foreach (Algorithme algo in m_algorithmes)
             {
                 if (algo.IsUsingStateObject(sentinel: var["sentinel"], package: var["package"], name: var["variable"])) return;
@@ -441,7 +441,7 @@ namespace AlgorithmePackage
         }
         private static void ExecuteAlgorithme(List<Execution> executions)
         {
-            PackageHost.WriteInfo("execution");
+       //     PackageHost.WriteInfo("execution");
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
             foreach (Execution exec in executions)
             {
@@ -497,7 +497,7 @@ namespace AlgorithmePackage
                 }
                 foreach (String algoName in algoToEnable)
                 {
-  /**/              PackageHost.WriteWarn("reAble");
+  /**/   //           PackageHost.WriteWarn("reAble");
                     m_reactivationAlgo.Remove(algoName);
                     EnableDisableAlgorithme(algoName, true);                    
                 }                
