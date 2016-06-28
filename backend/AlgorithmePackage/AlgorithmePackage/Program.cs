@@ -198,7 +198,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void AddAlgorithme(Algorithme algo)
         {
-            PackageHost.WriteError("receive algo :" + algo.toString());
+            //PackageHost.WriteError("receive algo :" + algo.toString());
             if(algo.URLPhotoDescription == "" || algo.URLPhotoDescription == null)
             {
                 algo.URLPhotoDescription = "http://www.laboiteverte.fr/wp-content/uploads/2015/01/scene-film-animation-05.gif";
@@ -218,7 +218,7 @@ namespace AlgorithmePackage
                 {
                     if (algo.Name == alg.Name)
                     {
-                        PackageHost.WriteWarn("delete enable");
+                      //  PackageHost.WriteWarn("delete enable");
                         algoDelete = alg.Name;
                         break;
                     }
@@ -227,7 +227,7 @@ namespace AlgorithmePackage
                 {
                     if (algo.Name == alg.Name)
                     {
-                        PackageHost.WriteWarn("replace paused");
+                     //   PackageHost.WriteWarn("replace paused");
                         algoDelete = alg.Name;
                         break;
                     }
@@ -237,17 +237,21 @@ namespace AlgorithmePackage
                 {
                     DeleteAlgorithme(algoDelete);
                 }
-                PackageHost.WriteWarn($"active : {algo.IsActive}");
+            //    PackageHost.WriteWarn($"active : {algo.IsActive}");
                 if (algo.IsActive)
                 {
                     m_algorithmes.Add(algo);
+                    foreach(Condition cond in algo.Conditions)
+                    {
+                        SubscribeStateObject(cond.Variables);
+                    }                    
                 }
                 else
                 {
                     m_pausedAlgorithmes.Add(algo);
                 }
             }
-            PackageHost.WriteWarn("pushing add ");
+         //   PackageHost.WriteWarn("pushing add ");
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
         }
@@ -260,7 +264,7 @@ namespace AlgorithmePackage
         [MessageCallback]
         public void DeleteAlgorithme(String name)
         {
-            PackageHost.WriteError("deleting " + name);
+    //        PackageHost.WriteError("deleting " + name);
             var isInReactivation = false;
             foreach(var item in m_reactivationAlgo)
             {
@@ -283,7 +287,7 @@ namespace AlgorithmePackage
                         UnSubscribeStateObject(cond.Variables);
                     }
                     m_algorithmes.Remove(algo);
-                    PackageHost.WriteWarn("pushing del enable");
+           //         PackageHost.WriteWarn("pushing del enable");
                     PackageHost.PushStateObject("Algorithmes", m_algorithmes);
                     PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
                     return;
@@ -299,7 +303,7 @@ namespace AlgorithmePackage
                         UnSubscribeStateObject(cond.Variables);
                     }
                     m_pausedAlgorithmes.Remove(algo);
-                    PackageHost.WriteWarn("pushing del paused");
+           //         PackageHost.WriteWarn("pushing del paused");
                     PackageHost.PushStateObject("Algorithmes", m_algorithmes);
                     PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
                     return;
@@ -351,8 +355,9 @@ namespace AlgorithmePackage
                 }
             }
         }
-        private void CheckAlgorithmes(StateObject SO) //on ne peut utiliser de LinkObject car sentinelle,... variables
+        private void CheckAlgorithmes(StateObject SO)
         {
+          //  PackageHost.WriteInfo("check begin");
             dynamic dynamicValue = null;
             String sentinel = null;
             String package = null;
@@ -368,43 +373,53 @@ namespace AlgorithmePackage
             List<String> algoToDisable = new List<string>(); //on ne peux modifier la liste m_algo pendant son traitement foreach
             foreach (Algorithme algo in m_algorithmes)
             {
-                if(algo.Schedule != null && !algo.Schedule.IsInTimeSlot())
+        //        PackageHost.WriteInfo($"algo : {algo.Name} in boucle");
+                if (algo.Schedule != null && !algo.Schedule.IsInTimeSlot())
                 {
+
+       //             PackageHost.WriteInfo($"pas dans le timeSlot");
                     if (algo.Schedule.NextSlotBegin(false)<1.2) continue;
   /**/      //        PackageHost.WriteError($"not in schedule, reactive in {algo.Schedule.NextSlotBegin(false)}");
                     algoToDisable.Add(algo.Name);
                     m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(false));
                     continue;
                 }
-                if ( 
-                    algo.SetDynamicValue(sentinel, package, name, dynamicValue))
-                {                    
+        //        PackageHost.WriteInfo($"{sentinel} {package} {name} {dynamicValue}");
+                if (algo.SetDynamicValue(sentinel, package, name, dynamicValue))
+                {
+       //             PackageHost.WriteError("setDynVal true");
                     ExecuteAlgorithme(algo.Executions);
                     if (algo.Waiting != 0)
                     {//si on doit attendre X sec entre chaque execution
-   /**/   //              PackageHost.WriteError($"wait for {algo.Waiting}");
+                     /**/   //              PackageHost.WriteError($"wait for {algo.Waiting}");
                         algoToDisable.Add(algo.Name);
                         m_reactivationAlgo.Add(algo.Name, algo.Waiting);
                         continue;
-                    }                    
+                    }
                     if (algo.DisableAfterRealisation)
                     {//si l'algo doit se desactiver apres execution
                         algoToDisable.Add(algo.Name);
-                        if(algo.Schedule.ReactivationPeriode != null)
+                        if (algo.Schedule.ReactivationPeriode != null)
                         {//si l'algo a une plage de restriction horaire, il se reactivera alors pour la prochaine plage                           
-      /**/   //               PackageHost.WriteError($"reactive in {algo.Schedule.NextSlotBegin(true)}");
-                            m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(true));                            
+                         /**/   //               PackageHost.WriteError($"reactive in {algo.Schedule.NextSlotBegin(true)}");
+                            m_reactivationAlgo.Add(algo.Name, algo.Schedule.NextSlotBegin(true));
                         }
                     }
-                }               
+                }
+                else
+                {
+        //            PackageHost.WriteInfo($"not setDynVal");
+                }           
             }
             foreach(String algoName in algoToDisable)
             {
+        //        PackageHost.WriteError($"{algoName} goes in reactivation");
                 this.EnableDisableAlgorithme(algoName, true);
             }
         }
         private static void SubscribeStateObject(Dictionary<String, String> var)
         {
+       //     PackageHost.WriteWarn("subscribe");
             PackageHost.SubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
         /// <summary>
@@ -414,14 +429,16 @@ namespace AlgorithmePackage
         /// <param name="var">dictionnaire définissant le StateObject"</param>
         private static void UnSubscribeStateObject(Dictionary<String, String> var)
         {
-            foreach(Algorithme algo in m_algorithmes)
+      //      PackageHost.WriteWarn("unsubscribe");
+            foreach (Algorithme algo in m_algorithmes)
             {
                 if (algo.IsUsingStateObject(sentinel: var["sentinel"], package: var["package"], name: var["variable"])) return;
             }
             PackageHost.UnSubscribeStateObjects(sentinel: var["sentinel"], package: var["package"], name: var["variable"]);
         }
         private static void ExecuteAlgorithme(List<Execution> executions)
-        {            
+        {
+       //     PackageHost.WriteError("execution");
             //pour toutes les realisations d'une liste, on appel les callbacks avec arguments qui correspondent
             foreach (Execution exec in executions)
             {
@@ -444,7 +461,7 @@ namespace AlgorithmePackage
         }
         public override void OnPreShutdown()
         { 
-            PackageHost.WriteWarn("pushing preshut");
+      //      PackageHost.WriteWarn("pushing preshut");
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PauseAlgorithmes", m_pausedAlgorithmes);
             base.OnPreShutdown();
@@ -456,7 +473,7 @@ namespace AlgorithmePackage
         }
         private void CheckTimeSlot_ThreadLoop()
         {
-            PackageHost.WriteWarn("debut thread chackTimeSlot");
+      //      PackageHost.WriteWarn("debut thread chackTimeSlot");
             int count = 0;
             while(Thread.CurrentThread.IsAlive)
             {
@@ -464,7 +481,7 @@ namespace AlgorithmePackage
                 
                 List<String> algoToEnable = new List<string>();
                 foreach (var item in m_reactivationAlgo)
-                {
+                {                    
                     myKeys.Add(item.Key);
                     if (item.Value < 0.2)
                     {
@@ -492,16 +509,13 @@ namespace AlgorithmePackage
         private void WaitConstellation_ThreadLoop()
         {
             var tour = 0;
-            PackageHost.WriteWarn($"debut du thread{receiveLastSO}");
             while(tour<5 && !receiveLastSO)
             {
-                PackageHost.WriteInfo("un tour dans le thread d'attente");
                 tour++;
                 Thread.Sleep(500);
             }
             PackageHost.PushStateObject("Algorithmes", m_algorithmes);
             PackageHost.PushStateObject("PausedAlgorithmes", m_pausedAlgorithmes);
-            PackageHost.WriteWarn($"pushing fin du thread{receiveLastSO} {tour}");
             attenteReponseConstellation.Abort();
         }
     }

@@ -62,7 +62,7 @@
         <!-- buttons -->
         <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined
                     && LoadingAlgoSuccess" ng-click="verifAndSendAlgo()">
-            Envoyer à Constellation
+            Envoyer à Constellation<span class="glyphicon glyphicon-send"></span>
         </button>
         <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
          <button type="button" class="btn btn-primary pull-left top" ng-show="ConnectionSuccess && sent != undefined
@@ -229,11 +229,26 @@
                             <div>
                                 Plages temporelles (range sliders) :
 
-                                <div>secondes</div>
-                                <div>min</div>
-                                <div>heures</div>
-                                <div>jours</div>
-                                <div>mois</div>
+                                <div>secondes :
+                                     de <input type="number" min="0" max="59"ng-model="Algorithme.Schedule.Begin.Second"> 
+                                    à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Second"> 
+                                    </div>
+                                <div>min : 
+                                de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Minute"> 
+                                à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Minute"> 
+                                </div>
+                                <div>heures : 
+                                de <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.Begin.Hour"> 
+                                à <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.End.Hour"> 
+                                </div>
+                                <div>jours :
+                                de <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.Begin.Day">
+                                à <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.End.Day">   
+                                </div>
+                                <div>mois :
+                                de <input type="number" min="1" max="12" ng-model="Algorithme.Schedule.Begin.Month"> 
+                                à<input type="number" min="1" max="12" ng-model="Algorithme.Schedule.End.Month"> 
+                                </div>
 
                             </div>
                         </div>

@@ -113,7 +113,6 @@
     <Content Include="Content\Bootstrap.FontAwsome.css" />
     <Content Include="Content\Bootstrap.FontAwsome.min.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\rzslider.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="HtmlPage.html" />
@@ -163,7 +162,6 @@
     <Content Include="scripts\ngConstellation-1.8.0.js" />
     <Content Include="scripts\ng_algorithme.js" />
     <Content Include="scripts\npm.js" />
-    <Content Include="scripts\rzslider.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
