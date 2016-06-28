@@ -41,23 +41,23 @@ namespace ClassesAlgorithm
         {//retourne true si toutes les conditions sont vérifiées
             if (Conditions.Count == 0) return true; //liste vide, toutes conditions vraies
             Boolean isChanged = false;
-            foreach (Condition cond in Conditions)
+            foreach (Condition condi in Conditions)
             {
-                if (cond.Variables["sentinel"] == sentinel && cond.Variables["package"] ==
-                    package && cond.Variables["variable"] == name)
+                if (condi.Variables["sentinel"] == sentinel && condi.Variables["package"] ==
+                    package && condi.Variables["variable"] == name)
                 {
-                    cond.DynamicValue = dynamicValue;
+                    condi.DynamicValue = dynamicValue;
                     isChanged = true;
                 }
             }
-            if(isChanged) return AllConditionsTrue(); //on a modifié des valeures, on vérifie que toutes les variables sont ok
-            return false; //on a modifié aucune valeure, la valeure reçue ne correspond à aucune condition stockée
+            if (isChanged) return AllConditionsTrue(); //on a modifié des valeures, on vérifie que toutes les variables sont ok
+            else { return false; } //on a modifié aucune valeure, la valeure reçue ne correspond à aucune condition stockée
         }
         private Boolean AllConditionsTrue()
         {
-            foreach (Condition cond in Conditions)
+            foreach (Condition condit in Conditions)
             {
-                if (!cond.IsTrue) return false;
+                if (!condit.IsTrue) return false;
             }
             return true;
         }

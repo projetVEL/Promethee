@@ -16,6 +16,10 @@ namespace ClassesAlgorithm
         {
             get
             {
+                if(DynamicValue == null || Value ==null)
+                {
+                    return false;
+                }
                 switch (OperationTested)
                 {
                     case Operations.Different:
@@ -32,6 +36,11 @@ namespace ClassesAlgorithm
                         return false;
                     case Operations.StrictlyUpper:
                         if (DynamicValue > Value) return true;
+                        return false;
+                    case Operations.Boolean:
+                        var cc = DynamicValue.ToString().ToUpper();
+                        var c = Value.ToString().ToUpper();
+                        if (c == cc) return true;
                         return false;
                     default:
                         if (DynamicValue == Value) return true;

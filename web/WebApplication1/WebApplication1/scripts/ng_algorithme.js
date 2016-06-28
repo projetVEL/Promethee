@@ -188,8 +188,8 @@ algoApp.controller('mainController', ['$scope', 'constellationConsumer', 'conste
             
             // ! si on n'a qu'un seul argument a revoyer (ce qui est le cas ici), on renvoie un élément simple, pas un tableau
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'AddAlgorithme', $scope.Algorithme);
-            console.log($scope.Algorithme);
-           // window.location = 'http://localhost:56215/';
+            //console.log($scope.Algorithme);
+            window.location = 'http://localhost:56215/';
         }
         $scope.deleteAlgo = function () {
             constellation.sendMessage({ Scope: 'Sentinel', Args: [$scope.sent + '/AlgorithmePackage'] }, 'DeleteAlgorithme', $scope.Algorithme.Name);

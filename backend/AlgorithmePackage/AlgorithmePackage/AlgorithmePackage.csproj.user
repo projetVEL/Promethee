@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>http://localhost:8088 Developer AlgorithmePackage 1182b2384b6f311117b8fbbf4c37087982007885</StartArguments>
+    <StartArguments>http://localhost:8088 Developer AlgorithmePackage 8dea78b76b83d2ea291ed68db80e5cb1fd630ec8</StartArguments>
   </PropertyGroup>
 </Project>
