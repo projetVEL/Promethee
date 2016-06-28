@@ -3,17 +3,20 @@
 <head>
     <title ng-controller="titleController">{{title}}</title>
     <script src="scripts/jQuery.Bootstrap.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="Content/1-col-portfolio.css" rel="stylesheet" />
+    <link href="Content/rzslider.min.css" rel="stylesheet" />
+
     <script type="text/javascript" src="scripts/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.js"></script>
     <script type="text/javascript" src="scripts/Constellation-1.8.0.js"></script>
     <script type="text/javascript" src="scripts/angular.min.js"></script>
     <script src="scripts/ngConstellation-1.8.0.js"></script>
+    <script src="scripts/rzslider.min.js"></script>
     <script src="scripts/ng_algorithme.js"></script>
+
 </head>
 <body ng-controller="mainController">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -62,89 +65,147 @@
         <!-- buttons -->
         <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined
                     && LoadingAlgoSuccess" ng-click="verifAndSendAlgo()">
-            Envoyer à Constellation<span class="glyphicon glyphicon-send"></span>
+            Envoyer à Constellation <span class="glyphicon glyphicon-send"></span>
         </button>
-        <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">Retour Index</a>
-         <button type="button" class="btn btn-primary pull-left top" ng-show="ConnectionSuccess && sent != undefined
-                    && LoadingAlgoSuccess" ng-click="deleteAlgo()">
-            Supprimer Algorithme
-        </button>
+        <a type="button" href="http://localhost:56215" class="btn btn-primary pull-left top">
+            <span class="glyphicon glyphicon-arrow-left"></span> Retour Index
+        </a>
+
 
         <!-- title then url's picture and description -->
         <div ng-show="LoadingAlgoSuccess">
             <div>
-                <h1 class="page-header" style="text-align:center">
-                    Nom :
-                    <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset;
-                      height: 45px; width: 275px;" ng-model="Algorithme.Name" />
-                    Activation : <input type="checkbox" ng-model="Algorithme.IsActive">
-                </h1>
+                <h1 class="page-header" style="text-align:center">Construisez votre algorithme
+                 </h1>
             </div>
             <div class="row">
+                <!--IMAGE-->
                 <div class="col-md-7">
-                    <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
-                         width="700" style="max-height:290px;" />
+                    <button class='btn btn-link ' data-toggle='modal' data-target='#modalImage'>
+                        <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
+                             width="700" style="max-height:290px;" />
+                    </button>
+                     <!--Modal Image-->
+                    <div class='modal fade' id='modalImage' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                        <div class='modal-dialog' role='document'>
+                            <div class='modal-content'>
+                                <div class='modal-header'>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    <h4 class='modal-title' id='myModalLabel'>Choisissez votre image</h4>
+                                </div>
+                                <!---->
+                                <!---->
+                                <div class='modal-body'>
+                                    <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
+                                         width="700" style="max-height:290px;" />
+                                    URL de la photo de présentation :
+                                    <input type="text" name="input" style="width:455px;" ng-model="Algorithme.URLPhotoDescription">
+                                </div>
+                                <!---->
+                                <!---->
+                                <div class='modal-footer'>
+                                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-5">
                     <label>
-                        URL de la photo de présentation : <br />
-                        <input type="text" name="input" style="width:455px;" ng-model="Algorithme.URLPhotoDescription">
+                        <!--Chose name-->
+                        Name : <br />
+                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset;
+                      height: 45px; width: 275px;" ng-model="Algorithme.Name"/>
+
+                    </label>
+                    <label>
+                        <div class="btn-group" data-toggle="buttons">
+                            <button type="button" class="btn btn-danger pull-left top" ng-show="ConnectionSuccess && sent != undefined
+                    && LoadingAlgoSuccess" ng-click="deleteAlgo()" style="width:200px;resize:none;">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Supprimer Algorithme
+                            </button>
+                            <label class="{{Algorithme.IsActive? 'btn btn-primary active':'btn btn-warning'}}" ng-click="Algorithme.IsActive = !Algorithme.IsActive" style="width:200px;resize:none;">
+                                <input type="checkbox">
+                                <span class="{{Algorithme.IsActive? 'glyphicon glyphicon-play':'glyphicon glyphicon-stop'}}"></span>
+                                {{Algorithme.IsActive? 'Activer  ':'Désactiver'}} Algorithme
+                            </label>
+                        </div>
                     </label>
                     <label>
                         Description : <br />
-                        <textarea class="form-control" style="height:215px; width:455px; max-width:455px; max-height:215px; resize:none;"
+                        <textarea class="form-control" style="height:169px; width:455px; max-width:455px; max-height:169px; resize:none;"
                                   ng-model="Algorithme.Description"></textarea>
                     </label>
                 </div>
             </div>
             <hr />
-            <div class="row, table-responsive">
-                <div class="col-sm-offset-1 col-sm-4">
-                    <h1 style="text-align : center">IF</h1>
-                    <div class="well" ng-repeat="(keyCond, valueCond) in Algorithme.Conditions track by $index">
-                        <div>
-                            Sentinelle :{{Algorithme.Conditions[keyCond].Variables.sentinel}}
-                            <select ng-model="Algorithme.Conditions[keyCond].Variables.sentinel" ng-change="Algorithme.Conditions[keyCond].Variables.package='';
-                                    Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
-                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">{{key}}</option>
-                                
-                            </select>
-                        </div>
-                        <div>
-                            Package :{{Algorithme.Conditions[keyCond].Variables.package}}
-                            <select ng-model="Algorithme.Conditions[keyCond].Variables.package" ng-show="Algorithme.Conditions[keyCond].Variables.sentinel!=''"
-                                    ng-change="Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
-                                <option ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
-                                        value="{{key}}">
-                                    <b>{{key}}</b>
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            Variable :{{Algorithme.Conditions[keyCond].Variables.variable}}
-                            <select ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
-                                    ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
-                                <option ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
-                                        [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" value="{{keyVar}}">
-                                    {{keyVar}}
-                                </option>
-                            </select>
-          <!--                  <select ng-model="Algorithme.Conditions[keyCond].Variables.variable"
-                                    ng-options="keyVar for (keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
-                                        [Algorithme.Conditions[keyCond].Variables.package]">
-                            </select>
-            -->             
-                            
-                            {{Algorithme.Conditions[keyCond].OperationTested}}
-                            <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0"/>
-                            <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                <!--IF-->
+            <div class="col-sm-5">
+                <div class="well">
+                    <h1>IF</h1>
+                    <ul class="list-group">
+                        <span ng-repeat="(keyCond, valueCond) in Algorithme.Conditions track by $index">
+                            <li class="list-group-item">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Sentinelle<span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.sentinel}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.sentinel" ng-change="Algorithme.Conditions[keyCond].Variables.package='';
+                            Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Conditions[keyCond].Variables.sentinel=key">
+                                                    {{key}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Package <span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.package}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.package" ng-show="Algorithme.Conditions[keyCond].Variables.sentinel!=''"
+                                            ng-change="Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'" ng-click="Algorithme.Conditions[keyCond].Variables.package=key">
+                                                    {{key}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Variable <span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.variable}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
+                                            ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
+                                            <li>
+                                                <a ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
+                                [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" ng-click="Algorithme.Conditions[keyCond].Variables.variable=keyVar">
+                                                    {{keyVar}}
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                                    <span>
+                                        
+                                        <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0" />
+                                        <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
-                                <option value="1"> égal à </option>
-                                <option value="2"> différent de </option>
-                            </select>
-                            <select ng-model="Algorithme.Conditions[keyCond].OperationTested" 
-                                    ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                            <option value="1"> égal à </option>
+                                            <option value="2"> différent de </option>
+                                        </select>
+                                        <select ng-model="Algorithme.Conditions[keyCond].OperationTested"
+                                                ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
@@ -157,23 +218,23 @@
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )">
-                                <option value="1"> égal à </option>
-                                <option value="2"> différent de </option>
-                                <option value="3"> strictement inférieur à </option>
-                                <option value="4"> inférieur ou égal à </option>
-                                <option value="5"> strictement supérieur à </option>
-                                <option value="6"> supérieur ou égal à </option>
-                            </select>{{Algorithme.Conditions[keyCond].Value}}
-                            <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                            <option value="1"> égal à </option>
+                                            <option value="2"> différent de </option>
+                                            <option value="3"> strictement inférieur à </option>
+                                            <option value="4"> inférieur ou égal à </option>
+                                            <option value="5"> strictement supérieur à </option>
+                                            <option value="6"> supérieur ou égal à </option>
+                                        </select>
+                                        <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Boolean'">
-                                <option value="true"> est vrai </option>
-                                <option value="false"> est faux </option>
-                            </select>
-                            <input type="text" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                            <option value="true"> est vrai </option>
+                                            <option value="false"> est faux </option>
+                                        </select>
+                                        <input type="text" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
-                            <input type="number" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                        <input type="number" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
                                     arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
@@ -186,153 +247,220 @@
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
                                     || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
                                     [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
-                        </div>                        
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteCondition(keyCond)">Supprimer</button>
-                    </div>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="afficherPlageHoraire = !afficherPlageHoraire">
-                        {{afficherPlageHoraire ? 'Moins' : 'Plus'}} d'options
-                    </button>
-                    <div ng-show="afficherPlageHoraire">
-                        <h3>Plage horaire :</h3>
-                        <div class="well">
-                            <div>
-                                <label>
-                                    Lundi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Monday">
-                                </label><br />
-                                <label>
-                                    Mardi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Tuesday">
-                                </label><br />
-                                <label>
-                                    Mercredi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Wednesday">
-                                </label><br />
-                                <label>
-                                    Jeudi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Thursday">
-                                </label><br />
-                                <label>
-                                    Vendredi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Friday">
-                                </label><br />
-                                <label>
-                                    Samedi:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Saturday">
-                                </label><br />
-                                <label>
-                                    Dimanche:
-                                    <input type="checkbox" ng-model="Algorithme.Schedule.Week.Sunday">
-                                </label><br />
-                            </div>
-                            <div>
-                                Plages temporelles (range sliders) :
-
-                                <div>secondes :
-                                     de <input type="number" min="0" max="59"ng-model="Algorithme.Schedule.Begin.Second"> 
-                                    à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Second"> 
-                                    </div>
-                                <div>min : 
-                                de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Minute"> 
-                                à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Minute"> 
-                                </div>
-                                <div>heures : 
-                                de <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.Begin.Hour"> 
-                                à <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.End.Hour"> 
-                                </div>
-                                <div>jours :
-                                de <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.Begin.Day">
-                                à <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.End.Day">   
-                                </div>
-                                <div>mois :
-                                de <input type="number" min="1" max="12" ng-model="Algorithme.Schedule.Begin.Month"> 
-                                à<input type="number" min="1" max="12" ng-model="Algorithme.Schedule.End.Month"> 
-                                </div>
-
-                            </div>
-                        </div>
+                                    </span>
+                               
+                                <button type="button" class="btn btn-danger" ng-click="deleteCondition(keyCond)">
+                                    <span class="glyphicon glyphicon-remove"></span>Supprimer
+                                </button>
+                            </li>
+                        </span>
+                    </ul>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
                     </div>
                 </div>
 
-                <div class="col-sm-offset-1 col-sm-5">
-                    <h1 style="text-align:center">THEN</h1>
-                    <div class="well" ng-repeat="(keyExec, valueExec) in Algorithme.Executions track by $index">
-                        <div>
-                            Sentinelle :{{Algorithme.Executions[keyExec].Variables.sentinel}}
-                            <select ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
-                                    Algorithme.Executions[keyExec].Variables.callBack=''">
-                                <option ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" value="{{key}}">
-                                    {{key}}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            Package :{{Algorithme.Executions[keyExec].Variables.package}}
-                            <select ng-model="Algorithme.Executions[keyExec].Variables.package" ng-if="Algorithme.Executions[keyExec].Variables.sentinel!=''"
-                                    ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
-                                <option ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
-                                        value="{{key}}">
-                                    {{key}}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            CallBack : {{Algorithme.Executions[keyExec].Variables.callBack}}
-                            <select ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-if="Algorithme.Executions[keyExec].Variables.package!=''"
-                                    ng-change="Algorithme.Executions[keyExec].Arguments=[];">
-                                <option ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                <div class="col-sm-2"></div>
+
+                <!--THEN-->
+            <div class="col-sm-5">
+                <div class="well ">
+                    <h1>THEN</h1>
+                    <ul class="list-group">
+                        <span ng-repeat="(keyExec, valueExec) in Algorithme.Executions track by $index">
+                            <li class="list-group-item">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Sentinelle <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.sentinel}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
+                                    Algorithme.Executions[keyExec].Variables.callBack='';">
+                                            <li><a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key">{{key}} </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Package <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.package}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.package" ng-show="Algorithme.Executions[keyExec].Variables.sentinel!=''"
+                                            ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.package=key">{{key}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Call back <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.callBack}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-show="Algorithme.Executions[keyExec].Variables.package!=''"
+                                            ng-change="Algorithme.Executions[keyExec].Arguments=[];">
+                                            <li>
+                                                <a ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
                                         .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
-                                        value="{{valuekk.MessageKey}}">
-                                    {{valuekk.MessageKey}}
-                                </option>
-                            </select>
-                            <span ng-repeat="(keyCB,valueCB) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
-                                  .PackageDescriptor.MessageCallbacks" ng-if="valueCB.MessageKey==Algorithme.Executions[keyExec].Variables.callBack">                                
-                                <span ng-repeat="(key, value) in valueCB.Parameters"><br />
-                                    {{value.Description ? 'Description' + value.Description : ''}} Type : {{value.TypeName}} Name : {{value.Name}} <br/>
-                                 <input type="text" ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'"/> 
-                                    <input type="number" ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
-                                           value.TypeName=='System.UInt64' || value.TypeName=='System.Double' || value.TypeName=='System.Single'" />                                    
-                                    <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'">
-                                        <option value="true"> est vrai </option>
-                                        <option value="false"> est faux </option>
-                                    </select>
-                                </span><br />
-                            </span>                          
-                        </div>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="deleteExecution(keyExec)">Supprimer</button>
-                    </div>
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.callBack= valuekk.MessageKey">{{valuekk.MessageKey}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>                                </ul>
+                                <div ng-repeat="(keyCB,valueCB) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                                  .PackageDescriptor.MessageCallbacks" ng-if="valueCB.MessageKey==Algorithme.Executions[keyExec].Variables.callBack">
+                                    <span ng-repeat="(key, value) in valueCB.Parameters">
+                                        <br />
+                                        {{value.Description ? 'Description' + value.Description : ''}} Type : {{value.TypeName}} Name : {{value.Name}} <br />
+                                        <input type="text" ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'" />
+                                        <input type="number" ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
+                                           value.TypeName=='System.UInt64' || value.TypeName=='System.Double' || value.TypeName=='System.Single'" />
+                                        <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'">
+                                            <option value="true"> est vrai </option>
+                                            <option value="false"> est faux </option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div>
+                                    <br />
+                                </div>
+                                <button type="button" class="btn btn-danger" ng-click="deleteExecution(keyCond)">
+                                    <span class="glyphicon glyphicon-remove"></span>Supprimer
+                                </button>
+                            </li>
+                        </span>
+                    </ul>
                     <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
-                    <button type="button" class="btn btn-primary btn-lg" ng-click="afficherDesactivation = !afficherDesactivation">
-                        {{afficherDesactivation ? 'Moins' : 'Plus'}} d'options
-                    </button>
-                    <div ng-show="afficherDesactivation">
-                        <h3>Désactivation de l'Algorithme :</h3>
-                        <div class="well">
-                            Temps d'attente :
-                            <input type="number" min="0" ng-change="Algorithme.DisableAfterRealisation = false"
-                                   ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
-                            <label>
-                                Désactiver après exécution :
-                                <input type="checkbox" ng-click="!Algorithme.DisableAfterRealisation ? null : Algorithme.Waiting = 0"
-                                       ng-model="Algorithme.DisableAfterRealisation" />
-                            </label>
-                            <div ng-show="Algorithme.DisableAfterRealisation">
-                                Se réactive chaque plage
-                                d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
-                                <select ng-model="Algorithme.Schedule.ReactivationPeriode">
-                                    <option value="Minutes">Minutes</option>
-                                    <option value="Hours">Heures</option>
-                                    <option value="Days">Jours</option>
-                                    <option value="Months">Mois</option>
-                                </select>
+                </div>
+            </div> 
+                </div>
+                </div>
+
+    <!--FOOTER-->
+    <div id="footer">
+        <button class='btn btn-info col-sm-offset-2 col-sm-2' data-toggle='modal' data-target='#modalOption'>
+            <span class='glyphicon glyphicon-cog'></span>
+            OPTION
+        </button>
+        <div class='modal fade' id='modalOption' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                        <h4 class='modal-title' id='myModalLabel'>Panel d'option</h4>
+                    </div>
+                    <!---->
+                    <!---->
+                    <div class='modal-body'>
+
+                        <button type="button" ng-click="afficherDesactivation = !afficherDesactivation" class="{{afficherDesactivation? 'btn btn-info locked_active':'btn btn-default unlocked_inactive'}}">
+                            {{afficherDesactivation ? 'Cacher' : 'Afficher'}} Option de fréquence
+                        </button>
+                        <button type="button" ng-click="afficherPlageHoraire = !afficherPlageHoraire" class="{{afficherPlageHoraire? 'btn btn-info locked_active':'btn btn-default unlocked_inactive'}}">
+                            {{afficherPlageHoraire ? 'Cacher' : 'Afficher'}} Options d'horraire
+                        </button>
+                        <div ng-show="afficherDesactivation">
+                            <h3>Désactivation de l'Algorithme :</h3>
+                            <div class="well">
+                                Temps d'attente :
+                                <input type="number" min="0" ng-change="Algorithme.DisableAfterRealisation = false"
+                                       ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
+                                <label>
+                                    Désactiver après exécution :
+                                    <input type="checkbox" ng-click="!Algorithme.DisableAfterRealisation ? null : Algorithme.Waiting = 0"
+                                           ng-model="Algorithme.DisableAfterRealisation" />
+                                </label>
+                                <div ng-show="Algorithme.DisableAfterRealisation">
+                                    Se réactive chaque plage
+                                    d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
+                                    <select ng-model="Algorithme.Schedule.ReactivationPeriode">
+                                        <option value="Minutes">Minutes</option>
+                                        <option value="Hours">Heures</option>
+                                        <option value="Days">Jours</option>
+                                        <option value="Months">Mois</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div ng-show="afficherPlageHoraire">
+                            <h3>Plage horaire :</h3>
+                            <div class="well">
+                                <div class="btn-group" data-toggle="buttons">
+
+                                    <label class="{{Algorithme.Schedule.Week.Monday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Monday = !Algorithme.Schedule.Week.Monday">
+                                        <input type="checkbox">
+                                        Lu
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Tuesday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Tuesday = !Algorithme.Schedule.Week.Tuesday">
+                                        <input type="checkbox">
+                                        Ma
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Wednesday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Wednesday = !Algorithme.Schedule.Week.Wednesday">
+                                        <input type="checkbox">
+                                        Me
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Thursday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Thursday = !Algorithme.Schedule.Week.Thursday">
+                                        <input type="checkbox">
+                                        Je
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Friday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Friday = !Algorithme.Schedule.Week.Friday">
+                                        <input type="checkbox">
+                                        Ve
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Saturday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Saturday = !Algorithme.Schedule.Week.Saturday">
+                                        <input type="checkbox">
+                                        Sa
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Sunday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Sunday = !Algorithme.Schedule.Week.Sunday">
+                                        <input type="checkbox">
+                                        Di
+                                    </label>
+                                </div>
+                                <div>
+                                    Plages temporelles (range sliders) :
+
+                                    <div>
+                                        secondes :
+                                        de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Second">
+                                        à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Second">
+                                    </div>
+                                    <div>
+                                        min :
+                                        de <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.Begin.Minute">
+                                        à <input type="number" min="0" max="59" ng-model="Algorithme.Schedule.End.Minute">
+                                    </div>
+                                    <div>
+                                        heures :
+                                        de <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.Begin.Hour">
+                                        à <input type="number" min="0" max="23" ng-model="Algorithme.Schedule.End.Hour">
+                                    </div>
+                                    <div>
+                                        jours :
+                                        de <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.Begin.Day">
+                                        à <input type="number" min="1" max="31" ng-model="Algorithme.Schedule.End.Day">
+                                    </div>
+                                    <div>
+                                        mois :
+                                        de <input type="number" min="1" max="12" ng-model="Algorithme.Schedule.Begin.Month">
+                                        à<input type="number" min="1" max="12" ng-model="Algorithme.Schedule.End.Month">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class='col-sm-12'>
+            <br />
+        </div>
+        <!---->
 </body>
 </html>
