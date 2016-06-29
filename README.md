@@ -8,8 +8,8 @@ Nous nous inspirons de l'application IF de IFTTT sur Android pour créer une int
 Ex : si le StateObject "On" d'une lampe passe à "false" alors on appel la fonction de callback "Shut()" des volets.
 <br />
 <br />
-Pour l'installation sur votre Constellation :
-_Lancer le package AlgorithmePackage
-_changer les chemins web dans les html et .js (chemins absolus pour le moment)
-_changer les clefs de connexion Constellation
-_Enjoy !
+Pour l'installation sur votre Constellation :<br/>
+_Lancer le package AlgorithmePackage<br/>
+_changer les chemins web dans les html et .js (chemins absolus pour le moment)<br/>
+_changer les clefs de connexion Constellation<br/>
+_Enjoy !<br/>
