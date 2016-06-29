@@ -10,6 +10,6 @@ Ex : si le StateObject "On" d'une lampe passe à "false" alors on appel la fonct
 <br />
 Pour l'installation sur votre Constellation :<br/>
 _Lancer le package AlgorithmePackage<br/>
-_changer les chemins web dans les html et .js (chemins absolus pour le moment)<br/>
+_changer les chemins web dans les fichiers HTML et JS(chemins absolus pour le moment)<br/>
 _changer les clefs de connexion Constellation<br/>
 _Enjoy !<br/>
