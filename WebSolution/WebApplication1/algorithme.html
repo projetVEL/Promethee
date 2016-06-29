@@ -1,0 +1,478 @@
+﻿<!DOCTYPE html>
+<html lang="fr-fr" ng-app="algoApp">
+<head>
+    <title ng-controller="titleController">{{title}}</title>
+    <script src="scripts/jQuery.Bootstrap.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="Content/1-col-portfolio.css" rel="stylesheet" />
+    <link href="Content/angular.rangeSlider.css" rel="stylesheet">
+
+    <script type="text/javascript" src="scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.js"></script>
+    <script type="text/javascript" src="scripts/Constellation-1.8.0.js"></script>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script src="scripts/angular.rangeSlider.js"></script>
+    <script src="scripts/ngConstellation-1.8.0.js"></script>
+    <script src="scripts/ng_algorithme.js"></script>
+
+</head>
+<body ng-controller="mainController">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost/">Prométhée</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="https://github.com/projetVEL/projetVEL">About</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/projetVEL/projetVEL">Contact</a>
+                    </li>
+                    <li>
+                    </li>
+                </ul>                
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <!-- alerts-->
+    <div class="container">
+        <div class="alert alert-success" ng-show="ConnectionSuccess && sent != undefined && LoadingAlgoSuccess">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Connecté à Constellation</strong>, données récupérées depuis la sentinelle : {{sent}}.
+        </div>
+        <div class="alert alert-info" ng-show="!ConnectionSuccess && sent != undefined">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>En attente de Constellation</strong>, recharger la page si le chargement est trop long.
+        </div>
+        <div class="alert alert-warning" ng-show="!LoadingAlgoSuccess && sent != undefined && ConnectionSuccess">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Problème de connection avec la Sentinelle</strong>, retournez à l'index et rechargez l'Algorithme.
+        </div>
+        <div class="alert alert-danger" ng-show="sent == undefined">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Sentinelle non communiquée</strong>, retournez à l'index et rechargez l'Algorithme.
+        </div>
+        <!-- buttons -->
+        <button type="button" class="btn btn-primary pull-right top" ng-show="ConnectionSuccess && sent != undefined
+                    && LoadingAlgoSuccess" ng-click="verifAndSendAlgo()">
+            Envoyer à Constellation <span class="glyphicon glyphicon-send"></span>
+        </button>
+        <a type="button" href="http://localhost/" class="btn btn-primary pull-left top">
+            <span class="glyphicon glyphicon-arrow-left"></span> Retour Index
+        </a>
+
+
+        <!-- title then url's picture and description -->
+        <div ng-show="LoadingAlgoSuccess">
+            <div>
+                <h1 class="page-header" style="text-align:center">
+                    Construisez votre algorithme
+                </h1>
+            </div>
+            <div class="row">
+                <!--IMAGE-->
+                <div class="col-md-7">
+                    <button class='btn btn-link ' data-toggle='modal' data-target='#modalImage'>
+                        <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
+                             width="700" style="max-height:290px;" />
+                    </button>
+                    <!--Modal Image-->
+                    <div class='modal fade' id='modalImage' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                        <div class='modal-dialog' role='document'>
+                            <div class='modal-content'>
+                                <div class='modal-header'>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    <h4 class='modal-title' id='myModalLabel'>Choisissez votre image</h4>
+                                </div>
+                                <!---->
+                                <!---->
+                                <div class='modal-body'>
+                                    <img class="img-responsive, img-thumbnail center-block" src="{{Algorithme.URLPhotoDescription}}"
+                                         width="700" style="max-height:290px;" />
+                                    URL de la photo de présentation :
+                                    <input type="text" name="input" style="width:455px; background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px;" ng-model="Algorithme.URLPhotoDescription">
+                                </div>
+                                <!---->
+                                <!---->
+                                <div class='modal-footer'>
+                                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label>
+                        <!--Chose name-->
+                        Name : <br />
+                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                               ng-model="Algorithme.Name" />
+
+                    </label>
+                    <label>
+                        <div class="btn-group" data-toggle="buttons">
+                            <button type="button" class="btn btn-danger pull-left top" ng-show="ConnectionSuccess && sent != undefined
+                    && LoadingAlgoSuccess" ng-click="deleteAlgo()" style="width:200px;resize:none;">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Supprimer Algorithme
+                            </button>
+                            <label class="{{Algorithme.IsActive? 'btn btn-success active':'btn btn-warning'}}" ng-click="Algorithme.IsActive = !Algorithme.IsActive" style="width:200px;resize:none;">
+                                <input type="checkbox">
+                                <span class="{{Algorithme.IsActive? 'glyphicon glyphicon-play':'glyphicon glyphicon-stop'}}"></span>
+                                Algorithme {{Algorithme.IsActive? 'Activé  ':'Désactivé'}}
+                            </label>
+                        </div>
+                    </label>
+                    <label>
+                        Description : <br />
+                        <textarea class="form-control" style="height:169px; width:455px; max-width:455px; max-height:169px; resize:none;"
+                                  ng-model="Algorithme.Description"></textarea>
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <!--IF-->
+            <div class="col-sm-5">
+                <div class="well">
+                    <h1>IF</h1>
+                    <ul class="list-group">
+                        <span ng-repeat="(keyCond, valueCond) in Algorithme.Conditions track by $index">
+                            <li class="list-group-item">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Sentinelle<span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.sentinel}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.sentinel" ng-change="Algorithme.Conditions[keyCond].Variables.package='';
+                            Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Conditions[keyCond].Variables.sentinel=key;
+                                                   Algorithme.Conditions[keyCond].Variables.package=''; Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].OperationTested=0;
+                                                   Algorithme.Conditions[keyCond].Value=undefined;">
+                                                    {{key}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Package <span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.package}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.package" ng-show="Algorithme.Conditions[keyCond].Variables.sentinel!=''"
+                                            ng-change="Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].Value=undefined;Algorithme.Conditions[keyCond].OperationTested=0">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]" ng-if="key!='AlgorithmePackage'" ng-click="Algorithme.Conditions[keyCond].Variables.package=key;
+                                                    Algorithme.Conditions[keyCond].Variables.variable='';Algorithme.Conditions[keyCond].OperationTested=0; Algorithme.Conditions[keyCond].Value=undefined;">
+                                                    {{key}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Variable <span class="caret"></span>:{{Algorithme.Conditions[keyCond].Variables.variable}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Conditions[keyCond].Variables.variable" ng-show="Algorithme.Conditions[keyCond].Variables.package!=''"
+                                            ng-change="Algorithme.Conditions[keyCond].OperationTested = 0; Algorithme.Conditions[keyCond].Value = undefined">
+                                            <li>
+                                                <a ng-repeat="(keyVar, valueVar) in arbre[Algorithme.Conditions[keyCond].Variables.sentinel]
+                                [Algorithme.Conditions[keyCond].Variables.package]" ng-if="keyVar != 'PackageDescriptor'" ng-click="Algorithme.Conditions[keyCond].Variables.variable=keyVar;
+                                                   Algorithme.Conditions[keyCond].OperationTested=0; Algorithme.Conditions[keyCond].Value=undefined;">
+                                                    {{keyVar}}
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                                <span>
+
+                                    <br ng-if="Algorithme.Conditions[keyCond].OperationTested!=0" />
+                                    <select ng-model="Algorithme.Conditions[keyCond].OperationTested" ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 200px;">
+                                        <option value="1"> égal à </option>
+                                        <option value="2"> différent de </option>
+                                    </select>
+                                    <select ng-model="Algorithme.Conditions[keyCond].OperationTested"
+                                            ng-show="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 200px;">
+                                        <option value="1"> égal à </option>
+                                        <option value="2"> différent de </option>
+                                        <option value="3"> strictement inférieur à </option>
+                                        <option value="4"> inférieur ou égal à </option>
+                                        <option value="5"> strictement supérieur à </option>
+                                        <option value="6"> supérieur ou égal à </option>
+                                    </select>
+                                    <select ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Boolean'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 75px;">
+                                        <option value="true"> est vrai </option>
+                                        <option value="false"> est faux </option>
+                                    </select>
+                                    <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                                           ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.String'">
+                                    <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;" step="any" ng-model="Algorithme.Conditions[keyCond].Value" ng-if="Algorithme.Conditions[keyCond].Variables.variable!='' &&(
+                                    arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Int64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt64'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.UInt32'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Double'
+                                    || arbre[Algorithme.Conditions[keyCond].Variables.sentinel][Algorithme.Conditions[keyCond].Variables.package]
+                                    [Algorithme.Conditions[keyCond].Variables.variable].Type == 'System.Single' )" />
+                                </span>
+                                <br /><br />
+                                <button type="button" class="btn btn-danger" ng-click="deleteCondition(keyCond)">
+                                    <span class="glyphicon glyphicon-remove"></span>Supprimer
+                                </button>
+                            </li>
+                        </span>
+                    </ul>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="addCondition()">Ajouter Condition</button>
+                </div>
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <!--THEN-->
+            <div class="col-sm-5">
+                <div class="well ">
+                    <h1>THEN</h1>
+                    <ul class="list-group">
+                        <span ng-repeat="(keyExec, valueExec) in Algorithme.Executions track by $index">
+                            <li class="list-group-item">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Sentinelle <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.sentinel}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.sentinel" ng-change="Algorithme.Executions[keyExec].Variables.package='';
+                                    Algorithme.Executions[keyExec].Variables.callBack='';">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre" ng-if="key != 'Developer'" ng-click="Algorithme.Executions[keyExec].Variables.sentinel=key;
+                                                   Algorithme.Executions[keyExec].Variables.package='';Algorithme.Executions[keyExec].Variables.callBack='';Algorithme.Executions[keyExec].Arguments=[];"
+                                                   ">{{key}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Package <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.package}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.package" ng-show="Algorithme.Executions[keyExec].Variables.sentinel!=''"
+                                            ng-change="Algorithme.Executions[keyExec].Arguments=[];Algorithme.Executions[keyExec].Variables.callBack='';">
+                                            <li>
+                                                <a ng-repeat="(key, value) in arbre[Algorithme.Executions[keyExec].Variables.sentinel]" ng-if="key!='AlgorithmePackage'"
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.package=key;Algorithme.Executions[keyExec].Variables.callBack='';Algorithme.Executions[keyExec].Arguments=[];">{{key}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-divider"></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                            Call back <span class="caret"></span>:{{Algorithme.Executions[keyExec].Variables.callBack}}
+                                        </a>
+                                        <ul class='dropdown-menu stay-open pull-left' role='menu' style='padding: 15px; min-width: 300px;' ng-model="Algorithme.Executions[keyExec].Variables.callBack" ng-show="Algorithme.Executions[keyExec].Variables.package!=''"
+                                            ng-change="Algorithme.Executions[keyExec].Arguments=[];">
+                                            <li>
+                                                <a ng-repeat="(key, valuekk) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                                        .PackageDescriptor.MessageCallbacks" ng-if="key!='AlgorithmePackage'"
+                                                   ng-click="Algorithme.Executions[keyExec].Variables.callBack= valuekk.MessageKey;Algorithme.Executions[keyExec].Arguments=[];">{{valuekk.MessageKey}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div ng-repeat="(keyCB,valueCB) in arbre[Algorithme.Executions[keyExec].Variables.sentinel][Algorithme.Executions[keyExec].Variables.package]
+                                  .PackageDescriptor.MessageCallbacks" ng-if="valueCB.MessageKey==Algorithme.Executions[keyExec].Variables.callBack">
+                                    <span ng-repeat="(key, value) in valueCB.Parameters">
+                                        <br />
+                                        {{value.Description ? 'Description' + value.Description : ''}} Type : {{value.TypeName}} Name : {{value.Name}} <br />
+                                        <input type="text" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 275px;"
+                                               ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.String' || value.TypeName=='System.Object'" />
+                                        <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;"
+                                               ng-model="Algorithme.Executions[keyExec].Arguments[key]" step="any" ng-if="value.TypeName=='System.Int32' || value.TypeName=='System.UInt32' || value.TypeName=='System.Int64' ||
+                                           value.TypeName=='System.UInt64' || value.TypeName=='System.Double' || value.TypeName=='System.Single'" />
+                                        <select ng-model="Algorithme.Executions[keyExec].Arguments[key]" ng-if="value.TypeName=='System.Boolean'" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 75px;">
+                                            <option value="true"> est vrai </option>
+                                            <option value="false"> est faux </option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div>
+                                    <br />
+                                </div>
+                                <button type="button" class="btn btn-danger" ng-click="deleteExecution(keyExec)">
+                                    <span class="glyphicon glyphicon-remove"></span>Supprimer
+                                </button>
+                            </li>
+                        </span>
+                    </ul>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="addExecution()">Ajouter Execution</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <div id="footer">
+        <button class='btn btn-info col-sm-offset-2 col-sm-2' data-toggle='modal' data-target='#modalOption' ng-if="LoadingAlgoSuccess">
+            <span class='glyphicon glyphicon-cog'></span>
+            OPTION
+        </button>
+        <div class='modal fade' id='modalOption' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                        <h4 class='modal-title' id='myModalLabel'>Panel d'option</h4>
+                    </div>
+                    <!---->
+                    <!---->
+                    <div class='modal-body'>
+
+                        <button type="button" ng-click="afficherDesactivation = !afficherDesactivation" class="{{afficherDesactivation? 'btn btn-info locked_active':'btn btn-default unlocked_inactive'}}">
+                            {{afficherDesactivation ? 'Cacher' : 'Afficher'}} Option de fréquence
+                        </button>
+                        <button type="button" ng-click="afficherPlageHoraire = !afficherPlageHoraire" class="{{afficherPlageHoraire? 'btn btn-info locked_active':'btn btn-default unlocked_inactive'}}">
+                            {{afficherPlageHoraire ? 'Cacher' : 'Afficher'}} Options d'horraire
+                        </button>
+                        <div ng-show="afficherDesactivation">
+                            <h3>Désactivation de l'Algorithme :</h3>
+                            <div class="well">
+                                Temps d'attente :
+                                <input type="number" style="background: white; border: 1px solid #DDD; border-radius: 5px; height: 45px; width: 75px;"
+                                       min="0" ng-change="Algorithme.DisableAfterRealisation = false"
+                                       ng-model="Algorithme.Waiting" /> seconde{{Algorithme.Waiting > 1 ? 's' : ''}}<br />
+                                <label>
+                                    Désactiver après exécution :
+                                    <input type="checkbox" ng-click="!Algorithme.DisableAfterRealisation ? null : Algorithme.Waiting = 0"
+                                           ng-model="Algorithme.DisableAfterRealisation" />
+                                </label>
+                                <div ng-show="Algorithme.DisableAfterRealisation">
+                                    Se réactive chaque plage
+                                    d{{Algorithme.Schedule.ReactivationPeriode == "Hours" ? "'" : "e"}} :
+                                    <select ng-model="Algorithme.Schedule.ReactivationPeriode" style="background: white; border: 1px solid #DDD; border-radius: 5px;box-shadow: 0 0 5px #DDD inset; height: 45px; width: 100px;">
+                                        <option value="Minutes">Minutes</option>
+                                        <option value="Hours">Heures</option>
+                                        <option value="Days">Jours</option>
+                                        <option value="Months">Mois</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="afficherPlageHoraire">
+                            <h3>Plage horaire :</h3>
+                            <div class="well">
+                                <div class="btn-group" data-toggle="buttons">
+
+                                    <label class="{{Algorithme.Schedule.Week.Monday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Monday = !Algorithme.Schedule.Week.Monday">
+                                        <input type="checkbox">
+                                        Lu
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Tuesday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Tuesday = !Algorithme.Schedule.Week.Tuesday">
+                                        <input type="checkbox">
+                                        Ma
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Wednesday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Wednesday = !Algorithme.Schedule.Week.Wednesday">
+                                        <input type="checkbox">
+                                        Me
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Thursday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Thursday = !Algorithme.Schedule.Week.Thursday">
+                                        <input type="checkbox">
+                                        Je
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Friday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Friday = !Algorithme.Schedule.Week.Friday">
+                                        <input type="checkbox">
+                                        Ve
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Saturday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Saturday = !Algorithme.Schedule.Week.Saturday">
+                                        <input type="checkbox">
+                                        Sa
+                                    </label>
+                                    <label class="{{Algorithme.Schedule.Week.Sunday ? 'btn btn-primary active':'btn btn-secondary'}}" ng-click="Algorithme.Schedule.Week.Sunday = !Algorithme.Schedule.Week.Sunday">
+                                        <input type="checkbox">
+                                        Di
+                                    </label>
+                                </div>
+                                <div>
+                                    Plages temporelles :
+
+                                    <div>
+                                        secondes :
+                                        <div range-slider min="0" max="59" model-min="Algorithme.Schedule.Begin.Second" model-max="Algorithme.Schedule.End.Second" style="width:400px"></div>
+                                    </div>
+                                    <div>
+                                        min :
+                                        <div range-slider min="0" max="59" model-min="Algorithme.Schedule.Begin.Minute" model-max="Algorithme.Schedule.End.Minute" style="width:400px"></div>
+                                    </div>
+                                    <div>
+                                        heures :
+                                        <div range-slider min="0" max="23" model-min="Algorithme.Schedule.Begin.Hour" model-max="Algorithme.Schedule.End.Hour" style="width:400px"></div>
+                                    </div>
+                                    <div>
+                                        jours :
+                                        <div range-slider min="1" max="31" model-min="Algorithme.Schedule.Begin.Day" model-max="Algorithme.Schedule.End.Day" style="width:400px"></div>
+                                    </div>
+                                    <div>
+                                        mois :
+                                        <div range-slider min="1" max="12" model-min="Algorithme.Schedule.Begin.Month" model-max="Algorithme.Schedule.End.Month" style="width:400px"></div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-sm-12'>
+            <br />
+        </div>
+        <!---->
+</body>
+</html>

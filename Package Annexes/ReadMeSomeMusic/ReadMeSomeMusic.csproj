@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{834BFCBE-00A7-40B6-BA65-D3FE898E5F6B}</ProjectGuid>
+    <ProjectGuid>{F79B3928-2FBA-4F85-AE8C-A2A61F632CC5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlgorithmePackage</RootNamespace>
-    <AssemblyName>AlgorithmePackage</AssemblyName>
+    <RootNamespace>ReadMeSomeMusic</RootNamespace>
+    <AssemblyName>ReadMeSomeMusic</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\AlgorithmePackage.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\ReadMeSomeMusic.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\AlgorithmePackage.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\ReadMeSomeMusic.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Constellation.Common, Version=1.8.0.0, Culture=neutral, PublicKeyToken=324a4f45ff674ee1, processorArchitecture=MSIL">
@@ -59,9 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -69,16 +67,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ClassesAlgorithme\ClassesAlgorithme\ClassesAlgorithm.csproj">
-      <Project>{ce79d750-ea14-4448-ab5c-d2a50722f50d}</Project>
-      <Name>ClassesAlgorithm</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties PublishMethod="ConstellationServer" PublishServer="http://localhost:8088" />
+      <UserProperties PublishServer="http://localhost:8088" PublishMethod="ConstellationServer" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
