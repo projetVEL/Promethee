@@ -19,7 +19,6 @@ def ChangerEtatDELs(pin):
         gpio.setup(defaultPin,gpio.OUT)
         dictionaryON[pin]=False;
     inBoucle = False;
-    "allume ou éteind les DELs"
     if(dictionaryON[pin]):
         dictionaryON[pin] = False
         gpio.output(pin,gpio.LOW)
@@ -32,7 +31,6 @@ def AllumerDELs(pin):
     if(dictionaryON.get(pin)==None):
         gpio.setup(defaultPin,gpio.OUT)
     inBoucle = False;
-    "allume les DELs"
     dictionaryON[pin]=True;
     gpio.output(pin,gpio.HIGH)
 
@@ -41,7 +39,6 @@ def EteindreDELs(pin):
     if(dictionaryON.get(pin)==None):
         gpio.setup(defaultPin,gpio.OUT)
     inBoucle = False
-    "allume les DELs"
     dictionaryON[pin]=False
     gpio.output(pin,gpio.LOW)
 
