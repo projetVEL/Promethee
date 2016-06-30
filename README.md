@@ -1,4 +1,4 @@
-# ![alt tag](https://github.com/projetVEL/projetVEL/blob/master/logo.png) Prométhée
+# ![alt tag](https://github.com/projetVEL/projetVEL/blob/master/logo.png) <span style="text-align:center>Prométhée</span> # ![alt tag](https://github.com/projetVEL/projetVEL/blob/master/logo.png)
 <i>Par Vianney GUISON, Edouard FRANCOIS et Louis-Jean CLAEYSSEN</i>
 <br/>
 
