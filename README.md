@@ -9,7 +9,11 @@ Ex : si le StateObject "On" d'une lampe passe à "false" alors on appel la fonct
 <br />
 <br />
 Pour l'installation sur votre Constellation :<br/>
-_Lancer le package AlgorithmePackage<br/>
-_changer les chemins web dans les fichiers HTML et JS(chemins absolus pour le moment)<br/>
-_changer les clefs de connexion Constellation<br/>
-_Enjoy !<br/>
+<ul>
+<li>Déployez le package AlgorithmePackage</li>
+<li>Changer les chemins web dans les fichiers HTML et JS(chemins absolus pour le moment)</li>
+<li>Changer les clefs de connexion Constellation</li>
+<li>Déplyer le site web (nous vous conseillons <a href="http://www.wampserver.com/">wamp</a> pour un usage local)</li>
+<li>Déployez vos packages à tester (nous vous conseillons <a href="https://github.com/projetVEL/projetVEL/tree/master/Packages%20Annexes">nos packages de test</a> si vous n'avez aucun package à essayer)</li>
+<li>Enjoy !</li>
+</ul>
