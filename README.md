@@ -1,4 +1,4 @@
-# Prométhée
+# Prométhée <img href="www.lorempixel.com/700/300" />
 <i>Par Vianney GUISON, Edouard FRANCOIS et Louis-Jean CLAEYSSEN</i>
 <br/>
 Bienvenue sur la page de Prométhée (anciennement projetVEL), un projet pour <a href="http://www.myconstellation.io/">Constellation</a> pensé pour vous simplifier la vie. 
