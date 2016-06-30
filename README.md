@@ -11,9 +11,9 @@ Ex : si le StateObject "IsOn" d'un bouton sur le pc1 est "True" alors on appel l
 Pour l'installation sur votre Constellation :<br/>
 <ul>
 <li>Déployez le package AlgorithmePackage</li>
-<li>Changez les chemins web dans les fichiers HTML et JS (sauf si vous hébergez le site sur vote localHost : voir wamp)</li>
+<li>Changez les chemins web dans les fichiers HTML et JS (sauf si vous hébergez le site sur vote localHost : cf wamp)</li>
 <li>Changez les clefs de connexion Constellation</li>
-<li>Déployez le site web (nous vous conseillons <a href="http://www.wampserver.com/">wamp</a> pour un usage local)</li>
+<li>Déployez le site web (nous vous conseillons <a href="http://www.wampserver.com/">wamp</a> pour un usage local sous windows)</li>
 <li>Déployez vos packages à tester (nous vous conseillons <a href="https://github.com/projetVEL/projetVEL/tree/master/Packages%20Annexes">nos packages de test</a> si vous n'avez aucun package à essayer)</li>
 <li>Enjoy !</li>
 </ul>
