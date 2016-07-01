@@ -20,10 +20,10 @@ Pour l'installation sur votre Constellation :<br/>
 <li>Enjoy !</li>
 </ul>
 </p>
-<div> --------------------</div>
+<div style="text-aligne:center"> -------------------------------------------</div>
 <br/>
 Fonctionnement détaillé des packages (FrontEnd Web et BackEnd C#) <br/>
-<b> /!\ documentation technique nécessitant des connaissances de base en programmation et du fonctionnement de Constellation. Cette partie est reservée à un public averti voulant comprendre le fonctionnement des Packages /!\ </b>
+<b> /!\ Documentation technique nécessitant des connaissances de base en programmation et du fonctionnement de Constellation. Cette partie est reservée à un public averti voulant comprendre le fonctionnement interne des Packages de Prométhée /!\ </b>
 <br/><br/>
 Note : Ici les règles sont appelées "Algorithmes" et contiennent une liste de conditions qui si vérifiées appel les MessageCallback d'une liste d'exécutions.
 <br/><br/>
